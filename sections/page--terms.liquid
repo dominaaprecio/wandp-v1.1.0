@@ -1,0 +1,38 @@
+<div class = "wrap wrap--max">
+  <h1>{{ section.settings.title }}</h1>
+  {% for block in section.blocks %}
+    <h2>{{ block.settings.title }}</h2>
+    {{ block.settings.body }}
+  {% endfor %}
+</div>
+
+{% schema %}
+  {
+    "name": "Terms and Conditiobns",
+    "settings": [
+      {
+        "id": "title",
+        "type": "text",
+        "label": "Page Title"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "text",
+        "name": "Paragraph Block",
+        "settings": [
+          {
+            "id": "title",
+            "type": "text",
+            "label": "title"
+          },
+          {
+            "id": "body",
+            "type": "richtext",
+            "label": "Body"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

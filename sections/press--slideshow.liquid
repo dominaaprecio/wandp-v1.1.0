@@ -1,0 +1,120 @@
+<style type="text/css">
+  .press-slide__img {
+    opacity: 0.25;
+    transition: all 0.3s ease-in-out;
+  }
+  .press-slide__img.slick-current {
+    opacity: 1;
+  }
+</style>
+<div class="press--slideshow">
+  {% for block in section.blocks %}
+    {% assign size = "1800x" %}
+    {% assign image = block.settings.image %}
+    {% include "block--image" %}
+  {% endfor %}
+</div>
+<div class="wrap wrap--max">
+  <div class="bottom--slideshow">
+    <div class="quote--slideshow">
+      {% for block in section.blocks %}
+        <div class="wrap wrap--max">
+          {% include "press--quote" %}
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+<script>
+  $( document ).ready(
+    function(){
+      $('.press--slideshow').slick({
+        slidesToShow: 5,
+        slidesToScroll: 1,
+        centerMode: true,
+        arrows: false,
+        responsive: [
+          {
+            breakpoint: 1023,
+            settings: {
+              slidesToShow: 3,
+              slidesToScroll: 1,
+              infinite: true,
+              dots: false,
+              arrows: false
+            }
+          },
+          {
+            breakpoint: 767,
+            settings: {
+              slidesToShow: 1,
+              slidesToScroll: 1,
+              infinite: true,
+              dots: true,
+              arrows: false
+            }
+          }
+        ],
+        dots: false,
+        asNavFor: '.quote--slideshow'
+      });
+      $('.quote--slideshow').slick({
+        slidesToShow: 1,
+        fade: true,
+        slidesToScroll: 1,
+        asNavFor: '.press--slideshow',
+        dots: false,
+        adaptiveHeight: true,
+        responsive: [
+          {
+            breakpoint: 767,
+            settings: {
+              slidesToShow: 1,
+              slidesToScroll: 1,
+              infinite: true,
+              arrows: false
+            }
+          }
+        ],
+        nextArrow: "<div class='carousel-next carousel-arrow'>&gt;</div>",
+        prevArrow: "<div class='carousel-prev carousel-arrow'>&lt;</div>",
+        centerMode: true,
+        focusOnSelect: true
+      });
+    }
+  );
+</script>
+
+{% schema %}
+  {
+    "name": "Press Slideshow",
+    "blocks": [
+  	  {
+        "type": "image",
+        "name": "Slideshow",
+        "settings": [
+          {
+            "type": "image_picker",
+            "label": "Image",
+            "id": "image"
+          },
+          {
+            "type": "text",
+            "label": "Text",
+            "id": "quote"
+          },
+          {
+            "type": "url",
+            "label": "Link",
+            "id": "press_url"
+          },
+          {
+            "type": "image_picker",
+            "label": "Logo",
+            "id": "press"
+          }
+        ]
+  	  }
+    ]
+  }
+{% endschema %}

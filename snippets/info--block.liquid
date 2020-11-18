@@ -1,0 +1,29 @@
+  {% if block.settings.block_text_left %}
+    <div class="info-block info-block--flip grid grid--full">
+      <div class="grid__item medium-up--one-third" data-aos="fade-left">
+        <img srcset="{{ block.settings.block_image | img_url: '1000x1250' }} 2x, {{ block.settings.block_image | img_url: '640x800' }} 1x" src="{{ block.settings.block_image | img_url: '640x800' }}">
+      </div>
+      <div class="grid__item medium-up--two-thirds info-block__wrap" data-aos="fade-right">
+        <div class="info-block__text">
+          <div class="info info--left">
+            <h2>{{ block.settings.block_title }}</h2>
+            {{ block.settings.block_body }}
+          </div>
+        </div>
+      </div>
+    </div>
+  {% else %}
+    <div class="info-block grid grid--full">
+      <div class="grid__item medium-up--one-third" data-aos="fade-right">
+        <img srcset="{{ block.settings.block_image | img_url: '1000x1250' }} 2x, {{ block.settings.block_image | img_url: '640x800' }} 1x" src="{{ block.settings.block_image | img_url: '640x800' }}">
+      </div>
+      <div class="grid__item medium-up--two-thirds info-block__wrap" data-aos="fade-left">
+        <div class="info-block__text">
+          <div class="info info--right">
+            <h2>{{block.settings.block_title}}</h2>
+            {{ block.settings.block_body }}
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endif %}

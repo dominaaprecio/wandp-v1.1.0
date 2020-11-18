@@ -1,0 +1,27 @@
+
+
+<div class = "grid__item medium-up--one-whole wholesale--customization" id = "customization">
+  <div class = "grid__item medium-up--one-whole">
+    <h2>{{ section.settings.title }}</h2>
+    {{section.settings.wholesale_description}}
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "Wholesale Customization",
+    "settings": [
+      {
+        "id": "title",
+        "type": "text",
+        "label": "Title"
+      },
+
+      {
+        "id": "wholesale_description",
+        "label": "Description",
+        "type": "richtext"
+      }
+    ]
+  }
+{% endschema %}

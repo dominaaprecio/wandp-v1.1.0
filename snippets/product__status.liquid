@@ -1,0 +1,25 @@
+{% if product.available %}
+  <div class="product__status__icon">
+    <div id="in-stock" class="status hidden">{% include 'icon--in-stock' %}</div>
+    <div id="out-of-stock" class="status hidden">{% include 'icon--out-of-stock' %}</div>
+    <div id="waiting-list" class="status hidden">{% include 'icon--waiting-list' %}</div>
+  </div>
+  {% if product.metafields.sku.availability != blank %}
+  	{% if product.metafields.sku.availability == 'Pre-Order' or product.metafields.sku.availability == 'Coming Soon' %}
+  	  {% if product.metafields.sku.shipdate != blank %}
+  	  	<span class="product__status__text">This item will be in stock {{ product.metafields.sku.shipdate }}.</span>
+  	  {% else %}
+  	    <span class="product__status__text">This item will ship soon.</span>
+  	  {% endif %}
+  	{% elsif product.metafields.sku.availability == 'Sold Out' %}
+  	  <span class="product__status__text">This item is currently out of stock.</span>
+    {% endif %}
+  {% else %}
+    <span class="product__status__text">Currently in stock.</span>
+  {% endif %}
+{% else %}
+  <div class="product__status__icon">
+    <div id="out-of-stock" class="status">{% include 'icon--out-of-stock' %}</div>
+  </div>
+  <span class="product__status__text">This item is currently out of stock.</span>
+{% endif %}

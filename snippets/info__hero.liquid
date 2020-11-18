@@ -1,0 +1,22 @@
+<style type="text/css">
+  #hero-{{ section.id }} h1 { margin: 0; }
+</style>
+<section class="hero hero--blocks" id="hero-{{ section.id }}">
+  <div class="grid grid--full">
+    <div class="grid__item large-up--two-thirds one-whole hero-image" style="line-height: 0;" data-aos="fade">
+      {% comment %}
+    <img src="{{ section.settings.hero_img | img_url: '2880x', crop: 'center' }}">
+      {% endcomment %}
+      <img srcset="{{ section.settings.hero_img | img_url: '2880x', crop: 'center' }} 2x, {{ section.settings.hero_img | img_url: '1440x', crop: 'center' }} 1x" src="{{ section.settings.hero_img | img_url: '1440x', crop: 'center' }}">
+    </div>
+  </div>
+  <div class="hero__text text-charcoal">
+    <div class="gray-block" data-aos="fade-up" data-aos-delay="500" data-aos-once="true" data-aos-anchor=".hero-image">
+      {% if section.settings.hero_txt != blank %}
+        <h1>{{ section.settings.hero_txt }}</h1>
+      {% else %}
+        <h1>{{ page.title }}</h1>
+      {% endif %}
+    </div>
+  </div>
+</section>

@@ -1,0 +1,49 @@
+<style type="text/css">
+  .hero-image {
+    background: url('{{ collection.image | img_url: '1440x' }}') no-repeat;
+    background-position: bottom left;
+    {% if collection.handle == 'weekend-plans' %}
+    background-position: center;
+    {% endif %}
+    background-size: cover;
+  }
+  @media
+  only screen and (-webkit-min-device-pixel-ratio: 2),
+  only screen and (   min--moz-device-pixel-ratio: 2),
+  only screen and (     -o-min-device-pixel-ratio: 2/1),
+  only screen and (        min-device-pixel-ratio: 2),
+  only screen and (                min-resolution: 192dpi),
+  only screen and (                min-resolution: 2dppx) {
+    .hero-image {
+      background: url('{{ collection.image | img_url: '2880x' }}') no-repeat;
+      background-position: bottom left;
+      {% if collection.handle == 'weekend-plans' %}
+      background-position: center;
+      {% endif %}
+      background-size: cover;
+    }
+  }
+</style>
+<section class="hero hero--blocks">
+  <div class="grid grid--full">
+    <div class="grid__item large-up--two-thirds one-whole" style="line-height: 0;" data-aos="fade">
+      {% comment %}
+	  <img src="{{ section.settings.hero_img | img_url: '2880x1100', crop: 'center' }}">
+      {% endcomment %}
+      <div class="hero-image"></div>
+      {% comment %}
+      <img srcset="{{ collection.image | img_url: '2880x' }} 2x, {{ collection.image | img_url: '1440x' }} 1x" src="{{ collection.image | img_url: '1440x' }}" alt="{{ collection.title }}">
+      {% endcomment %}
+    </div>
+  </div>
+  <div class="hero__text text-charcoal">
+    <div class="gray-block" data-aos="fade-up" data-aos-delay="900" data-aos-once="true" data-aos-anchor=".hero-image">
+      <h1>{{ collection.title }}</h1>
+      {% if collection.description != blank %}
+        <div class="rte">
+          {{ collection.description }}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</section>

@@ -1,0 +1,39 @@
+<section class="instagram">
+  <div class="instagram__header">
+    <div class="wrap text-center" style="display: flex; justify-content: center; align-items: center;">
+      {% if section.settings.headline != blank %}
+      {% include 'icon-instagram' %}
+      &nbsp;<a class="cta-arrow cta-arrow" href="http://instagram.com/wandpdesign" target="_blank">
+       {{ section.settings.headline }}
+      </a>
+      {% endif %}
+    </div>
+  </div>
+  <div id="insta-feed"></div>
+</section>
+
+{% schema %}
+  {
+    "name": "About - Instagram Feed",
+    "settings": [
+      {
+         "type": "text",
+         "label": "Headline",
+         "id": "headline",
+         "default": "Follow Along"
+      }
+	],
+    "presets": [
+      {
+        "category": "Media",
+        "name": "Instagram Feed"
+      }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

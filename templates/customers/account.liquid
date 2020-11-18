@@ -1,0 +1,53 @@
+<section class="account account-overview pad-y">
+  <div class="wrap wrap--max">
+      <h2>{% comment %}{{ 'customer.account.details' | t }}{% endcomment %}Account Details</h2>
+      <div class="white-block">
+        {% if customer.addresses_count > 0 %}
+          {{ customer.default_address | format_address }}
+          <a href="/account/addresses" class="cta-solid">{{ 'customer.account.view_addresses' | t }} ({{ customer.addresses_count }})</a>
+        {% else %}
+          <p>You haven't saved any addresses yet.</p>
+          <a href="/account/addresses" class="cta-solid">Add New Address</a>
+        {% endif %}
+      </div>
+      <h2>Order History</h2>
+      <div class="white-block">
+        {% comment %}<h2>{{ 'customer.orders.title' | t }}</h2>{% endcomment %}
+        {% paginate customer.orders by 20 %}
+        {% if customer.orders.size != 0 %}
+        <div class="order-history">
+          <table class="responsive-table text--center">
+            <thead>
+              <tr>
+                <th>{{ 'customer.orders.order_number' | t }}</th>
+                <th>{{ 'customer.orders.date' | t }}</th>
+                <th>{{ 'customer.orders.payment_status' | t }}</th>
+                <th>{{ 'customer.orders.fulfillment_status' | t }}</th>
+                <th>{{ 'customer.orders.total' | t }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for order in customer.orders %}
+              <tr class="responsive-table-row">
+                <td data-label="{{ 'customer.orders.order_number' | t }}">{{ order.name | link_to: order.customer_url }}</td>
+                <td data-label="{{ 'customer.orders.date' | t }}">{{ order.created_at | date: format: 'month_day_year' }}</td>
+                <td data-label="{{ 'customer.orders.payment_status' | t }}">{{ order.financial_status_label }}</td>
+                <td data-label="{{ 'customer.orders.fulfillment_status' | t }}">{{ order.fulfillment_status_label }}</td>
+                <td data-label="{{ 'customer.orders.total' | t }}">{{ order.total_price | money }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        {% else %}
+        <p class="text--center">{{ 'customer.orders.none' | t }}</p>
+        {% endif %}
+
+        {% if paginate.pages > 1 %}
+        {% include 'pagination' %}
+        {% endif %}
+
+        {% endpaginate %}
+      </div>
+    </div>
+</section>

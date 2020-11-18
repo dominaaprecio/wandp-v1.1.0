@@ -1,0 +1,92 @@
+<style>
+  .modal{
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100vw;
+    height: 100vh;
+    z-index: 10000;
+    display: none;
+    opacity: 1;
+  }
+
+  .modal__box{
+    background-color: #ede6e1;
+    background-color: #fff;
+    padding: 0 40px;
+    width: 500px;
+    max-width: 100%;
+    margin: 0 auto;
+    top: 50%;
+    position: absolute;
+    left: 50%;
+    transform: translate( -50%, -50% );
+  }
+
+  .modal__bg{
+    background-color: black;
+    opacity: .5;
+    width: 100%;
+    height: 100%;
+  }
+
+  .modal__body{
+
+  }
+
+  .modal__close{
+
+  }
+
+</style>
+
+<div class="modal" id = "newsletter-interstitial">
+ <div class="modal__bg"></div>
+ <div class="modal__box">
+   <div class="modal__body">
+     <a class="modal__close" href="#">
+       {% include 'icon-close' %}
+       <span class="visually-hidden">Close</span>
+     </a>
+    <img src="https://cdn.shopify.com/s/files/1/1002/8980/files/wp_logo_refresh_600.png?6568892928613632226" width="120" alt="W&amp;P Design" style="margin-top: 10px; height: auto;">
+    <h4 class="popup-subtitle">Join our mailing list and get</h4>
+    <h3 class="popup-title">15% off your first purchase</h3>
+    <h5 class="popup-text">Plus get exclusive access to new products and discount codes!</h5>
+
+      <div class="ltk-error-message" data-ltk-error-for="email" data-ltk-message="Please enter a valid email"></div>
+      <div class="ltk-input-container ltk-clearfix">
+          <input required="" type="email" id="ltkmodal-email" class="ltkmodal-email" name="email" placeholder="Email Address" pattern="^([a-zA-Z0-9._+!-]+[@](?:[a-zA-Z0-9-]+.)+[a-zA-Z]{2,})$" onkeypress="return searchKeyPress(event);">
+          <input type="button" id="submitButton" class="ltkmodal-subscribe" title="SIGN UP" value="SIGN UP">
+      </div>
+
+      <div class="field">
+          <input type="hidden" class="text" name="Source.Modal" value="On">
+      </div>
+
+   </div>
+ </div>
+</div>
+
+<script>
+$(".js-toggle--modal").click(function(e){
+    e.preventDefault();
+    dataModal = $(this).attr("data-modal");
+    $("#" + dataModal).fadeToggle('fast');
+  });
+  $(".modal__close, .modal__bg").click(function(){
+    $(".modal").fadeToggle('fast');
+  });
+</script>
+
+{% schema %}
+  {
+    "name": "Section name",
+    "settings": []
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

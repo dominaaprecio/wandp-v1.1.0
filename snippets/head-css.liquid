@@ -1,0 +1,12 @@
+<link rel="stylesheet" href="https://use.typekit.net/ytf1tlj.css" crossorigin>
+{{ 'theme.scss.css' | asset_url | stylesheet_tag }}
+{% comment %}
+<!-- 25 days of gifting page -->
+{% if page.handle == 'gifting' or page.title contains '25 Days' %}
+{{ '25days.scss.css' | asset_url | stylesheet_tag }}
+{% endif %}
+{% endcomment %}
+
+{% if template contains 'product' %}
+{{ 'pdp.scss.css' | asset_url | stylesheet_tag }}
+{% endif %}

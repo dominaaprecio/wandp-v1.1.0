@@ -1,0 +1,103 @@
+<style>
+  .collection--grid__item{
+
+  }
+
+  .description{
+    width: 100%;
+    height: 100%;
+    display: inline-block;
+    text-align: left;
+    margin-top: 20px;
+    margin-bottom: 50px;
+  }
+
+  .collection--grid__item img{
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .collection-img{
+    position: relative;
+  }
+
+  .collection-img-hover{
+    opacity: 0;
+    background-color: rgba(0, 0, 0, 0.25);
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    transition: all 0.3s ease-in-out;
+  }
+
+  @media( max-width: 768px ){
+    .collection--grid__item img{
+      padding: 0px;
+    }
+  }
+  @media (min-width: 769px) {
+    .collection--grid__item {
+      padding: 0 10px;
+    }
+  }
+
+
+  .more-button{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate( -50%, -50% );
+  }
+
+  .collection--grid__item:hover .collection-img-hover{
+    opacity: 1;
+  }
+</style>
+<div class = "wrap wrap--max">
+  <div class="center-grid grid grid--uniform">
+    {% for block in section.blocks %}
+      {% assign collectionName = block.settings.collection %}
+      {% assign collection = collections[ block.settings.collection ] %}
+      <div class="grid__item medium-up--one-half">
+        <div class="collection--grid__item">
+          <a class="" href="{{ collection.url }}">
+          <div class="collection-img">
+            <img src="{{ collection.image | img_url: '960x540', crop: 'bottom'  }}" alt="{{ collection.title | escape }}" />
+            <div class="collection-img-hover">
+              <div class="more-button white" style="margin:0">
+                <span class="cta-arrow cta-arrow--big cta-arrow--white">Shop Now</span>
+              </div>
+            </div>
+          </div>
+          <div class="description">
+            <h2>{{ collection.title }}</h2>
+            <p>{{ collection.description }}</p>
+          </div>
+          </a>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "Collection Blocks",
+    "blocks": [
+  	  {
+        "type": "collection",
+        "name": "blocks",
+        "settings": [
+          {
+            "type": "collection",
+            "label": "Collection",
+            "id": "collection"
+          }
+        ]
+  	  }
+    ]
+  }
+{% endschema %}

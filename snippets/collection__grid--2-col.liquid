@@ -1,0 +1,130 @@
+{% capture collection_vid %}
+  {% if section.settings.show_collection_img %}
+    <div class="collection__video">
+      <div class="wrap wrap--double">
+        <div class="grid grid--uniform">
+          <div class="grid__item one-whole" data-aos="fade" data-aos-delay="100">
+            <img src="{{ section.settings.collection_img | img_url: '2400x' }}">
+          </div>
+        </div>
+      </div>
+    </div>
+  {% else %}
+    {% if section.settings.collection_video != blank %}
+    	<div class="collection__video">
+        <div class="wrap wrap--double">
+          <div class="grid grid--uniform">
+            <div class="grid__item one-whole">
+              <div class="vimeo" data-aos="fade" data-aos-delay="100">
+                <iframe src="https://player.vimeo.com/video/{{ section.settings.collection_video.id }}?color=fbbd97&title=0&byline=0&portrait=0" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+                <script src="https://player.vimeo.com/api/player.js"></script>
+              </div>
+            </div>
+          </div>
+        </div>
+    	</div>
+    {% endif %}
+  {% endif %}
+{% endcapture %}
+
+{% assign product_count = section.settings.products_per_page %}
+{% paginate collection.products by product_count %}
+<div class="clear-footer">
+  <div class="wrap wrap--max">
+    {% for product in collection.products %}
+      {% if forloop.length > 9 %}
+        {% cycle 'entry': '<div class="grid grid--uniform">', '', '', '<div class="grid grid--uniform grid--rev">', '', '', collection_vid, '', '', '<div class="grid grid--uniform">', '', '', '<div class="grid grid--uniform grid--rev">', '', ''  %}
+          {% cycle 'entries': '<div class="grid__item medium-up--two-thirds one-whole" data-aos="fade-up">', '<div class="grid__item medium-up--one-third one-half" data-aos="fade-up" data-aos-delay="300">', '<div class="grid__item medium-up--one-third one-half" data-aos="fade-up" data-aos-delay="600">' %}
+            {% include 'product-grid-item' %}
+        {% if forloop.last %}
+		      </div>
+        {% else %}
+            {% cycle 'entries-end': '</div>', '</div>', '</div>', %}
+          {% cycle 'entry-end': '', '', '</div>', '', '', '</div>', '', '', '', '', '', '</div>', '', '', '</div>' %}
+        {% endif %}
+      {% elsif forloop.length == 9 %}
+        {% cycle 'entry': '<div class="grid grid--uniform">', '', '', '<div class="grid grid--uniform grid--rev">', '', '', collection_vid, '', '', '<div class="grid grid--uniform">', '', ''  %}
+          {% cycle 'entries': '<div class="grid__item medium-up--two-thirds one-whole" data-aos="fade-up">', '<div class="grid__item medium-up--one-third one-half" data-aos="fade-up" data-aos-delay="300">', '<div class="grid__item medium-up--one-third one-half" data-aos="fade-up" data-aos-delay="600">' %}
+            {% include 'product-grid-item' %}
+        {% if forloop.last %}
+
+        {% else %}
+            {% cycle 'entries-end': '</div>', '</div>', '</div>', %}
+          {% cycle 'entry-end': '', '', '</div>', '', '', '</div>', '', '', '', '', '', '</div>', %}
+        {% endif %}
+      {% elsif forloop.length <= 8 %}
+        {% cycle 'entry': '<div class="grid grid--uniform">', '', '', '<div class="grid grid--uniform grid--rev">', '', '', collection_vid, '', '', '<div class="grid grid--uniform">', '', ''  %}
+          {% cycle 'entries': '<div class="grid__item medium-up--two-thirds one-whole" data-aos="fade-up">', '<div class="grid__item medium-up--one-third one-half" data-aos="fade-up" data-aos-delay="300">', '<div class="grid__item medium-up--one-third one-half" data-aos="fade-up" data-aos-delay="600">' %}
+            {% include 'product-grid-item' %}
+        {% if forloop.last %}
+          </div>
+        {% else %}
+            {% cycle 'entries-end': '</div>', '</div>', '</div>', %}
+          {% cycle 'entry-end': '', '', '</div>', '', '', '</div>', '', '', '', '', '', '</div>', %}
+        {% endif %}
+      {% endif %}
+    {% else %}
+      {% if collection.handle == 'all' and collection.all_vendors.size == 0 and collection.all_types.size == 0 %}
+        {% for i in (1..8) %}
+          <a href="#">
+            {% capture current %}{% cycle 1, 2, 3, 4, 5, 6 %}{% endcapture %}
+            {{ 'product-' | append: current | placeholder_svg_tag: 'placeholder-svg placeholder-svg--small' }}
+          </a>
+
+          <p>
+            <a href="#">{{ 'homepage.onboarding.product_title' | t }}</a>
+          </p>
+
+          <p>
+            {{ 1999 | money }}
+          </p>
+        {% endfor %}
+      {% else %}
+        <p>{{ 'collections.general.no_matches' | t }}</p>
+      {% endif %}
+
+    {% endfor %}
+  </div>
+
+  {% if paginate.pages > 1 %}
+    {% include 'pagination' %}
+  {% endif %}
+
+  {% unless section.settings.hide_promo %}
+	<div class="collection__promo" data-aos="fade-up" id="promo-{{ section.id }}">
+      <div class="grid grid--uniform">
+        <div class="grid__item medium-up--one-half">
+          <div class="item">
+            <div class="item__image" style="background: url('{{ section.settings.promo_left | img_url: '1200x1500', crop: 'center' }}') no-repeat;"></div>
+            <div class="item__wrap{% if section.settings.visible_promo == 'right' %} item__wrap-hover{% endif %}"{% unless section.settings.visible_promo == 'right' %} data-aos="fade" data-aos-duration="1500" data-aos-anchor="#promo-{{ section.id }}" data-aos-anchor-placement="top-center"{% endunless %}>
+              <div class="item__text wrapper text-center" data-aos-delay="200" data-aos="fade-up">
+                <h2 class="weight800">{{ section.settings.promo_left_headline }}</h2>
+                <ul class="inline-list text-center">
+                  <li>
+                    <a class="cta-arrow" href="{{ section.settings.promo_left_cta_url }}">{{ section.settings.promo_left_cta }}</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="grid__item medium-up--one-half">
+          <div class="item">
+            <div class="item__image" style="background: url('{{ section.settings.promo_right | img_url: '1200x1500', crop: 'center' }}') no-repeat;"></div>
+            <div class="item__wrap{% if section.settings.visible_promo == 'left' %} item__wrap-hover{% endif %}"{% unless section.settings.visible_promo == 'left' %} data-aos="fade" data-aos-duration="1500" data-aos-anchor="#promo-{{ section.id }}" data-aos-anchor-placement="top-center"{% endunless %}>
+              <div class="item__text wrapper text-center" data-aos-delay="200" data-aos="fade-up">
+                <h2 class="weight800">{{ section.settings.promo_right_headline }}</h2>
+                <ul class="inline-list text-center">
+                  <li>
+                    <a class="cta-arrow" href="{{ section.settings.promo_right_cta_url }}">{{ section.settings.promo_right_cta }}</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+	</div>
+</div>
+  {% endunless %}
+{% endpaginate %}

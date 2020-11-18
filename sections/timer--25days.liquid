@@ -1,0 +1,23 @@
+<section id = "timer--banner">
+    <div class ="grid">
+        <div class = "item one-whole">
+            <div class ="timer">
+                <p class ="timer-text">{{section.settings.timer_title}}</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% schema %}
+{
+    "name": "Timer Banner",
+    "settings": [
+    {
+        "id":"timer_title",
+        "type": "text",
+        "label": "Title"
+
+    }]
+}
+
+{% endschema %}

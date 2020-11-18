@@ -1,0 +1,415 @@
+{% include 'breadcrumbs' %}
+{% include 'product__hero' %}
+{% include 'product__body' %}
+
+{% schema %}
+  {
+    "name": "Porter Brush",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "show_share_buttons",
+        "label": "Show social sharing buttons",
+        "default": true
+      },
+      {
+        "type": "header",
+        "content": "Porter Features"
+      },
+      {
+        "type": "select",
+        "id": "porter_feat1_icon",
+        "label": "Feature 1 - Icon",
+        "options": [
+          {
+            "value": "icon--lightning",
+            "label": "Lightning Bolt"
+          },
+          {
+            "value": "icon--hand-heart",
+            "label": "Hand Heart"
+          },
+          {
+            "value": "icon--glass",
+            "label": "Borosilicate Glass"
+          },
+          {
+            "value": "icon--ceramic",
+            "label": "Ceramic"
+          },
+          {
+            "value": "icon--feather",
+            "label": "Feather"
+          },
+          {
+            "value": "icon--silicone",
+            "label": "Silicone"
+          },
+          {
+            "value": "icon--stainless-steel",
+            "label": "Stainless Steel"
+          },
+          {
+            "value": "icon--hydration",
+            "label": "Hydration"
+          },
+          {
+            "value": "icon--bpa",
+            "label": "Leaf"
+          },
+          {
+            "value": "icon--wellness",
+            "label": "Wellness"
+          },
+          {
+            "value": "icon--recycle",
+            "label": "Recycle"
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "id": "porter_feat1_title",
+        "label": "Feature 1 - Title"
+      },
+      {
+        "type": "richtext",
+        "id": "porter_feat1_txt",
+        "label": "Feature 1 - Text",
+        "default": "<p>Text here.</p>"
+      },
+      {
+        "type": "select",
+        "id": "porter_feat2_icon",
+        "label": "Feature 2 - Icon",
+        "options": [
+          {
+            "value": "icon--lightning",
+            "label": "Lightning Bolt"
+          },
+          {
+            "value": "icon--hand-heart",
+            "label": "Hand Heart"
+          },
+          {
+            "value": "icon--glass",
+            "label": "Borosilicate Glass"
+          },
+          {
+            "value": "icon--ceramic",
+            "label": "Ceramic"
+          },
+          {
+            "value": "icon--feather",
+            "label": "Feather"
+          },
+          {
+            "value": "icon--silicone",
+            "label": "Silicone"
+          },
+          {
+            "value": "icon--stainless-steel",
+            "label": "Stainless Steel"
+          },
+          {
+            "value": "icon--hydration",
+            "label": "Hydration"
+          },
+          {
+            "value": "icon--bpa",
+            "label": "Leaf"
+          },
+          {
+            "value": "icon--wellness",
+            "label": "Wellness"
+          },
+          {
+            "value": "icon--recycle",
+            "label": "Recycle"
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "id": "porter_feat2_title",
+        "label": "Feature 2 - Title"
+      },
+      {
+        "type": "richtext",
+        "id": "porter_feat2_txt",
+        "label": "Feature 2 - Text",
+        "default": "<p>Text here.</p>"
+      },
+      {
+        "type": "select",
+        "id": "porter_feat3_icon",
+        "label": "Feature 3 - Icon",
+        "options": [
+          {
+            "value": "icon--lightning",
+            "label": "Lightning Bolt"
+          },
+          {
+            "value": "icon--hand-heart",
+            "label": "Hand Heart"
+          },
+          {
+            "value": "icon--glass",
+            "label": "Borosilicate Glass"
+          },
+          {
+            "value": "icon--ceramic",
+            "label": "Ceramic"
+          },
+          {
+            "value": "icon--feather",
+            "label": "Feather"
+          },
+          {
+            "value": "icon--silicone",
+            "label": "Silicone"
+          },
+          {
+            "value": "icon--stainless-steel",
+            "label": "Stainless Steel"
+          },
+          {
+            "value": "icon--hydration",
+            "label": "Hydration"
+          },
+          {
+            "value": "icon--bpa",
+            "label": "Leaf"
+          },
+          {
+            "value": "icon--wellness",
+            "label": "Wellness"
+          },
+          {
+            "value": "icon--recycle",
+            "label": "Recycle"
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "id": "porter_feat3_title",
+        "label": "Feature 3 - Title"
+      },
+      {
+        "type": "richtext",
+        "id": "porter_feat3_txt",
+        "label": "Feature 3 - Text",
+        "default": "<p>Text here.</p>"
+      },
+      {
+        "type": "header",
+        "content": "Porter Stat"
+      },
+      {
+        "id": "porter_stat_img",
+        "type": "image_picker",
+        "label": "Stat Background Image"
+      },
+      {
+        "type": "text",
+        "id": "porter_stat_title",
+        "label": "Stat Title",
+        "info": "e.g. Save 70 disposable cups."
+      },
+      {
+        "type": "richtext",
+        "id": "porter_stat_txt",
+        "label": "Stat Text",
+        "default": "<p>Text here.</p>"
+      },
+      {
+        "type": "header",
+        "content": "Related Products"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_related_products",
+        "label": "Show Related Products",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "related_products_title",
+        "label": "Related Products title",
+        "default": "You Might Also Like"
+      }
+    ],
+    "blocks": [
+    {
+    "type": "title",
+    "name": "Section Title",
+    "settings": [
+          {
+            "id": "title_text_align",
+            "type": "select",
+            "label": "Text Alignment",
+            "options": [
+              {
+                "value": "text-center",
+                "label": "Center"
+              },
+              {
+                "value": "text-left",
+                "label": "Left"
+              },
+              {
+                "value": "text-right",
+                "label": "Right"
+              }
+            ],
+            "default": "text-center"
+          },
+          {
+            "type": "text",
+            "id": "title_headline",
+            "label": "Title"
+          },
+          {
+            "type": "text",
+            "id": "title_sub",
+            "label": "Subheader",
+      "info": "Optional"
+          }
+    ]
+    },
+      {
+        "type": "video",
+        "name": "Video",
+    "limit": 1,
+        "settings": [
+          {
+            "type": "checkbox",
+            "id": "show_controls",
+            "label": "Disable Autoplay & Show Controls",
+            "default": false,
+            "info": "Recommended for videos with sound or longer than 15-30 seconds."
+          },
+          {
+            "type": "checkbox",
+            "id": "override_video",
+            "label": "Override Default Product Video",
+      "default": false
+          },
+          {
+            "id": "video_url",
+            "type": "video_url",
+            "label": "Video URL",
+            "accept": ["vimeo"],
+            "default": "https://vimeo.com/203509621",
+      "info": "Use if overriding default product video"
+          },
+          {
+            "type": "checkbox",
+            "id": "disable_split",
+            "label": "Disable Split Text",
+      "default": false
+          },
+          {
+            "type": "text",
+            "id": "video_headline",
+            "label": "Headline"
+          },
+          {
+            "type": "richtext",
+            "id": "video_body",
+            "label": "Body"
+          }
+        ]
+    },
+      {
+        "type": "info-block",
+        "name": "Info Block",
+        "settings": [
+          {
+            "id": "info_title",
+            "type": "text",
+            "label": "Info Title"
+          },
+          {
+            "id": "info_body",
+            "type": "richtext",
+            "label": "Info Text"
+          },
+          {
+            "id": "info_image",
+            "type": "image_picker",
+            "label": "Image"
+          },
+          {
+            "id": "info_text_left",
+            "type": "checkbox",
+            "label": "Flip Text Left"
+          }
+    ]
+    },
+      {
+        "type": "promo-block",
+        "name": "Promo Block",
+        "settings": [
+          {
+            "id": "visible_prodpromo",
+            "type": "select",
+            "label": "Default Visible Promo",
+            "options": [
+              {
+                "value": "left",
+                "label": "Left"
+              },
+              {
+                "value": "right",
+                "label": "Right"
+              }
+            ],
+            "default": "right"
+          },
+          {
+            "id": "prodpromo_left",
+            "type": "image_picker",
+            "label": "Promo - Left Image"
+          },
+          {
+            "id": "prodpromo_left_headline",
+            "type": "text",
+            "label": "Promo - Left Headline"
+          },
+          {
+            "id": "prodpromo_left_cta_url",
+            "type": "url",
+            "label": "Promo - Left CTA Link"
+          },
+          {
+            "id": "prodpromo_left_cta",
+            "type": "text",
+            "label": "Promo - Left CTA Text"
+          },
+          {
+            "id": "prodpromo_right",
+            "type": "image_picker",
+            "label": "Promo - Right Image"
+          },
+          {
+            "id": "prodpromo_right_headline",
+            "type": "text",
+            "label": "Promo - Right Headline"
+          },
+          {
+            "id": "prodpromo_right_cta_url",
+            "type": "url",
+            "label": "Promo - Right CTA Link"
+          },
+          {
+            "id": "prodpromo_right_cta",
+            "type": "text",
+            "label": "Promo - Right CTA Text"
+          }
+        ]
+    }
+  ]
+  }
+{% endschema %}

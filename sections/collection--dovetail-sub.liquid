@@ -1,0 +1,67 @@
+{% include 'breadcrumbs' %}
+{% include 'collection__hero' %}
+
+{% paginate collection.products by 40 %}
+<div class="clear-footer">
+  <div class="wrap wrap--max">
+    <div class="grid grid--uniform">
+      {% for product in collection.products %}
+        <div class="grid__item one-half medium--one-quarter large-up--one-fifth text-center grid__product grid__product-margin">
+          {% include 'product-grid-item' %}
+        </div>
+
+      {% else %}
+        {% if collection.handle == 'all' and collection.all_vendors.size == 0 and collection.all_types.size == 0 %}
+          {% for i in (1..8) %}
+            <a href="#">
+              {% capture current %}{% cycle 1, 2, 3, 4, 5, 6 %}{% endcapture %}
+              {{ 'product-' | append: current | placeholder_svg_tag: 'placeholder-svg placeholder-svg--small' }}
+            </a>
+
+            <p>
+              <a href="#">{{ 'homepage.onboarding.product_title' | t }}</a>
+            </p>
+
+            <p>
+              {{ 1999 | money }}
+            </p>
+          {% endfor %}
+        {% else %}
+          <p>{{ 'collections.general.no_matches' | t }}</p>
+        {% endif %}
+
+      {% endfor %}
+    </div>
+
+  </div>
+
+  {% if paginate.pages > 1 %}
+    <div class="pad-y">
+      {% include 'pagination' %}
+    </div>
+  {% endif %}
+  <div class="text-center pad-y">
+    <a class="cta-arrow cta-arrow--big" href="/collections/dovetail">See All from Dovetail</a>
+  </div>
+</div>
+{% endpaginate %}
+
+
+{% schema %}
+  {
+    "name": "Collection",
+    "settings": [
+    {
+        "id": "hero_img",
+        "type": "image_picker",
+        "label": "Collection Hero Image"
+    }
+  ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

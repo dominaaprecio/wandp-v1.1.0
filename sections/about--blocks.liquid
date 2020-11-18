@@ -1,0 +1,40 @@
+<div class = "about--blocks">
+  {% for block in section.blocks %}
+    {% include "info--block" %}
+  {% endfor %}
+</div>
+
+{% schema %}
+  {
+    "name": "About Blocks",
+    "blocks": [
+      {
+        "type": "text",
+        "name": "Text Block",
+        "settings": [
+          {
+            "id": "block_title",
+            "type": "text",
+            "label": "Title"
+          },
+          {
+            "id": "block_body",
+            "type": "richtext",
+            "label": "Body"
+          },
+          {
+            "id": "block_image",
+            "type": "image_picker",
+            "label": "Image"
+          },
+          {
+            "id": "block_text_left",
+            "type": "checkbox",
+            "label": "Block Text Left"
+          }
+
+        ]
+      }
+    ]
+  }
+{% endschema %}

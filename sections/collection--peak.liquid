@@ -1,0 +1,149 @@
+{% include 'breadcrumbs' %}
+{% include 'collection__hero' %}
+{% include 'collection__grid' %}
+
+{% schema %}
+  {
+    "name": "Peak Collection",
+    "settings": [
+    {
+      "id": "products_per_page",
+      "type": "select",
+      "label": "Products per Page",
+      "options": [
+        {
+          "value": "10",
+          "label": "10 products"
+        },
+        {
+          "value": "15",
+          "label": "15 products"
+        },
+        {
+          "value": "20",
+          "label": "20 products"
+        },
+        {
+          "value": "25",
+          "label": "25 products"
+        },
+        {
+          "value": "30",
+          "label": "30 products"
+        },
+        {
+          "value": "35",
+          "label": "35 products"
+        },
+        {
+          "value": "40",
+          "label": "40 products"
+        },
+        {
+          "value": "45",
+          "label": "45 products"
+        },
+        {
+          "value": "50",
+          "label": "50 products"
+        }
+      ],
+      "default": "30"
+    },
+    {
+      "id": "hero_img",
+      "type": "image_picker",
+      "label": "Collection Hero Image"
+    },
+    {
+      "id": "collection_video",
+      "type": "video_url",
+      "label": "Collection Video URL",
+      "accept": ["vimeo"]
+    },
+    {
+      "type": "checkbox",
+      "default": false,
+      "id": "show_collection_img",
+      "label": "Show Image instead of Video"
+    },
+    {
+      "id": "collection_img",
+      "type": "image_picker",
+      "label": "Collection Image"
+    },
+    {
+      "type": "header",
+      "content": "Promo Grid"
+    },
+    {
+      "type": "checkbox",
+      "default": false,
+      "id": "hide_promo",
+      "label": "Hide Promo Grid"
+    },
+    {
+      "id": "visible_promo",
+      "type": "select",
+      "label": "Default Visible Promo",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "right"
+    },
+    {
+      "id": "promo_left",
+      "type": "image_picker",
+      "label": "Promo - Left Image"
+    },
+    {
+      "id": "promo_left_headline",
+      "type": "text",
+      "label": "Promo - Left Headline"
+    },
+    {
+      "id": "promo_left_cta_url",
+      "type": "url",
+      "label": "Promo - Left CTA Link"
+    },
+    {
+      "id": "promo_left_cta",
+      "type": "text",
+      "label": "Promo - Left CTA Text"
+    },
+    {
+      "id": "promo_right",
+      "type": "image_picker",
+      "label": "Promo - Right Image"
+    },
+    {
+      "id": "promo_right_headline",
+      "type": "text",
+      "label": "Promo - Right Headline"
+    },
+    {
+      "id": "promo_right_cta_url",
+      "type": "url",
+      "label": "Promo - Right CTA Link"
+    },
+    {
+      "id": "promo_right_cta",
+      "type": "text",
+      "label": "Promo - Right CTA Text"
+    }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

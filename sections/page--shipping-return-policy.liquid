@@ -1,0 +1,42 @@
+<div class="wrap" style="margin: 30px 0;" id="returns">
+  <div class="grid">
+    <div class="grid__item medium-up--three-quarters">
+      <h2>{{ section.settings.title }}</h2>
+      {% for block in section.blocks %}
+        <h3>{{ block.settings.title }}</h3>
+        {{ block.settings.body }}
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "Return Policy",
+    "settings": [
+      {
+        "id": "title",
+        "type": "text",
+        "label": "Section Title"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "text",
+        "name": "Paragraph Block",
+        "settings": [
+          {
+            "id": "title",
+            "type": "text",
+            "label": "title"
+          },
+          {
+            "id": "body",
+            "type": "richtext",
+            "label": "Body"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

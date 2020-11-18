@@ -1,0 +1,134 @@
+{% assign isClearance = false %}
+{% for n in product.collections %}
+  {% if n.handle == "sale" or n.handle== "clearance" %}
+    {% assign isClearance = true %}
+  {% endif %}
+{% endfor %}
+
+<div class="text-center grid__product">
+  <input type="hidden" value="{{ product.url | within: collection }}" class="grid__product__url">
+  {% if product.featured_image != blank %}
+    <div class="grid__product-img">
+      {% unless product.handle == 'gift-card' or isClearance %}
+      <div class="grid__product-sale">
+        <span>20% Off</span>
+      </div>
+      {% endunless %}
+      <a href="{{ product.url | within: collection }}">
+        <img src="{{ product.featured_image.src | img_url: '1000x1000', crop: 'center' }}" class="grid__featured">
+        {% unless product.images.size == 1 %}
+          {% unless product.images[0].alt != product.images[1].alt %}
+          <div class="grid__product-hover">
+            <img src="{{ product.images[1] | img_url: '1000x1000', crop: 'center' }}" alt="{{ product.title }}" class="grid__hover">
+          </div>
+          {% endunless %}
+        {% endunless %}
+        {% if product.options.first contains "Color" %}
+          <div class="grid__product-variants">
+
+            {% for product in product.images %}
+              {% assign first_color = forloop.index0 %}
+              {% assign all_colors = '' %}
+              {% assign selected_color = '' %}
+              {% for variant in product.variants %}
+                {% capture selected_color %}
+                  {{ variant.options[first_color] }}
+                {% endcapture %}
+
+                <img style="display: none;" src="{{ variant.image | img_url: '1000x1000', crop: 'center' }}" alt="{{ product.title }} - {{ variant.option1 }}" id="{{ variant.id }}" class="grid__variant {{ variant.option1 | handleize }}">
+                {% capture temp_colors %}
+                  {{ all_colors | append: selected_color | append: ' ' }}
+                {% endcapture %}
+                {% assign all_colors = temp_colors %}
+
+              {% endfor %}
+
+            {% endfor %}
+
+          </div>
+        {% endif %}
+      </a>
+    </div>
+  {% endif %}
+
+  <p class="weight800">
+    <a href="{{ product.url | within: collection }}">{{ product.title }}</a>
+  </p>
+  <p style="display: none;">
+    {% if product.compare_at_price > product.price %}
+{% comment %}
+      {% if product.price_varies %}
+        {%- assign sale_price = product.price | money -%}
+        {{ 'products.product.on_sale_from_html' | t: price: sale_price }}
+      {% else %}
+        {{ 'products.product.on_sale' | t }}
+        {{ product.price | money }}
+      {% endif %}
+      {% endcomment %}
+      <span class="visually-hidden">{{ 'products.product.regular_price' | t }}</span>
+      <s>{{ product.compare_at_price | money }}</s>
+      {{ product.price | money }}
+
+    {% else %}
+{% comment %}
+      {% if product.price_varies %}
+        {%- assign price = product.price | money -%}
+        {{ 'products.product.from_text_html' | t: price: price }}
+      {% else %}
+        {{ product.price | money }}
+      {% endif %}
+      {% endcomment %}
+      {{ product.price | money }}
+
+    {% endif %}
+
+
+    {% unless product.available %}
+      {{ 'products.product.sold_out' | t }}
+    {% endunless %}
+  </p>
+  <p>
+    {% if product.handle == 'gift-card' or isClearance %}
+      {% if product.compare_at_price > product.price %}
+        <span class="visually-hidden">{{ 'products.product.regular_price' | t }}</span>
+        <s>{{ product.compare_at_price | money }}</s>
+        {{ product.price | money }}
+      {% else %}
+        {{ product.price | money }}
+      {% endif %}
+    {% else %}
+      {% assign saleDiscount = product.price | times: 0.2 %}
+      {% assign salePrice = product.price | minus: saleDiscount %}
+      <s>{{ product.price | money }}</s> <span class="sale-price">{{ salePrice | money }}</span>
+    {% endif %}
+  </p>
+  {% if template contains 'collection' %}
+    {% if product.variants.size > 1 %}
+      {% if product.options.first contains "Color" %}
+        <div class="swatch swatch--collection grid__swatches">
+          {% for option in product.options %}
+            {% if option == "Color" or option == "Colour" %}
+              {%- assign index = forloop.index0 -%}
+              {%- assign colorlist = '' -%}
+              {%- assign color = '' -%}
+              {% for variant in product.variants %}
+                {%- capture color -%}
+                  {{ variant.options[index] }}
+                 {%- endcapture -%}
+                {% unless colorlist contains color %}
+                  <div id="color-{{ color | handleize }}" data-value="{{ color }}" class="swatch-element color {% if product.vendor == 'Porter' or product.title contains 'LUNCH! Set' %}porter-{% endif %}{{ color | handleize }}{% if forloop.first %} active{% endif %}" data-url="{{ variant.url | within: collection }}" data-id="{{ variant.id }}">
+                    <label></label>
+                  </div>
+                  {% capture tempList %}
+                    {{ colorlist | append: color | append: ' ' }}
+                  {% endcapture %}
+                  {%- assign colorlist = tempList -%}
+                {% endunless %}
+              {% endfor %}
+            {% endif %}
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endif %}
+  {% endif %}
+</div>

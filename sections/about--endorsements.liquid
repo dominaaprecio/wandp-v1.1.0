@@ -1,0 +1,27 @@
+<div class="wrap wrap--max">
+  <div class="endorsement--block grid endorsement--grid">
+    {% assign aosDelay = 0 %}
+    {% for block in section.blocks %}
+      {% include "endorsement" %}
+    {% endfor %}
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "Endorsements",
+    "blocks": [
+  	  {
+        "type": "image",
+        "name": "Endorsement Logo",
+        "settings": [
+          {
+            "type": "image_picker",
+            "label": "Logo",
+            "id": "logo_image"
+          }
+        ]
+  	  }
+    ]
+  }
+{% endschema %}

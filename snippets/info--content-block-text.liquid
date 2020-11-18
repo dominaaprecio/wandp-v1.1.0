@@ -1,0 +1,16 @@
+<div class="grid__item one-whole">
+  <div class="gray-block">
+      <h2>{{ block.settings.title }}</h2>
+      {% if block.settings.link_1_title != blank %}
+        <p><a class="cta-arrow" href="{{ block.settings.link_1_link }}">
+          {{ block.settings.link_1_title }}
+        </a></p>
+      {% endif %}
+      {% if block.settings.link_2_title != blank %}
+        <p><a class="cta-arrow" href="{{ block.settings.link_2_link }}">
+          {{ block.settings.link_2_title }}
+        </a></p>
+      {% endif %}
+      {{ block.settings.body }}
+  </div>
+</div>

@@ -1,0 +1,173 @@
+<footer class="wp-footer">
+  <div class="grid grid--uniform">
+    <div class="grid__item medium-up--four-tenths">
+      <div class="email-capture">
+        <h3 class="weight900">{{ section.settings.footer_email_header }}</h3>
+        <div class="klaviyo-form-RAsG57"></div>
+      </div>
+      <div class="wp-footer__social">
+        {%- assign social_accounts = 'Instagram, Facebook, Twitter, Pinterest, Snapchat, Tumblr, YouTube, Vimeo,' | split: ', ' -%}
+        <ul class="inline-list">
+          {% for social in social_accounts %}
+            {%- assign social_handle = social | handleize -%}
+            {% capture social_link %}social_{{ social_handle }}_link{% endcapture %}
+            {% capture social_icon %}icon-{{ social_handle }}{% endcapture %}
+
+            {% if settings[social_link] != blank %}
+              <li>
+                <a target="_blank" href="{{ settings[social_link] }}" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: social }}">
+                  {% include social_icon %}
+                  <span class="icon-fallback-text">{{ social }}</span>
+                </a>
+              </li>
+            {% endif %}
+
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+    <div class="grid__item medium-up--six-tenths">
+      <div class="grid grid--uniform wp-footer__links">
+        <div class="grid__item medium-up--one-quarter one-half">
+        {%- assign footer_linklist_1 = section.settings.footer_linklist_1 -%}
+        {% if linklists[footer_linklist_1].links.size > 0 %}
+          <h4 class="caps weight900">{{ section.settings.footer_linklist_1_title }}</h4>
+          <ul class="no-bullets wp-footer__menu">
+            {% for link in linklists[footer_linklist_1].links %}
+              <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+        </div>
+        <div class="grid__item medium-up--one-quarter one-half">
+        {%- assign footer_linklist_2 = section.settings.footer_linklist_2 -%}
+        {% if linklists[footer_linklist_2].links.size > 0 %}
+          <h4 class="caps weight900">{{ section.settings.footer_linklist_2_title }}</h4>
+          <ul class="no-bullets wp-footer__menu">
+            {% for link in linklists[footer_linklist_2].links %}
+              <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+        </div>
+        <div class="grid__item medium-up--one-quarter one-half">
+        {%- assign footer_linklist_3 = section.settings.footer_linklist_3 -%}
+        {% if linklists[footer_linklist_3].links.size > 0 %}
+          <h4 class="caps weight900">{{ section.settings.footer_linklist_3_title }}</h4>
+          <ul class="no-bullets wp-footer__menu">
+            {% for link in linklists[footer_linklist_3].links %}
+              {% if link.title contains 'Sign In' %}
+                {% if customer %}
+                  <li><a href="/account">Account</a></li>
+                  <li><a href="/account/logout">Log&nbsp;Out</a></li>
+                {% else %}
+                  <li><a href="/account/login">Log&nbsp;In</a></li>
+                  <li><a href="/account/register">Register</a></li>
+                {% endif %}
+              {% else %}
+              <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+              {% endif %}
+            {% endfor %}
+          </ul>
+        {% endif %}
+        </div>
+        <div class="grid__item medium-up--one-quarter one-half">
+        {%- assign footer_linklist_4 = section.settings.footer_linklist_4 -%}
+        {% if linklists[footer_linklist_4].links.size > 0 %}
+          <h4 class="caps weight900">{{ section.settings.footer_linklist_4_title }}</h4>
+          <ul class="no-bullets wp-footer__menu">
+            {% for link in linklists[footer_linklist_4].links %}
+              {% if link.title contains 'Sign In' %}
+                {% if customer %}
+                  <li><a href="/account">Account</a></li>
+                  <li><a href="/account/logout">Log&nbsp;Out</a></li>
+                {% else %}
+                  <li><a href="/account/login">Log&nbsp;In</a></li>
+                  <li><a href="/account/register">Register</a></li>
+                {% endif %}
+              {% else %}
+              <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+              {% endif %}
+            {% endfor %}
+          </ul>
+        {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+<section class="wp-legal">
+  <div class="wrap">
+    <div class="grid grid--uniform">
+      <div class="grid__item one-half">
+        <a href="/pages/privacy">Privacy</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="/pages/terms">Terms</a>
+      </div>
+      <div class="grid__item one-half text-right">
+        &copy; {{ 'now' | date: "%Y" }} W&amp;P Design
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+  {
+    "name": "Footer",
+    "settings": [
+      {
+        "type": "text",
+        "id": "footer_email_header",
+        "label": "Email Header Text",
+        "default": "Subscribe to save 15% on your first order!"
+      },
+      {
+        "type": "link_list",
+        "id": "footer_linklist_1",
+        "label": "First menu",
+        "default": "footer"
+      },
+      {
+        "type": "text",
+        "id": "footer_linklist_1_title",
+        "label": "Menu Title",
+        "default": "Info"
+      },
+      {
+        "type": "link_list",
+        "id": "footer_linklist_2",
+        "label": "Second menu",
+        "default": "footer"
+      },
+      {
+        "type": "text",
+        "id": "footer_linklist_2_title",
+        "label": "Menu Title",
+        "default": "Shop"
+      },
+      {
+        "type": "link_list",
+        "id": "footer_linklist_3",
+        "label": "Third menu",
+        "default": "footer"
+      },
+      {
+        "type": "text",
+        "id": "footer_linklist_3_title",
+        "label": "Menu Title",
+        "default": "Help"
+      },
+      {
+        "type": "link_list",
+        "id": "footer_linklist_4",
+        "label": "Fourth menu",
+        "default": "footer"
+      },
+      {
+        "type": "text",
+        "id": "footer_linklist_4_title",
+        "label": "Menu Title",
+        "default": "Help"
+      }
+    ]
+  }
+
+{% endschema %}

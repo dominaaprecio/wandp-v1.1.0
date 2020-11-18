@@ -1,0 +1,395 @@
+/*================ Timer Banner  ================*/
+
+.timer{
+  background-color: #000;
+}
+
+.timer-text{
+  padding: 8px;
+  font-size: 14px;
+  color: #fff;
+  margin: 0px;
+  text-align: center;
+  line-height: 1.3;
+}
+
+
+/*================ Hero 25 Days  ================*/
+
+.hero--25days {
+  background-size: cover;
+  background-position: center;
+  height: auto;
+  background-color: #F8F7F5;
+  position: relative;
+  overflow: hidden;
+  @media (max-width: 1200px) {
+    background-image: none !important;
+  }
+  @media (min-width: 769px) {
+    min-height: 80vh;
+  }
+  .hero__wrap {
+    display: block;
+    padding-top: 40px;
+    padding-bottom: 40px;
+  }
+  h6 {
+    font-size: 16px;
+    line-height: 1;
+    margin: 0 0 20px 0;
+    letter-spacing: 0.05em;
+  }
+  h4 {
+    margin: 0 0 20px 0;
+    font-size: 20px;
+    line-height: 1;
+  }
+  h5 {
+    font-size: 16px;
+    line-height: 1;
+    margin: 0 0 14px 0;
+    @media (min-width: 769px) {
+      font-size: 18px;
+    }
+    @media (min-width: 1024px) {
+      font-size: 20px;
+    }
+  }
+  .hero__circle {
+    position: relative;
+    background: #fff;
+    border-radius: 50%;
+    line-height: 0;
+    margin: 0 auto;
+    @media (min-width: 769px) {
+      max-width: 600px;
+    }
+    @media (min-width: 1024px) {
+      max-width: 700px;
+    }
+    img {
+      border-radius: 50%;
+      width: 100%;
+      height: auto;
+      padding: 20px;
+      @media (min-width: 769px) {
+        padding: 30px;
+      }
+      @media (min-width: 1024px) {
+        padding: 40px;
+      }
+    }
+    .hero__circle__top, .hero__circle__bottom {
+      position: absolute;
+      left: 0;
+      width: 100%;
+      line-height: 1;
+      z-index: 3;
+    }
+    .hero__circle__top {
+      top: 32px;
+      @media (min-width: 769px) {
+        top: 50px;
+      }
+      @media (min-width: 1024px) {
+        top: 60px;
+      }
+    }
+    .hero__circle__bottom {
+      bottom: 20px;
+      @media (min-width: 769px) {
+        bottom: 50px;
+      }
+    }
+  }
+  .hero__bottom {
+    padding-top: 30px;
+    @media (min-width: 769px) {
+      padding-top: 40px;
+      padding-bottom: 10px;
+    }
+  }
+}
+
+/**
+ * Keyframes
+**/
+@keyframes fallingFlake {
+  0% {
+    transform: translate(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  20% {
+    transform: translate(10%, 20%);
+  }
+  50% {
+    transform: translate(-10%, 50%);
+  }
+  80% {
+    transform: translate(0%, 80%);
+  }
+  100% {
+    transform: translate(10%, 100%);
+    opacity: 0;
+  }
+}
+
+@keyframes fallingFlake2 {
+  0% {
+    transform: translate(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  20% {
+    transform: translate(-10%, 20%);
+  }
+  50% {
+    transform: translate(10%, 50%);
+  }
+  80% {
+    transform: translate(0%, 80%);
+  }
+  100% {
+    transform: translate(-10%, 100%);
+    opacity: 0;
+  }
+}
+
+.hero__snow-left, .hero__snow-right {
+  position: absolute;
+  top: 0;
+  width: 80px;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9;
+  @media (min-width: 769px) {
+    width: 160px;
+  }
+  svg {
+    width: 100%;
+    height: auto;
+  }
+  .hero__snow__icon {
+    animation: 4s fallingFlake infinite;
+    will-change: transform, opacity;
+    margin-bottom: 100px;
+    line-height: 0;
+    @media (min-width: 769px) {
+      margin-bottom: 50px;
+    }
+  }
+  .hero__snow__icon--flake1, .hero__snow__icon--flake2 {
+    width: 40px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .hero__snow__icon--flake1 {
+    animation-delay: 0.3s;
+  }
+  .hero__snow__icon--flake2 {
+    animation-delay: 1s;
+  }
+  .hero__snow__icon--o {
+    width: 20px;
+    animation-delay: 0.55s;
+  }
+  .hero__snow__icon--x {
+    width: 18px;
+    animation-delay: 0.8s;
+  }
+}
+
+.hero__snow-left {
+  text-align: left;
+  left: 20px;
+  padding-top: 240px;
+  @media (min-width: 769px) {
+    padding-top: 320px;
+    left: 50%;
+    margin-left: -330px;
+  }
+  @media (min-width: 1024px) {
+    margin-left: -420px;
+  }
+  .hero__snow__icon--o {
+    margin-right: auto;
+  }
+  .hero__snow__icon--x {
+    margin-left: auto;
+  }
+}
+
+.hero__snow-right {
+  text-align: right;
+  right: 20px;
+  padding-top: 340px;
+  @media (min-width: 769px) {
+    right: 50%;
+    padding-top: 200px;
+    margin-right: -330px;
+  }
+  @media (min-width: 1024px) {
+    margin-right: -420px;
+  }
+  .hero__snow__icon--o {
+    margin-right: auto;
+  }
+  .hero__snow__icon--x {
+    margin-left: auto;
+  }
+}
+
+/**
+ * Setup the Animations
+**/
+#snowflake_1,
+#snowflake_2 {
+  animation: 4s fallingFlake infinite;
+  will-change: transform, opacity;
+}
+#snowflake_2 {
+  opacity:0; /* Make sure there's no FOUC before this is animated */
+  animation-delay: 1s;
+}
+
+/*================ Calendar 25 Days  ================*/
+
+.calendar {
+  padding-top: 0px;
+  padding-bottom: 20px;
+  @media (min-width: 769px) {
+    padding-top: 60px;
+    padding-bottom: 120px;
+  }
+  .calendar__title {
+    padding-bottom: 20px;
+    line-height: 1.5;
+    font-size: 18px;
+    @media (max-width: 768px) {
+      max-width: 280px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    @media (min-width: 769px) {
+      padding-bottom: 30px;
+    }
+  }
+  .calendar__slider {
+    img {
+      width: auto;
+      height: 100%;
+      max-height: 300px;
+      margin: 0 auto;
+    }
+  }
+  .calendar__grid {
+    table {
+      border-collapse: collapse;
+      border: 1px solid #707070;
+      width: 100%;
+      tr {
+
+      }
+      td {
+        border: 1px solid #707070;
+        position: relative;
+        line-height: 0;
+        width: 20%;
+        min-width: 20%;
+        .calendar__date {
+          position: absolute;
+          top: 20px;
+          left: 20px;
+          z-index: 3;
+          line-height: 1;
+          font-weight: 700;
+          &.calendar__date--active {
+            &:before {
+              content: '';
+              width: 50px;
+              height: 50px;
+              top: 50%;
+              left: 50%;
+              transform: translate(-50%, -50%);
+              border: 3px solid #333334;
+              border-radius: 50%;
+              margin: 0;
+              padding: 0;
+              z-index: 3;
+              display: block;
+              position: absolute;
+              line-height: 0;
+            }
+          }
+          &.calendar__date--past {
+            &:before {
+              content: '';
+              width: 100%;
+              position: absolute;
+              top: 50%;
+              border-bottom: 2px solid #707070;
+              -webkit-transform: skewY(-45deg);
+              transform: skewY(-45deg);
+              padding: 0 10px;
+              left: -4px;
+              opacity: 0.4;
+            }
+            &:after {
+              content: '';
+              width: 100%;
+              position: absolute;
+              top: 50%;
+              border-bottom: 2px solid #707070;
+              -webkit-transform: skewY(45deg);
+              transform: skewY(45deg);
+              padding: 0 10px;
+              right: -4px;
+              opacity: 0.4;
+              display: none;
+            }
+          }
+        }
+        img {
+          position: relative;
+          z-index: 1;
+        }
+        .calendar__blank {
+          width: 100%;
+          &:after {
+            content: "";
+            display: block;
+            padding-bottom: 100%;
+          }
+        }
+        .calendar__tmrw {
+          position: absolute;
+          z-index: 2;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          display: flex;
+          text-align: center;
+          justify-content: center;
+          align-items: center;
+          -webkit-backdrop-filter: blur(10px);
+          backdrop-filter: blur(10px);
+          background-color: #d1d1d1;
+          background-color: rgba(0, 0, 0, 0.18);
+          color: #fff;
+          font-weight: 800;
+          line-height: 1.2;
+          padding: 0 25px;
+          font-size: 24px;
+        }
+      }
+    }
+  }
+}
+

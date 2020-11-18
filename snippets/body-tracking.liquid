@@ -1,0 +1,145 @@
+<!-- facebook -->
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.4";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+  <!-- Facebook Pixel -->
+  <script>
+  !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+  n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+  document,'script','//connect.facebook.net/en_US/fbevents.js');
+  fbq('dataProcessingOptions', ['LDU'], 0, 0);
+  fbq('init', '1000295246698600');
+  fbq('track', "PageView");
+  {% if template == 'product' %}
+    fbq('track', 'ViewContent', {
+      content_category: '{{ product.type }}',
+      content_ids: ['{{ product.first_available_variant.sku }}'],
+      content_type: 'product',
+      value: {{ product.price | money_without_currency }},
+      currency: 'USD'
+    });
+  {% elsif template contains 'confirmed' %}
+    fbq('track', 'Lead');
+  {% elsif template == 'cart' %}
+    fbq('track', 'InitiateCheckout', {
+      content_ids: [{% for item in cart.items %}'{{ item.sku }}'{% unless forloop.last == true %},{% endunless %}{% endfor %}],
+      content_type: 'product'
+    });
+  {% endif %}
+  </script>
+  <noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=1000295246698600&ev=PageView&noscript=1"
+  /></noscript>
+
+  <!-- Google Code for Remarketing Tag -->
+  <script>
+  {% if template contains 'product' %}
+      // On page load
+      var json_product = {{ product | json }};
+      var ecomm_prodid=[];
+      for(var i=0;i<json_product.variants.length;i++)
+          ecomm_prodid.push('shopify_US_{{ product.id }}_'+json_product.variants[i].id);
+      var google_tag_params = {
+          ecomm_prodid: ecomm_prodid,
+          ecomm_pagetype: 'product',
+          ecomm_totalvalue: parseFloat('{{ product.price | money_without_currency | remove: ","}}')
+      };
+      // On add to cart click - AJAX fix
+      var timer = setInterval(function(){
+      if(jQuery('#shoppingBag').hasClass("shoppingbagshow")){
+
+        var idm = $("#product-selector option:selected").attr('data-google');
+        var page = 'cart';
+        var valu =  google_tag_params.ecomm_totalvalue;
+        var dat = "ecomm_prodid%3d"+idm+"%3becomm_pagetype%3d"+page+"%3becomm_totalvalue%3d"+valu;
+
+        jQuery('body').append('<img height="1" width="1" style="border-style:none;" alt="" src="//googleads.g.doubleclick.net/pagead/viewthroughconversion/872713724/?value=0&amp;guid=ON&amp;script=0&data='+ dat +'"/>');
+
+        clearInterval(timer);
+      }
+    },2000);
+  {% elsif template contains 'collection' %}
+      var google_tag_params = {
+          ecomm_prodid: '',
+          ecomm_pagetype: 'category',
+          ecomm_totalvalue: 0
+      };
+  {% elsif template contains 'cart' %}
+      var id = new Array();
+      {% for item in cart.items %}
+      id.push('shopify_US_{{ item.product.id }}_{{ item.variant.id }}');
+      {% endfor %}
+      var google_tag_params = {
+          ecomm_prodid: id,
+          ecomm_pagetype: 'cart',
+          // ecomm_totalvalue: parseFloat('{{ cart.total_price | money_without_currency | remove: ","}}')
+      };
+  {% elsif template contains 'search' %}
+      var google_tag_params = {
+          ecomm_prodid: '',
+          ecomm_pagetype: 'searchresults',
+          ecomm_totalvalue: 0
+  };
+  {% elsif template contains 'index' %}
+      var google_tag_params = {
+          ecomm_prodid: '',
+          ecomm_pagetype: 'home',
+          ecomm_totalvalue: 0
+      };
+  {% else %}
+      var google_tag_params = {
+          ecomm_prodid: '',
+          ecomm_pagetype: 'other',
+          ecomm_totalvalue: 0
+      };
+  {% endif %}
+  </script>
+  <script type="text/javascript">
+  /* <![CDATA[ */
+  var google_conversion_id = 872713724;
+  var google_custom_params = window.google_tag_params;
+  var google_remarketing_only = true;
+  /* ]]> */
+  </script>
+  <script type="text/javascript" src="//www.googleadservices.com/pagead/conversion.js">
+  </script>
+  <noscript>
+  <div style="display:inline;">
+  <img height="1" width="1" style="border-style:none;" alt="" src="//googleads.g.doubleclick.net/pagead/viewthroughconversion/872713724/?value=0&amp;guid=ON&amp;script=0"/>
+  </div>
+  </noscript>
+
+  <!--  Quantcast Tag -->
+  <script>
+   var ezt = ezt ||[];
+
+   (function(){
+     var elem = document.createElement('script');
+     elem.src = (document.location.protocol == "https:" ? "https://secure" : "http://pixel") + ".quantserve.com/aquant.js?a=p-6TpZqdBmLfxpX";
+     elem.async = true;
+     elem.type = "text/javascript";
+     var scpt = document.getElementsByTagName('script')[0];
+     scpt.parentNode.insertBefore(elem,scpt);
+   }());
+
+
+   ezt.push({qacct: 'p-6TpZqdBmLfxpX',
+             orderid: '',
+             revenue: ''
+             });
+  </script>
+  <noscript>
+    <img src="//pixel.quantserve.com/pixel/p-6TpZqdBmLfxpX.gif?labels=_fp.event.Default" style="display: none;" border="0" height="1" width="1" alt="Quantcast"/>
+  </noscript>
+  <!-- End Quantcast Tag -->
+
+  <!-- linkedin -->
+  <script type="text/javascript"> _linkedin_partner_id = "2227634"; window._linkedin_data_partner_ids = window._linkedin_data_partner_ids || []; window._linkedin_data_partner_ids.push(_linkedin_partner_id); </script><script type="text/javascript"> (function(){var s = document.getElementsByTagName("script")[0]; var b = document.createElement("script"); b.type = "text/javascript";b.async = true; b.src = "https://snap.licdn.com/li.lms-analytics/insight.min.js"; s.parentNode.insertBefore(b, s);})(); </script> <noscript> <img height="1" width="1" style="display:none;" alt="" src="https://px.ads.linkedin.com/collect/?pid=2227634&fmt=gif" /> </noscript>

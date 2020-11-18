@@ -1,0 +1,21 @@
+{% if section.settings.disable_split %}
+  <div class = "info--text {{ section.settings.disable_split_align }}">
+    <h2 class="weight800">{{ section.settings.split_text_head }}</h2>
+    {{ section.settings.split_text_body }}
+    {% if section.settings.split_text_cta != blank %}
+      <p><a class="cta-arrow" href="{{ section.settings.split_text_cta_url }}">{{ section.settings.split_text_cta }}</a></p>
+    {% endif %}
+  </div>
+{% else %}
+  <div class = "split-text-block info--split-text">
+  	<div class = "split-text split-text--left info--split-text--left">
+  	  <h2 class="weight800">{{ section.settings.split_text_head }}</h2>
+  	</div>
+  	<div class="split-text split-text--right">
+    {{ section.settings.split_text_body }}
+    {% if section.settings.split_text_cta != blank %}
+      <p><a class="cta-arrow" href="{{ section.settings.split_text_cta_url }}">{{ section.settings.split_text_cta }}</a></p>
+    {% endif %}
+    </div>
+  </div>
+{% endif %}

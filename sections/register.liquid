@@ -1,0 +1,116 @@
+<style>
+  #create_customer{
+    max-width: 400px;
+    width: 100%;
+    margin: 0;
+  }
+
+  #create_customer input{
+    display: block;
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  #CustomerLoginForm h3{
+    width: 100%;
+    display: block;
+    text-align: center;
+  }
+
+  #create_customer label{
+    margin: 20px 0 5px 0;
+    font-weight: 900;
+    display: block;
+  }
+
+  #create_customer h3{
+    width: 100%;
+    display: block;
+    text-align: center;
+  }
+
+  #RecoverPassword{
+    width: 100%;
+    text-align: right;
+    display: block;
+    margin-bottom: 20px;
+  }
+</style>
+<section class="account account-register pad-y">
+  <div class="wrap wrap--max" data-aos-delay="1200" data-aos="fade-up" data-aos-duration="1500">
+    {% if section.settings.page_title != blank %}
+      <h1>{{ section.settings.page_title }}</h1>
+    {% else %}
+      <h1>{{ 'customer.register.title' | t }}</h1>
+    {% endif %}
+
+    {% form 'create_customer' %}
+      {{ form.errors | default_errors }}
+
+      <label for="FirstName" class="label">
+        {{ 'customer.register.first_name' | t }}
+      </label>
+      <input type="text"
+        name="customer[first_name]"
+        id="FirstName"
+        placeholder="{{ 'customer.register.first_name' | t }}"
+        autofocus
+        {% if form.first_name %}value="{{ form.first_name }}"{% endif %}>
+
+      <label for="LastName" class="label">
+        {{ 'customer.register.last_name' | t }}
+      </label>
+      <input type="text"
+        name="customer[last_name]"
+        id="LastName"
+        placeholder="{{ 'customer.register.last_name' | t }}"
+        {% if form.last_name %}value="{{ form.last_name }}"{% endif %}>
+
+      <label for="Email" class="label">
+        {{ 'customer.register.email' | t }}
+      </label>
+      <input type="email"
+        name="customer[email]"
+        id="Email"
+        class="{% if form.errors contains 'email' %}input-error{% endif %}"
+        placeholder="{{ 'customer.register.email' | t }}"
+        value="{% if form.email %}{{ form.email }}{% endif %}"
+        spellcheck="false"
+        autocomplete="off"
+        autocapitalize="off">
+
+      <label for="CreatePassword" class="label">
+        {{ 'customer.register.password' | t }}
+      </label>
+      <input type="password"
+        name="customer[password]"
+        id="CreatePassword"
+        class="{% if form.errors contains 'password' %}input-error{% endif %}"
+        placeholder="{{ 'customer.register.password' | t }}">
+
+      <p>
+        <button type="submit" class="cta-solid cta-solid--block">{{ 'customer.register.submit' | t }}</button>
+      </p>
+      <div class="text-center pad-y">
+        <h3>Already have an account? </h3>
+        <a class="cta-arrow cta-arrow--big" href="/account/login">
+          Log In
+        </a>
+      </div>
+    {% endform %}
+  </div>
+</section>
+
+{% schema %}
+  {
+    "name": "Register",
+    "settings": [
+      {
+        "type": "text",
+        "id": "page_title",
+        "label": "Page Title"
+      }
+    ]
+
+  }
+{% endschema %}

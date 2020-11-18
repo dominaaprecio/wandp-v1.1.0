@@ -1,0 +1,21 @@
+$(document).ready(function() {
+  // Collection Page Color Satches
+  $('.grid__product .swatch-element').on('click',function() {
+    var selectedVariant = $(this).data("value");
+    var variantUrl = $(this).data("url");
+    var variantImg = $(this).data("id");
+    if ( $(this).hasClass( "active" ) ){
+      $(this).removeClass("active");
+      $(this).closest(".grid__product").find("#"+variantImg).fadeOut('fast');
+      $(this).closest(".grid__product").find(".grid__featured").removeClass('hidden');
+    } else {
+      $(this).addClass("active").siblings('.swatch-element').removeClass( "active" );
+      //console.log(selectedVariant, variantUrl);
+      //$('#'+selectedVariant).fadeIn('slow');
+      $(this).closest(".grid__product").find(".grid__featured").addClass('hidden');
+      $(this).closest(".grid__product").find(".grid__variant").hide();
+      $(this).closest(".grid__product").find("#"+variantImg).fadeIn('fast');
+      $(this).closest(".grid__product").find("a").prop("href", variantUrl);
+    }
+  });
+});

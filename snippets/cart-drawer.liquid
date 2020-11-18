@@ -1,0 +1,119 @@
+<div class="cart-drawer" data-cart-view="data-cart-view">
+  <div class="cart-drawer__wrap">
+    <div class="cart-drawer__header">
+      <div class="cart-drawer__header__wrap">
+        <div class="cart-drawer__icon">
+          <h5>
+            <span class="visually-hidden">Your Cart</span>
+            {% include 'icon--cart' %}
+            <span id="cart-drawer-count">{{ cart.item_count }}</span>
+          </h5>
+        </div>
+        <div class="cart-drawer__free-shipping">
+          <div rv-if="cart.total_price | gt 4999">You get <span class="weight800">free&nbsp;domestic&nbsp;shipping</span>!</div>
+          <div rv-if="cart.total_price | lt 5000"><span class="weight800 sale-price">{5000 | minus cart.total_price | money}</span> away from <span class="weight800">free&nbsp;domestic&nbsp;shipping!</span></div>
+        </div>
+        <button class="cart-drawer__close js-close--cart">
+          {% include 'icon-close' %}
+          <span class="visually-hidden">Close</span>
+        </button>
+      </div>
+    </div>
+    <div class="cart-drawer__body">
+      <table class="cart">
+        <thead rv-show="cart.item_count | gt 0">
+          <tr>
+            <th class="cart-header__item text-left">Item</th>
+            <th class="cart-header__qty">Qty</th>
+            <th class="cart-header__price text-left">Price</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr rv-each-item="cart.items">
+            <td vertical-align="middle">
+              <div class="cart-item">
+                <div class="cart-item__img" vertical-align="middle">
+                  <span class="left cart__img" rv-if="item.image">
+                    <a rv-href="item.url"><img rv-src="item.image | productImageSize '160x160' "></a>
+                  </span>
+                </div>
+                <div class="cart-item__info">
+                  <a rv-href="item.url"><h5 rv-text="item.product_title"></h5></a>
+                  <div rv-show="item.variant_title">
+                  <h6 rv-text="item.variant_title"></h6>
+                  </div>
+                  {% comment %}
+                  <div rv-if="item.product_title | eq 'Porter Bundle - Ceramic'">
+                    This is a Porter Bundle!
+                  </div>
+                  {% endcomment %}
+                  <ul rv-hide="item.propertyArray | empty">
+                    <li rv-each-property="item.propertyArray < properties">
+                      <small class="text-muted">{property.name}: {property.value}</small>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="cart-item__qty text-center">
+                <div class="cart__qty text-center">
+                  <a href="#" rv-data-cart-update="index | plus 1" rv-data-cart-quantity="item.quantity | minus 1">&ndash;</a>
+                  <span rv-text="item.quantity"></span>
+                  <a href="#" rv-data-cart-update="index | plus 1" rv-data-cart-quantity="item.quantity | plus 1">+</a>
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="cart-item__price">
+                <div rv-if="item.original_line_price | gt item.line_price">
+                  <span class="cart__line-price weight800"><s>{item.original_line_price | money}</s></span>
+                  <span class="cart__line-price weight800">{item.line_price | money}</span>
+                </div>
+                <div rv-if="item.original_line_price | eq item.line_price">
+                  <span class="cart__line-price weight800">{item.line_price | money}</span>
+                </div>
+                <span class="cart__remove text-center" rv-data-cart-remove="index | plus 1"><small>Remove</small></span>
+              </div>
+            </td>
+          </tr>
+          <tr rv-show="cart.item_count | lt 1">
+            <td colspan="3" class="text-center" style="padding: 20px; line-height: 1.5;">You don't have any items in your cart. <a class="cta-arrow" href="/collections/all">Start Shopping</a></td>
+          </tr>
+          <tr rv-show="cart.item_count | gt 0" style="background-color: transparent;">
+            <td colspan="3">
+              <div class="cart-drawer__giftnote pad-bottom">
+                <label for="giftnote-checkbox"><strong>Add a gift note?</strong> <input name="giftnote-checkbox" id="giftnote-checkbox" type="checkbox" onclick='$("#giftnote-area").slideToggle("slow");'/></label>
+                <div id="giftnote-area" style="display:none">
+                  <div class="giftnote">
+                    <textarea name="note" class="input-full" id="CartSpecialInstructions" maxlength="500" placeholder="Enter gift note here (optional)">{{ cart.note }}</textarea>
+                    <label for="note"><em>Gift notes do not apply to e-gift card purchases.</em></label>
+                  </div>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      {% if settings.cart_promo != blank %}
+        <div class="cart-promo-text pad-top text-center">
+          <h5 style="color: {{ settings.cart_promo_color }};">{{ settings.cart_promo }}</h5>
+        </div>
+      {% endif %}
+    </div>
+    <div class="cart-drawer__footer text-center">
+      <div class="cart-drawer__upsell"></div>
+      <div class="cart-subtotal"  rv-show="cart.item_count | gt 0">
+        <h3>Subtotal <span rv-show="cart.total_discount | gt 0" rv-html="cart.original_total_price | money" style="text-decoration: line-through;"></span> <span rv-html="cart.total_price | money"></span></h3>
+        <h3 class="subtotal-savings" rv-show="cart.total_discount | gt 0">Your Savings: <span rv-html="cart.total_discount | money"></span></h3>
+      </div>
+      <div class="cart-drawer__cta" rv-show="cart.item_count | gt 0">
+        <a href="/cart" class="btn btn--cart-drawer">View Cart</a></p>
+        <a href="/checkout" class="btn btn--cart-drawer">Checkout</a></p>
+      </div>
+
+
+    </div>
+  </div>
+</div>
+<div class="cart-drawer__bg js-close--cart"></div>

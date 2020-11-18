@@ -1,0 +1,199 @@
+{% unless page.handle == 'gifting' or page.title contains '25 Days' %}
+  {% if section.settings.show_promo_bar %}
+    {% if section.settings.show_promo_bar_home_page == false or template.name == 'index' %}
+      <div class="promo-bar">
+        {% assign useSlider = false %}
+        {% for block in section.blocks %}
+          {% if forloop.length == 1 %}
+            <div class="promo-bar__message{% if block.settings.promo_bar_link != blank %} promo-bar__message--link{% endif %}">
+              <style>
+                .promo-bar {
+                  background-color: {{ block.settings.promo_bar_bg }};
+                }
+                .promo-bar__message {
+                  margin: 0;
+                  padding: 8px;
+                  font-size: 14px;
+                  color: {{ block.settings.promo_bar_text_color }};
+                }
+                .promo-bar__message p {
+                  margin: 0;
+                  text-align: center;
+                }
+                .promo-bar__message--link {
+                  transition: all 0.3s ease-in-out;
+                }
+                .promo-bar__message--link a {
+                  color: {{ block.settings.promo_bar_text_color }};
+                  text-decoration: none;
+                }
+
+                .promo-bar__message--link:hover {
+                  {% assign brightness = block.settings.promo_bar_bg | color_brightness %}
+
+                  {% if brightness <= 192 %}
+                  {% assign lightenAmount = 255 | minus: brightness | divided_by: 255 | times: 16 %}
+                  background-color: {{ block.settings.promo_bar_bg | color_lighten: lightenAmount }};
+                  {% else %}
+                  {% assign darkenAmount = 255 | divided_by: brightness | times: 8 %}
+                  background-color: {{ block.settings.promo_bar_bg | color_darken: darkenAmount }};
+                  {% endif %}
+                }
+              </style>
+              {% if block.settings.promo_bar_link != blank %}
+              <a href="{{ block.settings.promo_bar_link }}">
+              {% endif %}
+              <p data-aos="fade-down" data-aos-duration="800" data-aos-delay="800">{{ block.settings.promo_bar_text }}</p>
+              {% if block.settings.promo_bar_link != blank %}
+              </a>
+              {% endif %}
+            </div>
+          {% else %}
+            {% assign useSlider = true %}
+            <div class="promo-bar__message{% if block.settings.promo_bar_link != blank %} promo-bar__message--link{% endif %}" id="promo-{{ block.id }}">
+              <style>
+                {% if forloop.first %}
+                .promo-bar {
+                  background-color: {{ block.settings.promo_bar_bg }};
+                }
+                {% endif %}
+                #promo-{{ block.id }} {
+                  background-color: {{ block.settings.promo_bar_bg }};
+                  margin: 0;
+                  padding: 8px;
+                  font-size: 14px;
+                  color: {{ block.settings.promo_bar_text_color }};
+                }
+                #promo-{{ block.id }} p {
+                  margin: 0;
+                  text-align: center;
+                }
+                #promo-{{ block.id }}.promo-bar__message--link {
+                  transition: background-color 0.3s ease-in-out;
+                }
+                #promo-{{ block.id }} a {
+                  color: {{ block.settings.promo_bar_text_color }};
+                  text-decoration: none;
+                }
+
+                #promo-{{ block.id }}.promo-bar__message--link:hover {
+                  {% assign brightness = block.settings.promo_bar_bg | color_brightness %}
+
+                  {% if brightness <= 192 %}
+                  {% assign lightenAmount = 255 | minus: brightness | divided_by: 255 | times: 16 %}
+                  background-color: {{ block.settings.promo_bar_bg | color_lighten: lightenAmount }};
+                  {% else %}
+                  {% assign darkenAmount = 255 | divided_by: brightness | times: 8 %}
+                  background-color: {{ block.settings.promo_bar_bg | color_darken: darkenAmount }};
+                  {% endif %}
+                }
+              </style>
+              {% if block.settings.promo_bar_link != blank %}
+              <a href="{{ block.settings.promo_bar_link }}">
+              {% endif %}
+              <p>{{ block.settings.promo_bar_text }}</p>
+              {% if block.settings.promo_bar_link != blank %}
+              </a>
+              {% endif %}
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+      {% if useSlider == true %}
+        <script type="text/javascript">
+          let promoLoad = function(){
+            // Promo Bar Slick
+            // $('.promo-bar').slick({
+            //   speed: 500,
+            //   autoplay: true,
+            //   autoplaySpeed: 4500,
+            //   slidesToShow: 1,
+            //   slidesToScroll: 1,
+            //   infinite: false,
+            //   arrows: false,
+            //   dots: false,
+            //   fade: true,
+            //   cssEase: 'linear',
+            //   touchMove: true,
+            //   pauseOnFocus: false,
+            //   pauseOnHover: false
+            // });
+            var divs = $('.promo-bar__message').hide(),
+                i = 0;
+
+            (function cycle() { 
+
+                divs.eq(i).fadeIn('slow')
+                          .delay(5000)
+                          .fadeOut('slow', cycle);
+
+                i = ++i % divs.length;
+
+            })();
+          }
+          $(document).ready(promoLoad);
+          $(document).on("shopify:section:load", promoLoad);
+          // $(window).on('resize orientationchange', function() {
+          //   $('.promo-bar').slick('resize');
+          // });
+        </script>
+      {% endif %}
+    {% endif %}
+  {% endif %}
+{% endunless %}
+
+{% schema %}
+  {
+    "name": "Promo Bar",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Promo Bar"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_promo_bar",
+        "label": "Show Promo Bar",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "show_promo_bar_home_page",
+        "label": "Show Promo Bar on Home Page only",
+        "default": false
+      }
+    ],
+    "blocks": [
+      {
+        "type": "text",
+        "name": "Promo Message",
+        "settings": [
+          {
+            "type": "text",
+            "id": "promo_bar_text",
+            "label": "Promo Bar text",
+            "default": "Your promo text here"
+          },
+          {
+            "type": "url",
+            "id": "promo_bar_link",
+            "label": "Promo Bar link",
+            "info": "Optional"
+          },
+          {
+            "type": "color",
+            "id": "promo_bar_bg",
+            "label": "Bar",
+            "default": "#000"
+          },
+          {
+            "type": "color",
+            "id": "promo_bar_text_color",
+            "label": "Text",
+            "default": "#fff"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

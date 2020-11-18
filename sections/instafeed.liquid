@@ -1,0 +1,42 @@
+<section class="instagram">
+  <div class="instagram__header">
+    <div class="wrap text-center">
+      <a href="http://instagram.com/wandpdesign" target="_blank">
+        <h3 class="weight300" style="margin-bottom:0;">{% include 'icon-instagram' %} Follow Along @wandpdesign</h3>
+      </a>
+    </div>
+  </div>
+  <div id="insta-feed"></div>
+</section>
+
+{% schema %}
+  {
+    "name": "Instagram Feed",
+    "settings": [
+      {
+         "type": "text",
+         "label": "Headline",
+         "id": "headline",
+         "default": "Follow Along"
+      },
+      {
+         "type": "text",
+         "label": "Subhead",
+         "id": "subhead",
+         "default": "Use our tag to be featured!"
+      }
+	],
+    "presets": [
+      {
+        "category": "Media",
+        "name": "Instagram Feed"
+      }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

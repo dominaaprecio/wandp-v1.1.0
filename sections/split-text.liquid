@@ -1,0 +1,40 @@
+<div class="split-text-block split-text--half">
+  <div class="split-text split-text--left" data-aos="fade-right" data-aos-once="true">
+    <!-- Our <span>Mission</span> -->
+    <h2 class="weight800">{{ section.settings.headline }}</h2>
+  </div>
+  <div class="split-text split-text--right" data-aos="fade-left" data-aos-once="true">
+    <!-- To create products that inspire your daily interactions with food and drink in ways you never imagined possible. -->
+    {{ section.settings.body }}
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "Split Text",
+    "settings": [
+      {
+        "type": "text",
+        "id": "headline",
+        "label": "Headline"
+      },
+      {
+        "type": "richtext",
+        "id": "body",
+        "label": "Body"
+      }
+	],
+    "presets": [
+      {
+        "category": "Media",
+        "name": "Split Text"
+      }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

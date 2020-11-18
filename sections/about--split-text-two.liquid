@@ -1,0 +1,57 @@
+{% include "info--split-text" %}
+
+{% schema %}
+  {
+    "name": "About Text Split Two",
+    "settings": [
+      {
+        "id": "disable_split",
+        "type": "checkbox",
+        "label": "Disable Split Text",
+        "default": false
+      },
+  	  {
+          "id": "split_text_head",
+          "type": "text",
+          "label": "About Split Text Head"
+  	  },
+      {
+          "id": "split_text_body",
+          "type": "richtext",
+          "label": "About Split Text Body"
+  	  },
+      {
+        "type": "select",
+        "id": "disable_split_align",
+        "label": "Text Alignment",
+        "info": "If Split Text disabled, select text alignment",
+        "options": [
+          {
+            "value": "text-center",
+            "label": "Center"
+          },
+          {
+            "value": "text-left",
+            "label": "Left"
+          },
+          {
+            "value": "text-right",
+            "label": "Right"
+          }
+        ],
+        "default": "text-center"
+      },
+      {
+        "id": "split_text_cta",
+        "type": "text",
+        "label": "CTA Text",
+        "info": "Optional CTA Button"
+      },
+      {
+        "id": "split_text_cta_url",
+        "type": "url",
+        "label": "CTA Link"
+      }
+    ]
+  }
+{% endschema %}

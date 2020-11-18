@@ -1,0 +1,670 @@
+<style type="text/css">
+  #shopify-section-page--about {
+    background-color: {{ section.settings.hero_bg_color }};
+  }
+  #shopify-section-page--about p {
+    margin: 20px 0 0 0;
+    line-height: 1.6;
+  }
+  #about-content {
+    background-color: #fff;
+  }
+  .about-block {
+    margin-bottom: 50px;
+  }
+  .about-block--gray {
+    background-color: #f1f2f2;
+  }
+  #about-content .grid--flex {
+    display: flex;
+  }
+  #hero-{{ section.id }} {
+    background: url('{{ section.settings.hero_img | img_url: '2880x' }}') no-repeat;
+    background-position: {{ section.settings.hero_img_pos }};
+    background-size: cover;
+    background-color: {{ section.settings.hero_bg_color }};
+    color: {{ section.settings.hero_txt_color }};
+    position: relative;
+  }
+  #hero-{{ section.id }} a {
+    color: {{ section.settings.hero_txt_color }};
+  }
+  #hero-{{ section.id }} .hero__text {
+    padding-left: 0;
+  }
+  #hero-{{ section.id }} strong {
+    font-weight: 900;
+  }
+  #hero-{{ section.id }} p {
+    font-size: 18px !important;
+  }
+  .hero__arrow {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    line-height: 1;
+    padding: 30px 0;
+    cursor: pointer;
+    z-index: 6;
+  }
+  .hero__arrow svg {
+    width: 32px;
+    height: 32px;
+    fill: #fff;
+  }
+  .wrap--about {
+    max-width: 920px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .about-head {
+    font-size: 24px;
+    font-weight: 900;
+  }
+  .about-slider-block {
+    background-color: #f1f2f2;
+  }
+  .about-slider-img {
+    line-height: 0;
+  }
+  .about-slider-img img {
+    width: 100%;
+    height: auto;
+  }
+  .about-slider-text {
+    width: 100%;
+    padding: 20px;
+    margin: 0 auto;
+  }
+  .grid--pillar img {
+    width: 100%;
+    height: auto;
+  }
+  .grid--pillar, .endorsement--grid {
+    margin-top: 30px;
+  }
+  .about-pillar {
+    flex: 1;
+    position: relative;
+  }
+  .about-pillar h3 {
+    margin: 20px 0 0 0;
+    line-height: 1;
+  }
+  .about-pillar p {
+    font-size: 16px;
+  }
+  .hero__text h1.about-head {
+    font-size: 30px;
+  }
+  .about-offset {
+    position: relative;
+  }
+  .about-slider .slick-dots {
+    position: absolute;
+    left: 0; bottom: 0;
+    width: 100%;
+  }
+  .about-slider .slick-dots li {
+    width: 14px;
+    height: 14px;
+    margin: 0 7px;
+  }
+  .about-slider .slick-dots li button {
+    background-color: #fff;
+    width: 14px;
+    height: 14px;
+  }
+  .about-offset__text {
+    position: relative;
+    width: 100%;
+  }
+  .about-pillar a {
+    color: #5F7767;
+    font-weight: 700;
+    text-decoration: underline;
+  }
+  .about-block--press {
+    padding: 50px 0;
+    margin-bottom: 0px !important;
+  }
+  .instagram__header {
+    padding: 50px 0;
+  }
+  .about-pillar {
+    margin-bottom: 20px;
+  }
+  #insta-feed {
+    margin-top: 0 !important;
+  }
+  @media (min-width: 769px) {
+    #hero-{{ section.id }} p {
+      font-size: 22px !important;
+    }
+    #shopify-section-page--about p {
+      margin: 30px 0 0 0;
+    }
+    .about-head {
+      font-size: 36px;
+    }
+    .hero__text h1.about-head {
+      font-size: 42px;
+    }
+    .grid--pillar {
+      margin-top: 50px;
+    }
+    .about-pillar {
+      margin-bottom: 0px;
+    }
+    .about-pillar h3 {
+      margin-top: 30px;
+    }
+    .about-block {
+      margin-bottom: 80px;
+    }
+    .about-block--press {
+      padding: 80px 0;
+    }
+    .about-block--press p {
+      max-width: 75%;
+    }
+    .instagram__header {
+      padding: 60px 0;
+    }
+  }
+  @media (min-width: 1024px) {
+    .about-offset__text {
+      position: absolute;
+      width: 55%;
+      right: 30px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+    .about-block {
+      margin-bottom: 80px;
+    }
+    .about-slider-text {
+      max-width: 640px;
+    }
+  }
+</style>
+<div class="hero hero--info" id="hero-{{ section.id }}" data-aos="fade" data-aos-delay="1000" data-aos-duration="1500">
+  <div class="hero__wrap wrap--about {{ section.settings.hero_txt_pos }}">
+    <div class="hero__text {{ section.settings.hero_txt_align }}" data-aos="fade-up" data-aos-delay="2000" data-aos-duration="1200">
+      {% if section.settings.hero_headline != blank %}
+      <h1 class="weight900 about-head">{{ section.settings.hero_headline }}</h1>
+    {% endif %}
+    {% if section.settings.hero_txt != blank %}
+    <p>{{ section.settings.hero_txt }}</p>
+    {% endif %}
+    </div>
+  </div>
+  <div class="hero__arrow text-center">
+    <div data-aos="fade-down" data-aos-delay="2200" data-aos-duration="1200" data-aos-anchor="#hero-{{ section.id }}" data-aos-once="true">
+    {% include 'icon--arrow-down--open' %}
+    </div>
+  </div>
+</div>
+<div id="about-content">
+  {% for block in section.blocks %}
+    {% if block.type == 'text_block' %}
+      <div class="wrap wrap--about about-block">
+        <div class="text-center">
+          {% if block.settings.text_headline != blank %}
+          <h2 class="about-head">{{ block.settings.text_headline }}</h2>
+          {% endif %}
+          {% if block.settings.text_copy != blank %}
+          {{ block.settings.text_copy }}
+          {% endif %}
+        </div>
+      </div>
+    {% elsif block.type == 'text_block_cta' %}
+      <div class="wrap wrap--about about-block">
+        <div class="text-center">
+          {% if block.settings.textcta_headline != blank %}
+          <h2 class="about-head">{{ block.settings.textcta_headline }}</h2>
+          {% endif %}
+          {% if block.settings.textcta_copy != blank %}
+          {{ block.settings.textcta_copy }}
+          {% endif %}
+          <p><a class="cta-arrow" href="{{ block.settings.textcta_link }}">{{ block.settings.textcta_cta }}</a></p>
+        </div>
+      </div>
+    {% elsif block.type == 'threecol_block' %}
+      {% if block.settings.threecol_headline != blank %}
+        <div class="wrap wrap--about">
+          <div class="text-center">
+            <h2 class="about-head">{{ block.settings.threecol_headline }}</h2>
+            {% if block.settings.threecol_copy != blank %}
+            {{ block.settings.threecol_copy }}
+            {% endif %}
+          </div>
+        </div>
+      {% endif %}
+      <div class="wrap wrap--max about-block">
+        <div class="grid grid--flex grid--2x-gutter grid--pillar">
+          <div class="grid__item medium-up--one-third">
+            <img class="lozad" data-aos="fade" data-aos-delay="100" data-aos-anchor=".grid--pillar" data-aos-once="true" data-src="{{ block.settings.threecol_01_img | img_url: '900x1124', crop: 'center' }}" src="{{ block.settings.threecol_01_img | img_url: '4x5', crop: 'center' }}">
+            <div data-aos="fade-up" data-aos-delay="500" data-aos-anchor=".grid--pillar" data-aos-once="true" class="about-pillar">
+              <h3>{{ block.settings.threecol_01_headline }}</h3>
+              {{ block.settings.threecol_01_copy }}
+            </div>
+          </div>
+          <div class="grid__item medium-up--one-third">
+            <img class="lozad" data-aos="fade" data-aos-delay="250" data-aos-anchor=".grid--pillar" data-aos-once="true" data-src="{{ block.settings.threecol_02_img | img_url: '900x1124', crop: 'center' }}" src="{{ block.settings.threecol_02_img | img_url: '4x5', crop: 'center' }}">
+            <div data-aos="fade-up" data-aos-delay="650" data-aos-anchor=".grid--pillar" data-aos-once="true" class="about-pillar">
+              <h3>{{ block.settings.threecol_02_headline }}</h3>
+              {{ block.settings.threecol_02_copy }}
+            </div>
+          </div>
+          <div class="grid__item medium-up--one-third">
+            <img class="lozad" data-aos="fade" data-aos-delay="400" data-aos-anchor=".grid--pillar" data-aos-once="true" data-src="{{ block.settings.threecol_03_img | img_url: '900x1124', crop: 'center' }}" src="{{ block.settings.threecol_03_img | img_url: '4x5', crop: 'center' }}">
+            <div data-aos="fade-up" data-aos-delay="800" data-aos-anchor=".grid--pillar" data-aos-once="true" class="about-pillar">
+              <h3>{{ block.settings.threecol_03_headline }}</h3>
+              {{ block.settings.threecol_03_copy }}
+            </div>
+          </div>
+        </div>
+      </div>
+    {% elsif block.type == 'slider_block' %}
+      <div class="about-block">
+        <div class="about-slider-block" data-aos="fade" data-aos-delay="300" data-aos-once="true">
+          <div class="grid grid--flex grid--flex--center grid--full">
+            <div class="grid__item large-up--one-half">
+              <div class="about-slider-img">
+                <img data-aos="fade" data-aos-delay="400" data-aos-anchor=".about-block" data-aos-once="true" class="lozad" data-src="{{ block.settings.slider_img_01 | img_url: '1800x1200', crop: 'center' }}" src="{{ block.settings.slider_img_01 | img_url: '6x4', crop: 'center' }}">
+              </div>
+              {% comment %}
+              <div class="about-slider">
+                <div><img data-lazy="{{ block.settings.slider_img_01 | img_url: '1800x1200', crop: 'center' }}" src="{{ block.settings.slider_img_01 | img_url: '6x4', crop: 'center' }}"></div>
+                <div><img data-lazy="{{ block.settings.slider_img_02 | img_url: '1800x1200', crop: 'center' }}" src="{{ block.settings.slider_img_02 | img_url: '6x4', crop: 'center' }}"></div>
+                <div><img data-lazy="{{ block.settings.slider_img_03 | img_url: '1800x1200', crop: 'center' }}" src="{{ block.settings.slider_img_03 | img_url: '6x4', crop: 'center' }}"></div>
+                <div><img data-lazy="{{ block.settings.slider_img_04 | img_url: '1800x1200', crop: 'center' }}" src="{{ block.settings.offset_img_04 | img_url: '6x4', crop: 'center' }}"></div>
+                <div><img data-lazy="{{ block.settings.slider_img_05 | img_url: '1800x1200', crop: 'center' }}" src="{{ block.settings.offset_img_05 | img_url: '6x4', crop: 'center' }}"></div>
+              </div>
+              {% endcomment %}
+            </div>
+            <div class="grid__item large-up--one-half">
+              <div class="about-slider-text">
+                <h2 class="about-head">{{ block.settings.slider_headline }}</h2>
+                {{ block.settings.slider_copy }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% elsif block.type == 'press_block' %}
+      <div class="about-block about-block--press about-block--gray">
+        <div class="wrap wrap--max">
+          <div class="grid grid--flex grid--flex--center">
+            <div class="grid__item medium-up--one-half">
+              <div class="text-left">
+                {% if block.settings.press_headline != blank %}
+                <h2 class="about-head">{{ block.settings.press_headline }}</h2>
+                {% endif %}
+                {% if block.settings.press_copy != blank %}
+                {{ block.settings.press_copy }}
+                {% endif %}
+                {% if block.settings.press_link != blank %}
+                <p><a class="cta-arrow" href="{{ block.settings.press_link }}">{{ block.settings.press_cta }}</a></p>
+                {% endif %}
+              </div>
+            </div>
+            <div class="grid__item medium-up--one-half">
+              {% if block.settings.press_show_logos %}
+                <div class="endorsement--block grid endorsement--grid">
+                  {% assign aosDelay = 0 %}
+                  {% for block in section.blocks %}
+                    {% if block.type == 'press_image' %}
+                      {% assign aosDelay = aosDelay | plus: 100 %}
+                      <div class="grid__item medium-up--one-third one-third endorsement--grid__item" data-aos-anchor=".endorsement--block" data-aos="fade-up" data-aos-delay="{{ aosDelay }}">
+                        <img src="{{ block.settings.press_img | img_url: '500x' }}"/>
+                      </div>
+                    {% endif %}
+                  {% endfor %}
+                </div>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endif %}
+  {% endfor %}
+</div>
+<script>
+  let aboutLoad = function(){
+    /*
+    $('.about-slider').slick({
+      slidesToShow: 1,
+      slidesToScroll: 1,
+      arrows: false,
+      dots: true,
+      autoplay: true,
+      autoplaySpeed: 4000,
+      lazyLoad: 'ondemand',
+      infinite: true
+    });
+    */
+    $(".hero__arrow").click(function() {
+      $('html, body').animate({
+        scrollTop: $("#about-content").offset().top
+      }, 1000);
+    });
+  }
+  $(document).ready(aboutLoad);
+  $(document).on("shopify:section:load", aboutLoad);
+</script>
+
+{% schema %}
+  {
+    "name": "About Page",
+    "settings": [
+      {
+        "id": "hero_img",
+        "type": "image_picker",
+        "label": "Info Hero Image"
+      },
+      {
+        "type": "select",
+        "id": "hero_img_pos",
+        "label": "Hero Image Position",
+        "options": [
+          {
+            "value": "center",
+            "label": "Center"
+          },
+          {
+            "value": "top left",
+            "label": "Top Left"
+          },
+          {
+            "value": "top center",
+            "label": "Top Center"
+          },
+          {
+            "value": "top right",
+            "label": "Top Right"
+          },
+          {
+            "value": "bottom left",
+            "label": "Bottom Left"
+          },
+          {
+            "value": "bottom center",
+            "label": "Bottom Center"
+          },
+          {
+            "value": "bottom right",
+            "label": "Bottom Right"
+          }
+        ],
+        "default": "center"
+      },
+      {
+        "type": "text",
+        "id": "hero_headline",
+        "label": "Hero Text Headline"
+      },
+      {
+        "type": "textarea",
+        "id": "hero_txt",
+        "label": "Hero Text Headline"
+      },
+      {
+        "type": "color",
+        "id": "hero_bg_color",
+        "label": "Hero Background Color",
+        "default": "#5F7767"
+      },
+      {
+        "type": "color",
+        "id": "hero_txt_color",
+        "label": "Hero Text Color",
+        "default": "#ffffff"
+      },
+      {
+        "type": "select",
+        "id": "hero_txt_pos",
+        "label": "Hero Text Position",
+        "options": [
+          {
+            "value": "hero__wrap--center",
+            "label": "Center"
+          },
+          {
+            "value": "hero__wrap--top",
+            "label": "Top"
+          },
+          {
+            "value": "hero__wrap--bottom",
+            "label": "Bottom"
+          }
+        ],
+        "default": "hero__wrap--center"
+      },
+      {
+        "type": "select",
+        "id": "hero_txt_align",
+        "label": "Hero Text Alignment",
+        "options": [
+          {
+            "value": "text-center",
+            "label": "Center"
+          },
+          {
+            "value": "text-left",
+            "label": "Left"
+          },
+          {
+            "value": "text-right",
+            "label": "Right"
+          }
+        ],
+        "default": "text-center"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "text_block",
+        "name": "Text Block",
+        "settings": [
+          {
+            "type": "text",
+            "id": "text_headline",
+            "label": "Headline"
+          },
+          {
+            "type": "richtext",
+            "id": "text_copy",
+            "label": "Text",
+            "default": "<p>Add main text here.</p>"
+          }
+        ]
+      },
+      {
+        "type": "text_block_cta",
+        "name": "Text Block with CTA",
+        "settings": [
+          {
+            "type": "text",
+            "id": "textcta_headline",
+            "label": "Headline"
+          },
+          {
+            "type": "richtext",
+            "id": "textcta_copy",
+            "label": "Text",
+            "default": "<p>Add main text here.</p>"
+          },
+          {
+            "type": "text",
+            "id": "textcta_cta",
+            "label": "Button Text",
+            "info": "Optional"
+          },
+          {
+            "type": "url",
+            "id": "textcta_link",
+            "label": "CTA Link",
+            "info": "Optional"
+          }
+        ]
+      },
+      {
+        "type": "threecol_block",
+        "name": "3 Column Block",
+        "settings": [
+          {
+            "type": "text",
+            "id": "threecol_headline",
+            "label": "Headline"
+          },
+          {
+            "type": "richtext",
+            "id": "threecol_copy",
+            "label": "Text",
+            "default": "<p>Add main text here.</p>"
+          },
+          {
+            "id": "threecol_01_img",
+            "type": "image_picker",
+            "label": "Column 1 Image"
+          },
+          {
+            "type": "text",
+            "id": "threecol_01_headline",
+            "label": "Column 1 Headline"
+          },
+          {
+            "type": "richtext",
+            "id": "threecol_01_copy",
+            "label": "Column 1 Text",
+            "default": "<p>Add main text here.</p>"
+          },
+          {
+            "id": "threecol_02_img",
+            "type": "image_picker",
+            "label": "Column 2 Image"
+          },
+          {
+            "type": "text",
+            "id": "threecol_02_headline",
+            "label": "Column 2 Headline"
+          },
+          {
+            "type": "richtext",
+            "id": "threecol_02_copy",
+            "label": "Column 2 Text",
+            "default": "<p>Add main text here.</p>"
+          },
+          {
+            "id": "threecol_03_img",
+            "type": "image_picker",
+            "label": "Column 3 Image"
+          },
+          {
+            "type": "text",
+            "id": "threecol_03_headline",
+            "label": "Column 3 Headline"
+          },
+          {
+            "type": "richtext",
+            "id": "threecol_03_copy",
+            "label": "Column 3 Text",
+            "default": "<p>Add main text here.</p>"
+          }
+        ]
+      },
+      {
+        "type": "slider_block",
+        "name": "Slider Block",
+        "settings": [
+          {
+            "type": "text",
+            "id": "slider_headline",
+            "label": "Headline"
+          },
+          {
+            "type": "richtext",
+            "id": "slider_copy",
+            "label": "Text",
+            "default": "<p>Add main text here.</p>"
+          },
+          {
+            "id": "slider_img_01",
+            "type": "image_picker",
+            "label": "Image 1"
+          },
+          {
+            "id": "slider_img_02",
+            "type": "image_picker",
+            "label": "Image 2"
+          },
+          {
+            "id": "slider_img_03",
+            "type": "image_picker",
+            "label": "Image 3"
+          },
+          {
+            "id": "slider_img_04",
+            "type": "image_picker",
+            "label": "Image 4"
+          },
+          {
+            "id": "slider_img_05",
+            "type": "image_picker",
+            "label": "Image 5"
+          }
+        ]
+      },
+      {
+        "type": "press_block",
+        "name": "Press Block",
+        "settings": [
+          {
+            "type": "checkbox",
+            "id": "press_show_logos",
+            "label": "Show Logos with Press Block",
+            "default": true
+          },
+          {
+            "type": "text",
+            "id": "press_headline",
+            "label": "Headline"
+          },
+          {
+            "type": "richtext",
+            "id": "press_copy",
+            "label": "Text",
+            "default": "<p>Add main text here.</p>"
+          },
+          {
+            "type": "text",
+            "id": "press_cta",
+            "label": "Button Text",
+            "info": "Optional"
+          },
+          {
+            "type": "url",
+            "id": "press_link",
+            "label": "CTA Link",
+            "info": "Optional"
+          }
+        ]
+      },
+      {
+        "type": "press_image",
+        "name": "Press Image",
+        "settings": [
+          {
+            "type": "image_picker",
+            "label": "Press Logo",
+            "id": "press_img"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

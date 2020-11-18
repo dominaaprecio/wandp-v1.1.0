@@ -1,0 +1,71 @@
+<!doctype html><!-- -->
+<!--[if IE 9]> <html class="ie9 no-js supports-no-cookies" lang="{{ shop.locale }}"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html class="no-js supports-no-cookies" lang="{{ shop.locale }}"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="{{ settings.color_primary }}">
+  {% if shop.permanent_domain == 'wandpdesign.myshopify.com' %}
+  {% else %}
+  <meta name="robots" content="noindex">
+  {% endif %}
+  <meta name="p:domain_verify" content="52f1ee725e73c69ad73dd2197122bd3c"/>
+  <meta name="google-site-verification" content="C136xQTti5f-jHmvXrORvVD-f0xIKqusT4z5F0AGVtw" />
+  <meta name="google-site-verification" content="49ddSnq1Gq_oupbAFp_UEEi1Dhn492ep2kbjInNH4r4" />
+  <meta name="google-site-verification" content="v8TGKZM9RhLdiYvcZ5JwzL9YpD3qsllZip_KVirzBv4" />
+  <meta name="google-site-verification" content="h6s7gRrY3V0SOCfmug9Xq4XFrVip-GPd-hR-OXHeYb8" />
+  <link rel="canonical" href="{{ canonical_url }}">
+
+  {% if settings.favicon != blank %}
+    <link rel="shortcut icon" href="{{ settings.favicon | img_url: '32x32' }}" type="image/png">
+  {% endif %}
+
+  {% capture seo_title %}
+    {{ page_title }}
+    {% if current_tags %}
+      {%- assign meta_tags = current_tags | join: ', ' %} &ndash; {{ 'general.meta.tags' | t: tags: meta_tags -}}
+    {% endif %}
+    {% if current_page != 1 %}
+      &ndash; {{ 'general.meta.page' | t: page: current_page }}
+    {% endif %}
+    {% unless page_title contains shop.name %}
+      &ndash; {{ shop.name }}
+    {% endunless %}
+  {% endcapture %}
+  <title>{{ seo_title }}</title>
+  {% if page_description %}
+    <meta name="description" content="{{ page_description | escape }}">
+  {% endif %}
+
+  {% include 'social-meta-tags' %}
+
+  {% include 'head-preload' %}
+  {% include 'head-css' %}
+  {% include 'head-js' %}
+
+  {{ content_for_header }}
+
+  {% include 'head-tracking' %}
+
+</head>
+
+<body id="{{ page_title | handle }}" class="template-{{ template.name | handle }}">
+
+  {% section 'promo-bar' %}
+
+  {% section 'header' %}
+
+  <main role="main" id="MainContent"{% unless template.name == 'index' %} class="clear-header"{% endunless %}>
+    {{ content_for_layout }}
+  </main>
+
+  {% section 'footer' %}
+
+  {% unless template == 'cart' %}{% include 'cart-drawer' %}{% endunless %}
+
+  {% include 'body-tracking' %}
+  {% comment %}{% endcomment %}
+
+</body>
+</html>

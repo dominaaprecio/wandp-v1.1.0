@@ -1,0 +1,544 @@
+<style>
+  #customer_login_link{
+    transition: .4s;
+    transform: translate( 0px, 0px );
+    opacity: 1;
+  }
+
+  #customer_login_link.customer_login_link--hide{
+    opacity: 0;
+    transform: translate( 0px, 20px );
+  }
+
+</style>
+  <header class="wp-header{% if template == 'index' %} wp-header--solid{% endif %}{% if section.settings.trans_header and template == 'index' %} wp-header--transparent{% endif %}{% if section.settings.white_header and template == 'index' %} wp-header--white{% endif %}" role="banner" data-section-id="{{ section.id }}" data-section-type="header-section" data-aos="fade" data-aos-duration="800" data-aos-delay="800">
+    <nav class="wp-nav">
+      <div class="wp-nav__mobile hide-desktop">
+        <button class="js-toggle--mobile-nav">
+          <div class="wp-burger">
+            <span class="wp-burger__line"></span>
+            <span class="wp-burger__line"></span>
+            <span class="wp-burger__line"></span>
+          </div>
+        </button>
+      </div>
+      <div class="wp-nav__logo hide-desktop" itemtype="http://schema.org/Organization">
+        <a href="/" itemprop="url">
+          {% include 'logo' %}
+        </a>
+      </div>
+      <div class="wp-nav__links">
+        <div class="wp-nav__logo hide-mobile" itemtype="http://schema.org/Organization">
+          <a href="/" itemprop="url">
+            {% include 'logo' %}
+          </a>
+        </div>
+        <!-- begin site-nav -->
+        <ul class="site-nav" id="AccessibleNav">
+          {% for block in section.blocks %}
+            <li class="{{ block.type }}" {{ block.shopify_attributes }}>
+              {% if block.type == 'link' %}
+          		<a href="{{ block.settings.link_url }}" class="site-nav__link">{{ block.settings.link_txt }}</a>
+              {% elsif block.type =='shop' %}
+                <a href="{{ block.settings.shop_url }}" class="site-nav__link site-nav__link-submenu" data-menu="menu-{{ block.settings.shop_txt | handleize }}">{{ block.settings.shop_txt }}</a>
+              	<div class="site-nav__submenu" id="menu-{{ block.settings.shop_txt | handleize }}">
+                  <div class="wrap wrap--double">
+                    <div class="grid grid--uniform grid--rev">
+                      <div class="grid__item medium-up--eight-tenths large-up--five-sixths one-whole">
+                        <div class="grid grid--uniform">
+                          {% if block.settings.shop_link1_title != blank %}
+                          <div class="grid__item medium-up--one-half one-half submenu-promo">
+                            <a href="{{ block.settings.shop_link1_url }}">
+                              <div class="submenu-promo__image hide-mobile"><img class="lozad" data-src="{{ block.settings.shop_link1_img | img_url: '506x275', crop: 'bottom' }}" data-srcset="{{ block.settings.shop_link1_img | img_url: '1012x550', crop: 'center' }} 2x, {{ block.settings.shop_link1_img | img_url: '506x275', crop: 'center' }} 1x"></div>
+                              <h3>{{ block.settings.shop_link1_title }}</h3>
+                              {% if block.settings.shop_link1_txt != blank %}
+                              <p class="hide-mobile">{{ block.settings.shop_link1_txt }}</p>
+                              {% endif %}
+                            </a>
+                          </div>
+                          {% endif %}
+                          {% if block.settings.shop_link2_title != blank %}
+                          <div class="grid__item medium-up--one-half one-half submenu-promo">
+                            <a href="{{ block.settings.shop_link2_url }}">
+                              <div class="submenu-promo__image hide-mobile"><img class="lozad" data-src="{{ block.settings.shop_link2_img | img_url: '506x275', crop: 'bottom' }}" data-srcset="{{ block.settings.shop_link2_img | img_url: '1012x550', crop: 'center' }} 2x, {{ block.settings.shop_link2_img | img_url: '506x275', crop: 'center' }} 1x"></div>
+                              <h3>{{ block.settings.shop_link2_title }}</h3>
+                              {% if block.settings.shop_link2_txt != blank %}
+                              <p class="hide-mobile">{{ block.settings.shop_link2_txt }}</p>
+                              {% endif %}
+                            </a>
+                          </div>
+                          {% endif %}
+                          {% if block.settings.shop_link3_title != blank %}
+                          <div class="grid__item medium-up--one-half one-half submenu-promo">
+                            <a href="{{ block.settings.shop_link3_url }}">
+                              <div class="submenu-promo__image hide-mobile"><img class="lozad" data-src="{{ block.settings.shop_link3_img | img_url: '506x275', crop: 'bottom' }}" data-srcset="{{ block.settings.shop_link3_img | img_url: '1012x550', crop: 'center' }} 2x, {{ block.settings.shop_link3_img | img_url: '506x275', crop: 'center' }} 1x"></div>
+                              <h3>{{ block.settings.shop_link3_title }}</h3>
+                              {% if block.settings.shop_link3_txt != blank %}
+                              <p class="hide-mobile">{{ block.settings.shop_link3_txt }}</p>
+                              {% endif %}
+                            </a>
+                          </div>
+                          {% endif %}
+                          {% if block.settings.shop_link4_title != blank %}
+                          <div class="grid__item medium-up--one-half one-half submenu-promo">
+                            <a href="{{ block.settings.shop_link4_url }}">
+                              <div class="submenu-promo__image hide-mobile"><img class="lozad" data-src="{{ block.settings.shop_link4_img | img_url: '506x275', crop: 'bottom' }}" data-srcset="{{ block.settings.shop_link4_img | img_url: '1012x550', crop: 'center' }} 2x, {{ block.settings.shop_link4_img | img_url: '506x275', crop: 'center' }} 1x"></div>
+                              <h3>{{ block.settings.shop_link4_title }}</h3>
+                              {% if block.settings.shop_link4_txt != blank %}
+                              <p class="hide-mobile">{{ block.settings.shop_link4_txt }}</p>
+                              {% endif %}
+                            </a>
+                          </div>
+                          {% endif %}
+                        </div>
+                      </div>
+                      <div class="grid__item medium-up--two-tenths large-up--one-sixth one-whole">
+                        <ul class="grid grid--uniform site-nav__submenu__list">
+                          {% for link in linklists[block.settings.shop_list].links %}
+                          <li class="grid__item medium-up--one-whole one-half">
+                            <a href="{{ link.url }}">{{ link.title }}</a>
+                          </li>
+                          {% endfor %}
+                        </ul>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              {% elsif block.type =='wholesale' %}
+                {% if block.settings.hide_wholesale_mobile %}
+                <a href="{{ block.settings.wholesale_url }}" class="site-nav__link hide-desktop">{{ block.settings.wholesale_txt }}</a>
+                {% endif %}
+                <a href="{{ block.settings.wholesale_url }}" class="site-nav__link site-nav__link-submenu{% if block.settings.hide_wholesale_mobile %} hide-mobile{% endif %}" data-menu="menu-{{ block.settings.wholesale_txt | handleize }}">{{ block.settings.wholesale_txt }}</a>
+              	<div class="site-nav__submenu" id="menu-{{ block.settings.wholesale_txt | handleize }}">
+                  <div class="wrap wrap--double">
+                    <div class="grid grid--uniform">
+                      {% if block.settings.wholesale_block1_title != blank %}
+                      <div class="grid__item medium-up--one-quarter one-whole submenu-promo">
+                        <a href="{{ block.settings.wholesale_block1_img_url }}" title="{{ block.settings.wholesale_block1_title }}" class="hide-mobile">
+                          <div class="box box--square lozad" data-background-image="{{ block.settings.wholesale_block1_img | img_url: '600x600', crop: 'center' }}" style="background-repeat: no-repeat; background-size: cover; background-position: center; color: {{ block.settings.wholesale_block1_color }};{% if block.settings.wholesale_block1_noimg %} background-color: {{ block.settings.wholesale_block1_bgcolor }};{% endif %}">
+                            {% if block.settings.wholesale_block1_overlaytxt != blank %}
+                              <div class="box__overlay">
+                                <div class="box__text">
+                                  {{ block.settings.wholesale_block1_overlaytxt }}
+                                </div>
+                              </div>
+                            {% endif %}
+                          </div>
+                        </a>
+                        <h4><a href="{{ block.settings.wholesale_block1_url }}">{{ block.settings.wholesale_block1_title }}</a></h4>
+                        {% if block.settings.wholesale_block1_title2 != blank %}
+                          <h4><a href="{{ block.settings.wholesale_block1_url2 }}">{{ block.settings.wholesale_block1_title2 }}</a></h4>
+                        {% endif %}
+                      </div>
+                      {% endif %}
+                      {% if block.settings.wholesale_block2_title != blank %}
+                      <div class="grid__item medium-up--one-quarter one-whole submenu-promo">
+                        <a href="{{ block.settings.wholesale_block2_url }}" title="{{ block.settings.wholesale_block2_title }}" class="hide-mobile">
+                          <div class="box box--square lozad" data-background-image="{{ block.settings.wholesale_block2_img | img_url: '600x600', crop: 'center' }}" style="background-repeat: no-repeat; background-size: cover; background-position: center;"></div>
+                        </a>
+                        <a href="{{ block.settings.wholesale_block2_url }}" title="{{ block.settings.wholesale_block2_title }}">
+                          <h4>{{ block.settings.wholesale_block2_title }}</h4>
+                        </a>
+                      </div>
+                      {% endif %}
+                      {% if block.settings.wholesale_block3_title != blank %}
+                      <div class="grid__item medium-up--one-quarter one-whole submenu-promo">
+                        <a href="{{ block.settings.wholesale_block3_url }}" title="{{ block.settings.wholesale_block3_title }}" class="hide-mobile">
+                          <div class="box box--square lozad" data-background-image="{{ block.settings.wholesale_block3_img | img_url: '600x600', crop: 'center' }}" style="background-repeat: no-repeat; background-size: cover; background-position: center;"></div>
+                        </a>
+                        <a href="{{ block.settings.wholesale_block3_url }}" title="{{ block.settings.wholesale_block3_title }}">
+                          <h4>{{ block.settings.wholesale_block3_title }}</h4>
+                        </a>
+                      </div>
+                      {% endif %}
+                      {% if block.settings.wholesale_block4_title != blank %}
+                      <div class="grid__item medium-up--one-quarter one-whole submenu-promo">
+                        <a href="{{ block.settings.wholesale_block4_url }}" title="{{ block.settings.wholesale_block4_title }}" class="hide-mobile">
+                          <div class="box box--square lozad" data-background-image="{{ block.settings.wholesale_block4_img | img_url: '600x600', crop: 'center' }}" style="background-repeat: no-repeat; background-size: cover; background-position: center;"></div>
+                        </a>
+                        <a href="{{ block.settings.wholesale_block4_url }}" title="{{ block.settings.wholesale_block4_title }}">
+                          <h4>{{ block.settings.wholesale_block4_title }}</h4>
+                        </a>
+                      </div>
+                      {% endif %}
+                    </div>
+                  </div>
+                </div>
+              {% endif %}
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+      <div class="wp-nav__utility">
+        <ul class="inline-list">
+          {% if shop.customer_accounts_enabled %}
+          {% if customer %}
+          <li class="hide-mobile">
+            <a href="/account" class="site-nav__link">Account</a>
+          </li>
+          <li class="hide-mobile">
+            <a href="/account/logout" class="site-nav__link">{{ 'layout.customer.log_out' | t }}</a>
+          </li>
+          {% else %}
+          <li class="hide-mobile">
+            <a href="/account/login" class="site-nav__link">{{ 'layout.customer.log_in' | t }}</a>
+          </li>
+          {% endif %}
+          {% endif %}
+          <li>
+            <div class="wp-nav__search">
+              <form class="search-form" action="/search" method="get" _lpchecked="1">
+                <input type="hidden" name="type" value="product" />
+                <label for="Search" class="label-hidden">
+                  {{ 'general.search.placeholder' | t }}
+                </label>
+                <input type="text"
+                       name="q"
+                       id="Search"
+                       value="{{ search.terms | escape }}"
+                       placeholder="{{ 'general.search.placeholder' | t }}">
+                <button type="submit" class="btn" style="display: none;">
+                  {% include 'icon-search' %}
+                  <span class="icon-fallback-text">{{ 'general.search.submit' | t }}</span>
+                </button>
+              </form>
+              {% comment %}
+              <form action="/search" method="get" role="search">
+                <label for="Search" class="label-hidden">
+                  {{ 'general.search.placeholder' | t }}
+                </label>
+                <input type="search"
+                       name="q"
+                       id="Search"
+                       value="{{ search.terms | escape }}"
+                       placeholder="{{ 'general.search.placeholder' | t }}">
+                <button type="submit" class="btn" style="display: none;">
+                  {% include 'icon-search' %}
+                  <span class="icon-fallback-text">{{ 'general.search.submit' | t }}</span>
+                </button>
+              </form>
+              {% endcomment %}
+            </div>
+            <button class="js-toggle--search">
+              {% include 'icon--search' %}
+              <span class="icon-fallback-text">{{ 'general.search.submit' | t }}</span>
+            </button>
+          </li>
+       	  <li>
+            <button class="js-toggle--cart">
+              {% include 'icon--cart' %}
+              {% comment %}{{ 'layout.cart.title' | t }}{% endcomment %}
+              <span id="cart-count">{{ cart.item_count }}</span>{% comment %}{{ 'layout.cart.items_count' | t: count: cart.item_count }}{% endcomment %}
+            </button>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+
+{% schema %}
+  {
+    "name": "Header",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Navigation"
+      },
+      {
+        "type": "checkbox",
+        "id": "white_header",
+        "label": "Use White Text in Transparent Header on Home Page",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "trans_header",
+        "label": "Show Transparent Header on Home Page",
+        "default": true
+      },
+      {
+        "type": "paragraph",
+        "content": "Use the Content section below to manage Navigation links."
+      }
+    ],
+    "blocks": [
+      {
+        "type": "link",
+        "name": "Link",
+        "settings": [
+          {
+            "label": "Link Text",
+            "id": "link_txt",
+            "type": "text"
+          },
+          {
+            "label": "Link URL",
+            "id": "link_url",
+            "type": "url"
+          }
+        ]
+      },
+      {
+        "type": "shop",
+        "name": "Shop Mega Menu",
+        "settings": [
+          {
+            "label": "Shop Link Text",
+            "id": "shop_txt",
+            "type": "text"
+          },
+          {
+            "type": "url",
+            "id": "shop_url",
+            "label": "Shop Link"
+          },
+          {
+            "type": "link_list",
+            "id": "shop_list",
+            "label": "Side Navigation"
+          },
+          {
+            "type": "image_picker",
+            "id": "shop_link1_img",
+            "label": "Link 1 - Image"
+          },
+          {
+            "label": "Link 1 - URL",
+            "id": "shop_link1_url",
+            "type": "url"
+          },
+          {
+            "label": "Link 1 - Title",
+            "id": "shop_link1_title",
+            "type": "text"
+          },
+          {
+            "label": "Link 1 - Text",
+            "id": "shop_link1_txt",
+            "type": "textarea"
+          },
+          {
+            "type": "image_picker",
+            "id": "shop_link2_img",
+            "label": "Link 2 - Image"
+          },
+          {
+            "label": "Link 2 - URL",
+            "id": "shop_link2_url",
+            "type": "url"
+          },
+          {
+            "label": "Link 2 - Title",
+            "id": "shop_link2_title",
+            "type": "text"
+          },
+          {
+            "label": "Link 2 - Text",
+            "id": "shop_link2_txt",
+            "type": "textarea"
+          },
+          {
+            "type": "image_picker",
+            "id": "shop_link3_img",
+            "label": "Link 3 - Image"
+          },
+          {
+            "label": "Link 3 - URL",
+            "id": "shop_link3_url",
+            "type": "url"
+          },
+          {
+            "label": "Link 3 - Title",
+            "id": "shop_link3_title",
+            "type": "text"
+          },
+          {
+            "label": "Link 3 - Text",
+            "id": "shop_link3_txt",
+            "type": "textarea"
+          },
+          {
+            "type": "image_picker",
+            "id": "shop_link4_img",
+            "label": "Link 4 - Image"
+          },
+          {
+            "label": "Link 4 - URL",
+            "id": "shop_link4_url",
+            "type": "url"
+          },
+          {
+            "label": "Link 4 - Title",
+            "id": "shop_link4_title",
+            "type": "text"
+          },
+          {
+            "label": "Link 4 - Text",
+            "id": "shop_link4_txt",
+            "type": "textarea"
+          },
+          {
+            "type": "image_picker",
+            "id": "shop_link5_img",
+            "label": "Link 5 - Image"
+          },
+          {
+            "label": "Link 5 - URL",
+            "id": "shop_link5_url",
+            "type": "url"
+          },
+          {
+            "label": "Link 5 - Title",
+            "id": "shop_link5_title",
+            "type": "text"
+          },
+          {
+            "label": "Link 5 - Text",
+            "id": "shop_link5_txt",
+            "type": "textarea"
+          },
+          {
+            "type": "image_picker",
+            "id": "shop_link6_img",
+            "label": "Link 6 - Image"
+          },
+          {
+            "label": "Link 6 - URL",
+            "id": "shop_link6_url",
+            "type": "url"
+          },
+          {
+            "label": "Link 6 - Title",
+            "id": "shop_link6_title",
+            "type": "text"
+          },
+          {
+            "label": "Link 6 - Text",
+            "id": "shop_link6_txt",
+            "type": "textarea"
+          }
+        ]
+      },
+      {
+        "type": "wholesale",
+        "name": "Wholesale Mega Menu",
+        "settings": [
+          {
+            "label": "Wholesale Link Text",
+            "id": "wholesale_txt",
+            "type": "text"
+          },
+          {
+            "id": "hide_wholesale_mobile",
+            "label": "Disable Mobile Mega Menu on Mobile",
+            "default": true,
+            "type": "checkbox"
+          },
+          {
+            "type": "url",
+            "id": "wholesale_url",
+            "label": "Wholesale Link"
+          },
+          {
+            "type": "image_picker",
+            "id": "wholesale_block1_img",
+            "label": "Block 1 - Image"
+          },
+          {
+            "type": "checkbox",
+            "id": "wholesale_block1_noimg",
+            "label": "Disable Block Image [Background Color Only]",
+            "default": true
+          },
+          {
+            "type": "color",
+            "id": "wholesale_block1_bgcolor",
+            "label": "Block 1 - Background Color"
+          },
+          {
+            "label": "Block 1 - Image Text",
+            "id": "wholesale_block1_overlaytxt",
+            "type": "text",
+            "info": "Optional text to display over image"
+          },
+          {
+            "type": "color",
+            "id": "wholesale_block1_color",
+            "label": "Block 1 - Title Color"
+          },
+          {
+            "label": "Block 1 - Image URL",
+            "id": "wholesale_block1_img_url",
+            "type": "url"
+          },
+          {
+            "label": "Block 1 - 1st Link URL",
+            "id": "wholesale_block1_url",
+            "type": "url"
+          },
+          {
+            "label": "Block 1 - 1st Link Title",
+            "id": "wholesale_block1_title",
+            "type": "text"
+          },
+          {
+            "label": "Block 1 - 2nd Link URL",
+            "id": "wholesale_block1_url2",
+            "type": "url"
+          },
+          {
+            "label": "Block 1 - 2nd Link Title",
+            "id": "wholesale_block1_title2",
+            "type": "text"
+          },
+          {
+            "type": "image_picker",
+            "id": "wholesale_block2_img",
+            "label": "Block 2 - Image"
+          },
+          {
+            "label": "Block 2 - URL",
+            "id": "wholesale_block2_url",
+            "type": "url"
+          },
+          {
+            "label": "Block 2 - Title",
+            "id": "wholesale_block2_title",
+            "type": "text"
+          },
+          {
+            "type": "image_picker",
+            "id": "wholesale_block3_img",
+            "label": "Block 3 - Image"
+          },
+          {
+            "label": "Block 3 - URL",
+            "id": "wholesale_block3_url",
+            "type": "url"
+          },
+          {
+            "label": "Block 3 - Title",
+            "id": "wholesale_block3_title",
+            "type": "text"
+          },
+          {
+            "type": "image_picker",
+            "id": "wholesale_block4_img",
+            "label": "Block 4 - Image"
+          },
+          {
+            "label": "Block 4 - URL",
+            "id": "wholesale_block4_url",
+            "type": "url"
+          },
+          {
+            "label": "Block 4 - Title",
+            "id": "wholesale_block4_title",
+            "type": "text"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

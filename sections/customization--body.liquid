@@ -1,0 +1,23 @@
+{% if section.settings.headline != blank %}
+<h2>{{ section.settings.headline }}</h2>
+{% endif %}
+{{ section.settings.body }}
+
+{% schema %}
+  {
+  	"name": "Customization Body",
+  	"settings": [
+      {
+        "type": "text",
+        "id": "headline",
+        "label": "Headline"
+      },
+      {
+        "type": "richtext",
+        "id": "body",
+        "label": "Body Text"
+      }
+  	]
+
+  }
+{% endschema %}

@@ -1,0 +1,276 @@
+{% capture checkDate %}{{ 'now' | date: '%d' }}{% endcapture %}
+{% assign todaysDate = checkDate | plus: 0 %}
+{% assign tomorrowsDate = todaysDate | plus: 1 %}
+{% if todaysDate > 25 %}{% assign todaysDate = 25 %}{% endif %}
+<!-- control the date -->
+{% assign todaysDate = 24 %}
+{% assign tomorrowsDate = 25 %}
+<div class="timer">
+  <p class="timer-text">{{ section.settings.timer_text }} <span id="timer-countdown"></span></p>
+</div>
+<section class="hero hero--25days" id="hero-{{ section.id }}">
+  <style type="text/css">
+    #hero-{{ section.id }} {
+      background-image: url('{{ section.settings.hero_img | img_url: '2800x' }}');
+    }
+  </style>
+  <div class="hero__wrap text-center">
+    <h6 class="weight900">{{ section.settings.hero_pretitle }}</h6>
+    <h1>{{ section.settings.hero_title }}</h1>
+    {% for block in section.blocks %}
+      {% if forloop.index == todaysDate %}
+        <div class="hero__circle">
+          {% assign heroGift = all_products[block.settings.featured_product] %}
+          <div class="hero__circle__top">
+            <h5 class="weight300">Gift of the Day</h5>
+          </div>
+          {% if block.settings.cta_url != blank %}
+            <a href="{{ block.settings.cta_url }}">
+              {% if block.settings.use_alt_image %}
+                <img src="{{ block.settings.alt_image | img_url: '600x600', crop: 'center' }}" data-aos="fade" data-aos-delay="1000" data-aos-duration="2000">
+              {% else %}
+                <img src="{{ heroGift.featured_image | img_url: '600x600', crop: 'center' }}" data-aos="fade" data-aos-delay="1000" data-aos-duration="2000">
+              {% endif %}
+            </a>
+            <div class="hero__circle__bottom hide-mobile">
+              <a href="{{ block.settings.cta_url }}"><h4>{{ block.settings.deal_title }}</h4></a>
+            </div>
+          {% else %}
+            <a href="{{ heroGift.url }}">
+              {% if block.settings.use_alt_image %}
+                <img src="{{ block.settings.alt_image | img_url: '600x600', crop: 'center' }}" data-aos="fade" data-aos-delay="1000" data-aos-duration="2000">
+              {% else %}
+                <img src="{{ heroGift.featured_image | img_url: '600x600', crop: 'center' }}" data-aos="fade" data-aos-delay="1000" data-aos-duration="2000">
+              {% endif %}
+            </a>
+            <div class="hero__circle__bottom hide-mobile">
+              <a href="{{ heroGift.url }}"><h4>{{ block.settings.deal_title }}</h4></a>
+            </div>
+          {% endif %}
+        </div>
+        <div class="hero__bottom">
+          {% if block.settings.cta_url != blank %}
+            <a href="{{ block.settings.cta_url }}" class="hide-desktop"><h4>{{ block.settings.deal_title }}</h4></a>
+            <a href="{{ block.settings.cta_url }}" class="cta-arrow">{{ block.settings.cta_text }}</a>
+          {% else %}
+            <a href="{{ heroGift.url }}" class="hide-desktop"><h4>{{ block.settings.deal_title }}</h4></a>
+            <a href="{{ heroGift.url }}" class="cta-arrow">{{ block.settings.cta_text }}</a>
+          {% endif %}
+        </div>
+      {% endif %}
+    {% endfor %}
+    </div>
+    <div class="hero__snow-left">
+      <div class="hero__snow__icon hero__snow__icon--flake1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48.8 53.3"><path d="M48.8 23.7c-0.2-1.6-1.7-2.8-3.3-2.6l-1 0.1 -0.2-1.4c-0.2-1.6-1.7-2.8-3.3-2.6 -1.6 0.2-2.8 1.7-2.6 3.3l0.2 1.4 -11.6 1.4 -0.8-6.5 4-0.4c1.7-0.1 2.9-1.6 2.7-3.3 -0.1-1.7-1.6-2.9-3.3-2.7l-4.2 0.4 -1-8.3C24.1 1 22.6-0.2 21 0c-1.6 0.2-2.8 1.7-2.6 3.3l1 8.1 -4.7 0.4c-1.7 0.1-2.9 1.6-2.7 3.3 0.1 1.6 1.4 2.7 3 2.7 0.1 0 0.2 0 0.3 0l4.9-0.4 0.8 6.7 -9.8 1.2 -0.1-1.2c-0.2-1.6-1.7-2.8-3.3-2.6C6 21.7 4.8 23.2 5 24.9L5.1 26l-2.5 0.3C1 26.6-0.2 28.1 0 29.7c0.2 1.5 1.5 2.6 3 2.6 0.1 0 0.2 0 0.4 0L5.9 32l0.2 1.7c0.2 1.5 1.5 2.6 3 2.6 0.1 0 0.2 0 0.4 0 1.6-0.2 2.8-1.7 2.6-3.3l-0.2-1.7 9.8-1.2 0.9 7.6 -5 0.4c-1.7 0.1-2.9 1.6-2.7 3.3 0.1 1.6 1.4 2.7 3 2.7 0.1 0 0.2 0 0.3 0l5.2-0.5 0.9 7.1c0.2 1.5 1.5 2.6 3 2.6 0.1 0 0.2 0 0.4 0 1.6-0.2 2.8-1.7 2.6-3.3l-0.8-6.9 3.8-0.3c1.7-0.1 2.9-1.6 2.7-3.3s-1.6-2.9-3.3-2.7l-4 0.3 -1-7.8 11.6-1.4 0.2 1.5c0.2 1.5 1.5 2.6 3 2.6 0.1 0 0.2 0 0.4 0 1.6-0.2 2.8-1.7 2.6-3.3l-0.2-1.5 1-0.1C47.8 26.8 49 25.3 48.8 23.7z"/></svg>
+      </div>
+      <div class="hero__snow__icon hero__snow__icon--o hide-mobile">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 21 21"><path d="M10.5 0C4.7 0 0 4.7 0 10.5S4.7 21 10.5 21C16.3 21 21 16.3 21 10.5S16.3 0 10.5 0zM10.5 15C8 15 6 13 6 10.5 6 8 8 6 10.5 6 13 6 15 8 15 10.5 15 13 13 15 10.5 15z"/></svg>
+      </div>
+      <div class="hero__snow__icon hero__snow__icon--x">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25.7 25.7"><path d="M24.1 15.4l-7.2-3.8 3.8-7.2c0.8-1.5 0.2-3.3-1.2-4.1s-3.3-0.2-4.1 1.2l-3.8 7.2L4.4 5C2.9 4.2 1.1 4.7 0.4 6.2c-0.8 1.5-0.2 3.3 1.2 4.1l7.2 3.8L5 21.2c-0.8 1.5-0.2 3.3 1.2 4.1 0.4 0.2 0.9 0.4 1.4 0.4 1.1 0 2.1-0.6 2.7-1.6l3.8-7.2 7.2 3.8c0.4 0.2 0.9 0.4 1.4 0.4 1.1 0 2.1-0.6 2.7-1.6C26.1 18 25.5 16.2 24.1 15.4z"/></svg>
+      </div>
+    </div>
+    <div class="hero__snow-right">
+      <div class="hero__snow__icon hero__snow__icon--flake2 hide-mobile">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 47.3 43.3"><path d="M46.9 8.1C46 6.7 44.2 6.2 42.8 7l-7 4.1 -2.2-4.2c-0.8-1.5-2.6-2-4.1-1.2 -1.5 0.8-2 2.6-1.2 4.1l2.3 4.4 -5.9 3.4 -5-8.6 1-0.6c1.4-0.8 1.9-2.7 1.1-4.1 -0.8-1.4-2.7-1.9-4.1-1.1l-1 0.6 -1.3-2.2c-0.8-1.4-2.7-1.9-4.1-1.1C10 1.2 9.5 3.1 10.3 4.5l1.3 2.2 -1.5 0.8C8.7 8.3 8.2 10.2 9 11.6c0.6 1 1.6 1.5 2.6 1.5 0.5 0 1-0.1 1.5-0.4l1.5-0.8 5 8.6 -6.6 3.8 -2.3-4.4c-0.8-1.5-2.6-2-4.1-1.2 -1.5 0.8-2 2.6-1.2 4.1l2.4 4.6 -6.2 3.6c-1.4 0.8-1.9 2.7-1.1 4.1C1 35.9 2 36.4 3 36.4c0.5 0 1-0.1 1.5-0.4l6-3.5 1.8 3.3c0.5 1 1.6 1.6 2.7 1.6 0.5 0 1-0.1 1.4-0.4 1.5-0.8 2-2.6 1.2-4.1l-1.9-3.5 6.8-3.9 5.9 10.1 -1.3 0.7c-1.4 0.8-1.9 2.7-1.1 4.1 0.6 1 1.6 1.5 2.6 1.5 0.5 0 1-0.1 1.5-0.4l1.3-0.7 0.5 0.9c0.6 1 1.6 1.5 2.6 1.5 0.5 0 1-0.1 1.5-0.4 1.4-0.8 1.9-2.7 1.1-4.1L36.6 38l1.2-0.7c1.4-0.8 1.9-2.7 1.1-4.1 -0.8-1.4-2.7-1.9-4.1-1.1l-1.2 0.7 -5.9-10.1 5.7-3.3 1.9 3.6c0.5 1 1.6 1.6 2.7 1.6 0.5 0 1-0.1 1.4-0.4 1.5-0.8 2-2.6 1.2-4.1l-2-3.8 7.2-4.2C47.2 11.4 47.7 9.5 46.9 8.1z"/></svg>
+      </div>
+      <div class="hero__snow__icon hero__snow__icon--x hide-mobile">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25.7 25.7"><path d="M24.1 15.4l-7.2-3.8 3.8-7.2c0.8-1.5 0.2-3.3-1.2-4.1s-3.3-0.2-4.1 1.2l-3.8 7.2L4.4 5C2.9 4.2 1.1 4.7 0.4 6.2c-0.8 1.5-0.2 3.3 1.2 4.1l7.2 3.8L5 21.2c-0.8 1.5-0.2 3.3 1.2 4.1 0.4 0.2 0.9 0.4 1.4 0.4 1.1 0 2.1-0.6 2.7-1.6l3.8-7.2 7.2 3.8c0.4 0.2 0.9 0.4 1.4 0.4 1.1 0 2.1-0.6 2.7-1.6C26.1 18 25.5 16.2 24.1 15.4z"/></svg>
+      </div>
+      <div class="hero__snow__icon hero__snow__icon--o">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 21 21"><path d="M10.5 0C4.7 0 0 4.7 0 10.5S4.7 21 10.5 21C16.3 21 21 16.3 21 10.5S16.3 0 10.5 0zM10.5 15C8 15 6 13 6 10.5 6 8 8 6 10.5 6 13 6 15 8 15 10.5 15 13 13 15 10.5 15z"/></svg>
+      </div>
+    </div>
+  </div>
+</section>
+{% assign collection = collections['25days'] %}
+<section class="calendar calendar--25days">
+  <div class="calendar__slider hide-desktop">
+    {% for block in section.blocks limit:4 %}
+      {% assign giftImg = all_products[block.settings.featured_product] %}
+      {% if block.settings.use_alt_image %}
+        <div><img src="{{ block.settings.alt_image | img_url: '600x600', crop: 'center' }}"></div>
+      {% else %}
+        <div><img src="{{ giftImg.featured_image | img_url: '600x600', crop: 'center' }}"></div>
+      {% endif %}
+    {% endfor %}
+  </div>
+  <div class="wrap wrap--max">
+    <div class="calendar__title text-center weight700">
+      {{ section.settings.calendar_title }}
+    </div>
+    <div class="calendar__grid hide-mobile">
+      <table>
+        {% for block in section.blocks %}
+          {% for product in collection.products %}
+            {% if product.handle == block.settings.featured_product %}
+              {% capture giftImage %}<img src="{{ product.featured_image | img_url: '600x600', crop: 'center' }}">{% endcapture %}
+              {% capture giftUrl %}{{ product.url }}{% endcapture %}
+            {% endif %}
+          {% endfor %}
+          {% cycle: 'open-rows': '<tr>', '', '', '', '' %}
+            {% assign calendarGift = block.settings.featured_product %}
+            <td>
+              <div class="calendar__date{% if forloop.index == todaysDate %} calendar__date--active{% endif %}{% if forloop.index < todaysDate %} calendar__date--past{% endif %}">{{ forloop.index }}</div>
+              {% if forloop.index <= todaysDate or forloop.index == tomorrowsDate %}
+                {% if block.settings.cta_url != blank %}
+                  <a href="{{ block.settings.cta_url }}">
+                    {% if block.settings.use_alt_image %}
+                      <img src="{{ block.settings.alt_image | img_url: '600x600', crop: 'center' }}">
+                    {% else %}
+                      {{ giftImage }}
+                    {% endif %}
+                  </a>
+                {% else %}
+                  <a href="{{ giftUrl }}">
+                    {% if block.settings.use_alt_image %}
+                      <img src="{{ block.settings.alt_image | img_url: '600x600', crop: 'center' }}">
+                    {% else %}
+                      {{ giftImage }}
+                    {% endif %}
+                  </a>
+                {% endif %}
+                {% if forloop.index == tomorrowsDate %}
+                  <div class="calendar__tmrw">
+                    Come back tomorrow!
+                  </div>
+                {% endif %}
+              {% else %}
+                <div class="calendar__blank"></div>
+              {% endif %}
+            </td>
+          {% cycle: 'close-rows': '', '', '', '', '</tr>' %}
+        {% endfor %}
+      </table>
+    </div>
+  </div>
+</section>
+<script type="text/javascript">
+  function timeToMidnight(){
+    //calculate
+    var now = new Date();
+    var hoursleft = 23-now.getHours();
+    var minutesleft = 59-now.getMinutes();
+    var secondsleft = 59-now.getSeconds();
+
+    //format 0 prefixes
+    if(minutesleft<10) minutesleft = "0"+minutesleft;
+    if(secondsleft<10) secondsleft = "0"+secondsleft;
+
+    //display
+    $('#timer-countdown').html(hoursleft+":"+minutesleft+":"+secondsleft);
+  }
+
+  const giftSlickSettings = {
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    infinite: true,
+    arrows: false,
+    dots: false,
+    centerMode: true,
+    mobileFirst: true,
+    rows: 0,
+    lazyLoad: 'progressive',
+    autoplay: true,
+    autoplaySpeed: 1000,
+    centerPadding: '0px'
+  };
+
+  $('.calendar__slider').slick(giftSlickSettings);
+  // $(".calendar__slider").on("click", function() {
+  //   $('.pdp-hero__photos__slider').slick('slickNext');
+  // });
+
+  // PDP Load & Resize Events
+  $(window).on('resize', function() {
+    $('.calendar__slider').slick('resize');
+  });
+
+  timeToMidnight();
+  setInterval(timeToMidnight, 1000);
+</script>
+
+{% schema %}
+  {
+    "name": "25 Days of Gifting",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Hero Area"
+      },
+      {
+        "id":"timer_text",
+        "type": "text",
+        "label": "Timer Text"
+      },
+      {
+        "id": "hero_img",
+        "type": "image_picker",
+        "label": "Info Hero Image"
+      },
+      {
+        "id":"hero_pretitle",
+        "type": "text",
+        "label": "Hero Pre-Header"
+      },
+      {
+        "id":"hero_title",
+        "type": "text",
+        "label": "Hero Title"
+      },
+      {
+        "type": "header",
+        "content": "Calendar Area"
+      },
+      {
+        "id":"calendar_title",
+        "type": "richtext",
+        "label": "Calendar Title",
+        "default": "<p>Visit us daily from Dec 1-25 for more featured products and gifting inspiration!</p>"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "product",
+        "name": "Product",
+        "settings": [
+          {
+            "id": "featured_product",
+            "type": "product",
+            "label": "Featured Product"
+          },
+          {
+            "id": "use_alt_image",
+            "type": "checkbox",
+            "label": "Overwrite Default Product Image",
+            "info": "Will use the Alternate Image below",
+            "default": false
+          },
+          {
+            "id": "alt_image",
+            "type": "image_picker",
+            "label": "Alternate Image"
+          },
+          {
+            "id": "deal_title",
+            "type": "text",
+            "label": "Deal Title"
+          },
+          {
+            "type": "text",
+            "id": "cta_text",
+            "label": "CTA Text",
+            "default": "Shop Now for 25% Off"
+          },
+          {
+            "id": "cta_url",
+            "type": "url",
+            "label": "CTA Link"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

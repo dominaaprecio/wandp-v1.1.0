@@ -1,0 +1,70 @@
+<div class="split-text-block">
+  <div class="split-text split-text--left" data-aos="fade-right" data-aos-once="true">
+    <!-- Our <span>Mission</span> -->
+    <h2 class="weight800">{{ section.settings.headline }}</h2>
+  </div>
+  <div class="split-text split-text--right" data-aos="fade-left" data-aos-once="true">
+    {% if section.settings.body != blank %}
+      {{ section.settings.body }}
+    {% endif %}
+  </div>
+</div>
+<div class="split-text-block split-text-block--newsletter pad-bottom">
+  <div class="split-text split-text--left"></div>
+  <div class="split-text split-text--right" data-aos="fade-up" data-aos-once="true">
+    <div class="email-capture">
+      <form id="split-text-form" onsubmit="return false;" autocomplete="off" accept-charset="UTF-8">
+        <div class="input-field-group">
+          <input maxlength="100" id="split-text-email" class="email" name="email" size="40" type="text" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" placeholder="your@email.com" value="" required />
+          <button type="submit" onclick="splitTextCapture();" class="email-submit">&gt;</button>
+        </div>
+      </form>
+      <div id="split-text-result"></div>
+      <script type="text/javascript">
+        function splitTextCapture(){
+          if (document.getElementById("split-text-form").checkValidity() == true){
+            _ltk.Subscriber.List = "homepage";
+            _ltk.Subscriber.Email = document.getElementById("split-text-email").value;
+            _ltk.Subscriber.Submit();
+            document.getElementById("split-text-form").style.display="none";
+            document.getElementById("split-text-result").className = "success";
+            document.getElementById("split-text-result").innerHTML="<h4>You're All Set!</h4><p>You'll be first to hear about new products, sales and more. Keep an eye on your inbox, a discount code is on its way.</p>";
+          } else {
+            document.getElementById("split-text-result").className = "error";
+            document.getElementById("split-text-result").innerHTML="<p>Please enter a valid email</p>";
+          }
+        }
+      </script>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "Split Text w/ Newsletter",
+    "settings": [
+      {
+        "type": "text",
+        "id": "headline",
+        "label": "Headline"
+      },
+      {
+        "type": "richtext",
+        "id": "body",
+        "label": "Body"
+      }
+	],
+    "presets": [
+      {
+        "category": "Media",
+        "name": "Split Text w/ Newsletter"
+      }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

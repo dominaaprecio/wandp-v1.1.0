@@ -1,0 +1,51 @@
+<div class = "wrap wrap--max">
+  <div class="grid">
+    {% for block in section.blocks %}
+      {% include "info--content-block-text" %}
+    {% endfor %}
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "Contact Body",
+    "blocks": [
+      {
+        "type": "text",
+        "name": "Text Block",
+        "settings": [
+          {
+            "id": "title",
+            "type": "text",
+            "label": "title"
+          },
+          {
+            "id": "link_1_title",
+            "type": "text",
+            "label": "Link 1 Title"
+          },
+          {
+            "id": "link_1_link",
+            "type": "url",
+            "label": "Link 1"
+          },
+          {
+            "id": "link_2_title",
+            "type": "text",
+            "label": "Link 2 Title"
+          },
+          {
+            "id": "link_2_link",
+            "type": "url",
+            "label": "Link 2"
+          },
+          {
+            "id": "body",
+            "type": "richtext",
+            "label": "Content"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

@@ -1,0 +1,396 @@
+{%- assign current_variant = product.selected_or_first_available_variant -%}
+{%- assign featured_image = current_variant.featured_image | default: product.featured_image -%}
+{% assign notifyMe = true %}
+
+{% for tag in product.tags %}
+  {% if product.tags contains "Pre-Order" %}
+    {% assign dataAvail = "Pre-Order" %}
+    {% if product.metafields.sku.shipdate != blank %}
+      {% assign dataStatus = "This item will be in stock " | plus: product.metafields.sku.shipdate %}
+    {% else %}
+      {% assign dataStatus = "This item will be in stock soon." %}
+    {% endif %}
+  {% elsif product.tags contains "Coming-Soon" %}
+    {% assign dataAvail = "Coming Soon" %}
+    {% if product.metafields.sku.shipdate != blank %}
+      {% assign dataStatus = "This item will be in stock " | plus: product.metafields.sku.shipdate %}
+    {% else %}
+      {% assign dataStatus = "This item is coming soon!" %}
+    {% endif %}
+  {% elsif product.tags contains "Sold-Out" %}
+    {% assign dataAvail = "Sold Out" %}
+    {% if product.metafields.sku.shipdate != blank %}
+      {% assign dataStatus = "This item will be in stock " | plus: product.metafields.sku.shipdate %}
+    {% else %}
+      {% assign dataStatus = "This item is currently out of stock." %}
+    {% endif %}
+  {% elsif product.tags contains "clearance" %}
+    {% assign notifyMe = false %}
+  {% endif %}
+{% endfor %}
+
+{% assign isOnSale = false %}
+{% assign saleCollection = settings.discount_collection %}
+{% for n in product.collections %}
+  {% if n.handle == "sale" or n.handle == "clearance" %}
+    {% assign notifyMe = false %}
+  {% endif %}
+  {% if n.handle == saleCollection %}
+    {% assign isOnSale = true %}
+  {% endif %}
+{% endfor %}
+
+{% if product.vendor == 'Short Stack Editions' or product.vendor == 'Clearance' %}
+{% assign notifyMe = false %}
+{% endif %}
+
+
+
+<div id="product" class="product{% if settings.enable_discount and isOnSale %} product--sale {% endif %}" data-section-id="{{ section.id }}" data-section-type="product" data-enable-history-state="true" itemscope itemtype="http://schema.org/Product">
+  <meta itemprop="name" content="{{ product.title }}{% unless product.has_only_default_variant %} - {{ current_variant.title }}{% endunless %}">
+  <meta itemprop="url" content="{{ shop.url }}{{ current_variant.url }}">
+  <meta itemprop="brand" content="{{ product.vendor }}">
+  <meta itemprop="image" content="{{ featured_image | img_url: '600x750' }}">
+  <meta itemprop="description" content="{{ product.metafields.global.description_tag }}">
+  <div class="wrap wrap--max">
+    <div class="product__hero">
+      <div class="grid grid--full">
+        <div class="grid__item medium-up--six-tenths product__sticky">
+          {% if product.images.size > 1 %}
+          <div class="product__images">
+            <div id="product-slider" class="product__slider" data-aos="fade" data-aos-once="true">
+              {% for image in product.images %}
+              <div class="{{ image.alt }} photo product__photo" data-src="{{ image.src | img_url: '1000x1250', crop: 'center' }}">
+                <img srcset="{{ image.src | img_url: '1000x1250', crop: 'center' }} 2x, {{ image.src | img_url: '640x800', crop: 'center' }} 1x" src="{{ image.src | img_url: '640x800', crop: 'center' }}" alt="{{ image.alt | escape }}">
+              </div>
+              {% endfor %}
+            </div>
+            <div class="product__thumbs hide-mobile">
+              <div class="product__thumbs__wrap" data-aos="fade" data-aos-delay="1000" data-aos-duration="500" data-aos-once="true">
+                <div id="product-thumbnails" class="product__thumbs__slider no-bullets">
+                  {% for image in product.images %}
+                  <div class="product__thumb {{ image.alt }}">
+                    <img srcset="{{ image.src | img_url: '160x160', crop: 'center' }} 2x, {{ image.src | img_url: '100x100', crop: 'center' }} 1x" src="{{ image.src | img_url: '100x100', crop: 'center' }}" alt="{{ image.alt | escape }}">
+                  </div>
+                  {% endfor %}
+                </div>
+              </div>
+            </div>
+          </div>
+          {% else %}
+          {% if featured_image != blank %}
+          <img srcset="{{ featured_image | img_url: '1400x1750' }} 2x, {{ featured_image | img_url: '1000x1250' }} 1x" src="{{ featured_image | img_url: '1000x1250' }}" alt="{{ featured_image.alt | escape }}">
+          {% endif %}
+          {% endif %}
+        </div>
+        <div class="grid__item medium-up--four-tenths product__sticky" data-aos="zoom-in" data-aos-delay="1500" data-aos-duration="600" data-aos-once="true" data-aos-anchor=".product__hero">
+          <div class="product__text">
+            <div class="product__title" data-price-wrapper>
+              <h1>
+                {{ product.title }}
+                <br>
+                {% if settings.enable_discount and isOnSale %}
+                  <span id="product-price-container" style="display: block; margin-top: 4px;" class="weight300" data-product-price>
+                    <s><span id="product-price">{{- current_variant.price | money -}}</span></s>
+                    {% if product.has_only_default_variant %}
+                      {% capture saleDiscount %}0.{{ settings.discount_percentage }}{% endcapture %}
+                      {% assign saleDiscount = saleDiscount | plus: 0 %}
+                      {%- assign prodSaleDiscount = product.price | times: saleDiscount -%}
+                      {%- assign prodSalePrice = product.price | minus: prodSaleDiscount -%}
+                      <span class="sale-price">{{- prodSalePrice | money -}}</span>
+                    {% else %}
+                      <span id="product-sale-price"></span>
+                    {% endif %}
+                  </span>
+                {% else %}
+                  <span id="product-price-container" style="display: block; margin-top: 4px;" class="weight300" data-product-price>
+                    {% if product.compare_at_price_max > product.price %}
+                    <span class="visually-hidden" data-compare-text>{{ 'products.product.regular_price' | t }}</span>
+                    <s data-compare-price class="price-crossed-out weight300">
+                      {%- if current_variant.compare_at_price > current_variant.price -%}
+                      {{- current_variant.compare_at_price | money -}}
+                      {%- endif -%}
+                    </s>
+                    {% endif %} {{- current_variant.price | money -}}
+                  </span>
+                {% endif %}
+              </h1>
+            </div>
+            <div class="product__offers" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+              <meta itemprop="priceCurrency" content="{{ shop.currency }}">
+              <meta itemprop="price" content="{{ current_variant.price | divided_by: 100.00 }}">
+              <link itemprop="availability" href="http://schema.org/{% if current_variant.available %}InStock{% else %}OutOfStock{% endif %}">
+
+              <form action="/cart/add" method="post" enctype="multipart/form-data" data-cart-submit>
+                {% unless product.has_only_default_variant %}
+                {% for option in product.options_with_values %}
+                <div class="selector-wrapper js">
+                  <label for="SingleOptionSelector-{{ forloop.index0 }}">
+                    {{ option.name }}
+                  </label>
+
+                  <select
+                          id="SingleOptionSelector-{{ forloop.index0 }}"
+                          class="single-option-selector"
+                          data-single-option-selector
+                          data-index="option{{ option.position }}">
+                    {% for value in option.values %}
+                    <option
+                            value="{{ value | escape }}"
+                            {% if option.selected_value == value %}selected="selected"{% endif %}>
+                      {{ value }}
+                    </option>
+                    {% endfor %}
+                  </select>
+                </div>
+                {% endfor %}
+                {% endunless %}
+
+                <select id="product-select" name="id" class="no-js" data-product-select>
+                  {% for variant in product.variants %}
+                  <option
+                    {% if variant == current_variant %}selected="selected"{% endif %}
+                    value="{{ variant.id }}"
+                    data-id="{{ variant.id }}"
+                    data-variant="{{ variant.title }}"
+                    data-product="{{ product.title }}"
+                    data-sku="{{ variant.sku }}"
+                    data-price="{{ variant.price | money_without_currency }}"
+                    data-image="{{ variant.image.src | img_url: "1000x" }}"
+                    {% if variant.available %}
+                      {% if variant.metafields.sku.availability != blank %}
+                        data-availability="{{ variant.metafields.sku.availability }}"
+                        {% if variant.metafields.sku.cta != blank %}
+                          data-cta="{{ variant.metafields.sku.cta }}"
+                        {% else %}
+                          data-cta="{{ variant.metafields.sku.availability }}"
+                        {% endif %}
+                        {% if variant.metafields.sku.availability == 'Pre-Order' or variant.metafields.sku.availability == 'Coming Soon'  %}
+                          {% if variant.metafields.sku.shipdate != blank %}
+                            data-status="This item will be in stock {{ variant.metafields.sku.shipdate }}."
+                          {% else %}
+                            data-status="This item will be in stock soon."
+                          {% endif %}
+                        {% elsif variant.metafields.sku.availability == 'Sold Out' %}
+                          data-status="This item is currently out of stock."
+                        {% endif %}
+                      {% else %}
+                        {% if dataAvail != blank %}
+                          data-availability="{{ dataAvail }}"
+                          {% if variant.metafields.sku.cta != blank %}
+                            data-cta="{{ variant.metafields.sku.cta }}"
+                          {% else %}
+                            data-cta="{{ dataAvail }}"
+                          {% endif %}
+                          data-status="{{ dataStatus }}"
+                        {% else %}
+                          data-availability="In Stock"
+                          {% if variant.metafields.sku.cta != blank %}
+                            data-cta="{{ variant.metafields.sku.cta }}"
+                          {% else %}
+                            data-cta="Add to Cart"
+                          {% endif %}
+                          {% if variant.metafields.sku.shipdate != blank %}
+                            data-status="This item will be in stock {{ variant.metafields.sku.shipdate }}."
+                          {% else %}
+                            data-status="Currently in stock."
+                          {% endif %}
+                        {% endif %}
+                      {% endif %}
+                    {% else %}
+                      data-availability="Sold Out"
+                      data-cta="Sold Out"
+                      data-status="This item is currently out of stock."
+                    {% endif %}
+                    {% if variant.metafields.sku.shipdate != blank %}
+                      data-shipdate="{{ variant.metafields.sku.shipdate }}"
+                    {% endif %}
+                    >
+                    {{ variant.title }} {{ variant.metafields.sku.availability }}
+                  </option>
+                  {% endfor %}
+                </select>
+
+                <div class="product__options{% if product.variants.size > 1 %} product__options--gray{% endif %}">
+                  {% if product.variants.size > 1 %}
+                    {% for option in product.options %}
+                      {% include 'swatch' with option %}
+                    {% endfor %}
+                    {% if product.options.first == 'Color' %}
+                      <input type="hidden" id="initial-color" value="{{ current_variant.option1 }}">
+                    {% endif %}
+                  {% endif %}
+                  <div class="{% if product.options.size > 1 %} {% else %} {% endif %}">
+                    <div class="">
+                      <h5>Quantity:</h5>
+                      <div class="product__qty">
+                        <span class="js-qty--minus">–</span>
+                        <input type="text" pattern="[0-9]*" id="Quantity" name="quantity" value="1">
+                        <span class="js-qty--plus">+</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="product__add">
+                  <button
+                          onclick="pintrk('track', 'addtocart', { value: 10.00, order_quantity: 1, currency: 'USD' });"
+                          class="btn btn--bigger btn--add-to-cart"
+                          type="submit"
+                          name="add"
+                          data-add-to-cart
+                          {% unless current_variant.available %}disabled="disabled"{% endunless %}>
+                    <span data-add-to-cart-text>
+                      {% if current_variant.available %}
+                      {{ 'products.product.add_to_cart' | t }}
+                      {% else %}
+                      {{ 'products.product.sold_out' | t }}
+                      {% endif %}
+                    </span>
+                  </button>
+                  <div class="product__status">
+                    {% if product.variants.size == 1 %}
+                      {% include 'product__status' %}
+                    {% else %}
+                      {% include 'product__status--variants' %}
+                    {% endif %}
+                  </div>
+                </div>
+              </form>
+              {% if notifyMe %}
+              <div class="product__notify-me" style="display: none;">
+                <form id="bis-signup" onsubmit="return false;" autocomplete="off" accept-charset="UTF-8">
+                  <p>* Enter your email address to be notified when&nbsp;this&nbsp;item&nbsp;is&nbsp;in&nbsp;stock.</p>
+                  <div class="product__notify-me__fields">
+                    <input id="bis-email" type="text" name="email" size="40" maxlength="100" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" value="" placeholder="email" required />
+                    <input id="saveForm" name="saveForm" class="btTxt btn btn--primary submit" type="submit" value="Notify Me" />
+                  </div>
+                </form>
+                <div id="bis-signup-msg"></div>
+              </div>
+              {% endif %}
+            </div>
+
+            {% unless product == empty %}
+            <script type="application/json" data-product-json>
+                  {{ product | json }}
+            </script>
+            {% endunless %}
+      {% capture product_icons %}
+              {% for tag in product.tags %}
+                {% if tag contains 'icon' and tag contains '_'  %}
+                {% assign icon = tag | split: '_' | last | prepend: 'icon--' | append: '--text' %}
+                <li>{% include icon %}</li>
+                {% endif %}
+              {% endfor %}
+      {% endcapture %}
+            <div class="product__info">
+              {% if product.description contains '<!-- tab -->' %}
+                <div class="product__description rte">
+                  {{ product.description | split: '<!-- tab -->' | first }}
+                </div>
+                {% unless product_icons == empty %}
+                <div class="product__icons">
+                  <ul class="inline-list">
+                    {{ product_icons }}
+                  </ul>
+                </div>
+                {% endunless %}
+                <div class="product__details product__details--closed">
+                  <h2 class="js-toggle__details">{% include 'icon--arrow-down--open' %}</span> Details</h2>
+                  <div class="rte product__details__text">
+                    {{ product.description | split: '<!-- tab -->' | last }}
+                  </div>
+                </div>
+              {% else %}
+                <div class="product__description rte">
+                  {{ product.description }}
+                </div>
+                {% unless product_icons == empty %}
+                <div class="product__icons">
+                  <ul class="inline-list">
+                    {{ product_icons }}
+                  </ul>
+                </div>
+                {% endunless %}
+        {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% if product.variants.size > 1 %}
+<input type="hidden" value="{{ product.variants.first.id }}" id="first-variant">
+<input type="hidden" value="{{ current_variant.option1 }}" id="default-variant">
+{% endif %}
+
+{% if product.vendor == 'Porter' %}
+{% include 'pdp-porter' %}
+{% endif %}
+
+<script type="text/javascript">
+  var _learnq = _learnq || [];
+  var item = {
+    Name: {{ product.title|json }},
+    ProductID: {{ product.id|json }},
+    Categories: {{ product.collections|map:'title'|json }},
+    ImageURL: "https:{{ product.featured_image.src|img_url:'grande' }}",
+    URL: "{{ shop.secure_url }}{{ product.url }}",
+    Brand: {{ product.vendor|json }},
+    Price: {{ product.price|money|json }},
+    CompareAtPrice: {{ product.compare_at_price_max|money|json }}
+  };
+  _learnq.push(['track', 'Viewed Product', item]);
+  _learnq.push(['trackViewedItem', {
+    Title: item.Name,
+    ItemId: item.ProductID,
+    Categories: item.Categories,
+    ImageUrl: item.ImageURL,
+    Url: item.URL,
+    Metadata: {
+      Brand: item.Brand,
+      Price: item.Price,
+      CompareAtPrice: item.CompareAtPrice
+    }
+  }]);
+
+  document.querySelector(".btn--add-to-cart").addEventListener('click',function (){
+    _learnq.push(['track', 'Added to Cart', item]);
+  });
+
+  {% if notifyMe %}
+  $("#bis-signup").submit(function(event) {
+      let bisEmail = $("#bis-email").val();
+      let bisId = $("#product-select option:selected").data("id");
+      let bisImage = $("#product-select option:selected").data("image");
+      let bisVariant = $("#product-select option:selected").data("variant");
+      let bisSku = $("#product-select option:selected").data("sku");
+      let bisPrice = $("#product-select option:selected").data("price");
+      window._learnq.push([ 'identify',
+        {
+          '$email': bisEmail
+        }
+      ]);
+      window._learnq.push(['track', 'Back in Stock', {
+        Title: '{{ product.title }}',
+        variantTitle: bisVariant,
+        ProductID: {{ product.id }},
+        Brand: "W&P",
+        pageUrl: window.location.href,
+        imageUrl: bisImage,
+        Price: bisPrice,
+        quantity: 1,
+        variantId: bisId
+      }]);
+      document.getElementById("bis-signup").style.display="none";
+      document.getElementById("bis-signup-msg").style.color="#000";
+      document.getElementById("bis-signup-msg").innerHTML="<p>Thanks! We'll notify you when this product is in stock.</p>";
+
+      // document.getElementById("bis-signup-msg").style.color="#f00";
+      // document.getElementById("bis-signup-msg").innerHTML="Please enter a valid email";
+    event.preventDefault();
+  });
+  {% endif %}
+</script>

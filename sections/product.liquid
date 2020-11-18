@@ -1,0 +1,71 @@
+{% include 'breadcrumbs' %}
+{% include 'product__hero' %}
+{% if section.settings.show_related_products %}
+<div class="product__related">
+  <div class="wrap wrap--max">
+    <h2 class="text-center">{{ section.settings.related_products_title }}</h2>
+  </div>
+  {% include 'cross-sell-custom' %}
+</div>
+{% endif %}
+{% assign video_count = 0 %}
+{% for tag in product.tags %}
+  {% if tag contains "Vimeo" %}
+    {% assign video_count = video_count | plus: 1 %}
+    {% capture video_url %}{{ tag | remove: "Vimeo: " }}{% endcapture %}
+  {% endif %}
+{% endfor %}
+<div style="display:none">{{ video_count }}</div>
+{% if video_count != 0 %}
+<div class="product__video">
+  {% comment %}
+  <div class="section-title">
+    <h2>Product Video{% if video_count > 1 %}s{% endif %}</h2>
+    <hr/>
+  </div>
+  {% endcomment %}
+  <div class="wrap wrap--double">
+    {% if video_count == 1 %}
+      <div class="vimeo"><iframe src="https://player.vimeo.com/video/{{ video_url }}?color=fbbd97&title=0&byline=0&portrait=0&background=1" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe></div>
+      <script src="https://player.vimeo.com/api/player.js"></script>
+    {% else %}
+      {% for tag in product.tags %}
+        {% if tag contains "Vimeo" %}
+          <div class="vimeo"><iframe src="https://player.vimeo.com/video/{{ tag | remove: "Vimeo: " }}?color=fbbd97&title=0&byline=0&portrait=0" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe></div>
+        {% endif %}
+      {% endfor %}
+      <script src="https://player.vimeo.com/api/player.js"></script>
+    {% endif %}
+  </div>
+</div>
+{% endif %}
+
+{% schema %}
+  {
+    "name": "Product Page",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "show_share_buttons",
+        "label": "Show social sharing buttons",
+        "default": true
+      },
+	  {
+		"type": "header",
+		"content": "Related Products"
+	  },
+      {
+        "type": "checkbox",
+        "id": "show_related_products",
+        "label": "Show Related Products",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "related_products_title",
+        "label": "Related Products title",
+        "default": "You Might Also Like"
+      }
+    ]
+  }
+{% endschema %}

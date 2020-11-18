@@ -1,0 +1,43 @@
+<div class="grid">
+  <div class="grid__item medium-up--three-quarters">
+    {{ section.settings.before_bullets }}
+    <ul style="margin-left: 40px;">
+      {% for block in section.blocks %}
+        <li> {{ block.settings.bullet }} </li>
+      {% endfor %}
+    </ul>
+    {{ section.settings.after_bullets }}
+    <a target="_blank" href="https://www.shareasale.com/shareasale.cfm?merchantID=64361" class="cta-solid">Apply Now &gt;</a>
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "Affiliate Body",
+    "settings": [
+      {
+        "id": "before_bullets",
+        "type": "richtext",
+        "label": "Text Before Bullets"
+      },
+      {
+        "id": "after_bullets",
+        "type": "textarea",
+        "label": "Text After Bullets"
+      }
+  	],
+    "blocks": [
+      {
+          "type": "text",
+          "name": "Bullet",
+          "settings": [
+            {
+              "id": "bullet",
+              "type": "text",
+              "label": "Bullet"
+            }
+          ]
+      }
+    ]
+  }
+{% endschema %}

@@ -1,0 +1,41 @@
+
+<h2 class = "text-center">Our Clients</h2>
+<!--hr /--></div>
+<div id="customization-logos">
+  <div class="grid grid--full">
+  {% assign aosDelay = 0 %}
+  {% for block in section.blocks %}
+    {% assign aosDelay = aosDelay | plus: 100 %}
+    <div class="grid__item medium-up--one-fifth one-half customization-logo" data-aos-anchor="#customization-logos" data-aos="fade-up" data-aos-delay="{{ aosDelay }}">
+      <img src = "{{ block.settings.image | img_url: '400x' }}" border="0" />
+    </div>
+  {% endfor %}
+  </div>
+<div class="clearfix"></div>
+
+{% schema %}
+  {
+    "name": "Logo Blocks",
+    "blocks": [
+  	  {
+        "type": "image",
+        "name": "Logos",
+        "settings": [
+          {
+            "type": "image_picker",
+            "label": "Logo",
+            "id": "image"
+          }
+        ]
+  	  }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+  #customization-logos {
+    width: 100%;
+    max-width: 880px;
+    margin: 0px auto 30px auto;
+  }
+{% endstylesheet %}

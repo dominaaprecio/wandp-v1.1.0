@@ -1,0 +1,105 @@
+{% include 'blog__hero' %}
+
+<div class="wrap wrap--max">
+  <div class="blog__nav text-center">
+    {% for link in linklists[section.settings.blog_nav].links %}
+    <a href="{{ link.url }}"{% if link.active %}{% if link.title == 'All' and current_tags %}class="weight300"{% else %} class="weight800"{% endif %}{% endif %}>{{ link.title }}</a>{% unless forloop.last == true %}&nbsp;&nbsp;|&nbsp;&nbsp;{% endunless %}
+    {% endfor %}
+  </div>
+</div>
+
+{% paginate blog.articles by 15 %}
+
+{% comment %}
+  {%- assign blog_title = blog.title -%}
+
+  {% if current_tags %}
+    {% capture blog_title %}{{ blog.title | link_to: blog.url }} &mdash; {{ current_tags.first }}{% endcapture %}
+  {% endif %}
+
+  <h1>{{ blog_title }}</h1>
+
+  {% if blog.all_tags.size > 0 %}
+    <h2>{{ 'blogs.general.categories' | t }}</h2>
+
+    <ul>
+      {% for tag in blog.all_tags %}
+
+        {% if current_tags contains tag %}
+          <li>{{ tag }}</li>
+        {% else %}
+          <li>{{ tag | link_to_tag: tag }}</li>
+        {% endif %}
+
+      {% endfor %}
+    </ul>
+  {% endif %}
+{% endcomment %}
+<div class="clear-footer">
+  <div class="wrap wrap--max">
+
+
+      {% comment %}
+
+      Article Previews
+      ====================
+      {% endcomment %}
+
+
+
+        {% for article in blog.articles %}
+        {% cycle 'entry': '<div class="c-grid">', '', '', '', '', '<div class="c-grid c-grid--rev">', '', '', '', '' %}
+          {% cycle 'entries': '<div class="c-grid__item c-grid__item--big" data-aos-once="true" data-aos="fade-up">', '<div class="c-grid__item" data-aos-once="true" data-aos="fade-up" data-aos-delay="100">', '<div class="c-grid__item" data-aos-once="true" data-aos="fade-up" data-aos-delay="200">', '<div class="c-grid__item" data-aos-once="true" data-aos="fade-up" data-aos-delay="100">', '<div class="c-grid__item" data-aos-once="true" data-aos="fade-up" data-aos-delay="200">' %}
+            {% include 'article-grid-item' %}
+        {% if forloop.last %}
+          </div>
+        {% else %}
+            {% cycle 'entries-end': '</div>', '</div>', '</div>', '</div>', '</div>'  %}
+          {% cycle 'entry-end': '', '', '', '', '</div>', '', '', '', '', '</div>' %}
+        {% endif %}
+
+
+    	{% endfor %}
+
+
+  </div>
+
+  {% if paginate.pages > 1 %}
+    {% include 'pagination' %}
+  {% endif %}
+</div>
+{% endpaginate %}
+
+
+{% schema %}
+  {
+    "name": "Blog",
+    "settings": [
+      {
+         "type": "header",
+         "content": "Blog Hero"
+      },
+	  {
+        "id": "hero_img",
+        "type": "image_picker",
+        "label": "Blog Hero Image"
+	  },
+	  {
+        "id": "hero_txt",
+        "type": "richtext",
+        "label": "Blog Hero Text"
+	  },
+	  {
+        "id": "show_email_capture",
+        "type": "checkbox",
+        "label": "Show Email Capture in Blog Hero",
+		"default": true
+	  },
+      {
+         "type": "link_list",
+         "id": "blog_nav",
+         "label": "Blog Categories List"
+      }
+	]
+  }
+{% endschema %}

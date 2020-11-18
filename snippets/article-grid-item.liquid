@@ -1,0 +1,37 @@
+<div class="text-center blog-item">
+          {% if article.image %}
+            <a href="{{ article.url }}">
+              {{ article | img_url: '1200x1500', crop: 'center' | img_tag: article.title }}
+            </a>
+          {% endif %}
+
+          {% if article.tags.size > 0 %}
+            {% for tag in article.tags %}
+              {% unless tag == 'lunch' %}
+              <h6 class="category-link">
+                <a href="{{ blog.url }}/tagged/{{ tag | handle }}">{{ tag }}</a>
+                {% unless forloop.last %}, {% endunless %}
+              </h6>
+              {% endunless %}
+            {% endfor %}
+          {% endif %}
+          <h3>
+            <a href="{{ article.url }}">{{ article.title }}</a>
+          </h3>
+
+		  {% comment %}
+          <div class="rte">
+            {% if article.excerpt.size > 0 %}
+              {{ article.excerpt }}
+            {% else %}
+              <p>
+                {{ article.content | strip_html | truncatewords: 100 }}
+              </p>
+            {% endif %}
+          </div>
+
+          <p>
+            <a href="{{ article.url }}">{{ 'blogs.article.read_more' | t }} &rarr;</a>
+          </p>
+          {% endcomment %}
+</div>

@@ -1,0 +1,33 @@
+<section class="hero hero--blog">
+  <div class="grid grid--full">
+    <div class="grid__item medium-up--six-tenths" data-aos="fade">
+	  <img src="{{ section.settings.hero_img | img_url: '1920x1100', crop: 'center' }}">
+    </div>
+    <div class="grid__item medium-up--four-tenths">
+      <div class="wrap">
+        <div class="hero__text hero__text--flex">
+          {% if section.settings.show_email_capture %}
+          <div class="grid">
+            <div class="grid__item one-whole">
+              <h1><span class="single-line--desktop">{{ blog.title }}</span></h1>
+            </div>
+            <div class="grid__item one-whole">
+              {% if section.settings.hero_txt != blank %}
+              {{ section.settings.hero_txt }}
+              {% endif %}
+              <div class="email-capture">
+                <div class="klaviyo-form-Sfh7FT"></div>
+              </div>
+            </div>
+          </div>
+          {% else %}
+            <h1><span class="single-line">{{ blog.title }}</span></h1>
+            {% if section.settings.hero_txt != blank %}
+              {{ section.settings.hero_txt }}
+            {% endif %}
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,37 @@
+
+<h2 class = "grid__item" id = "distributors">{{ section.settings.title }}</h2>
+
+{% for block in section.blocks %}
+  {% include "info--content-block-text" %}
+{% endfor %}
+
+{% schema %}
+  {
+    "name": "Wholesale Distribution",
+    "settings": [
+      {
+        "id": "title",
+        "type": "text",
+        "label": "Title"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "text",
+        "name": "Text Block",
+        "settings": [
+          {
+            "id": "title",
+            "type": "text",
+            "label": "title"
+          },
+          {
+            "id": "body",
+            "type": "richtext",
+            "label": "Content"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

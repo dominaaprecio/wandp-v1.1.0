@@ -1,0 +1,96 @@
+{% paginate search.results by 18 %}
+
+<section class="search">
+  <div class="wrap wrap--max">
+      <div class="pad-y">
+        <div class="page__text page--search text-center">
+          <h1>{% if search.performed %}Search Results for: {{ search.terms | escape }}{% else %}Search{% endif %}</h1>
+          <form action="/search" method="get" class="form__search" role="search">
+            <input type="text" name="q" value="{{ search.terms | escape }}" class="formsearch__input" />
+            <input type="submit" value="Search" class="cta-solid" />
+          </form>
+
+          <div id="search--shop" class="text-center">
+            <div class="grid grid--uniform">
+
+              {% if search.performed %}
+
+              {% if search.results_count == 0 %}
+
+              <div class="searchresult__text pad-y">
+                <h3>No results found for "{{ search.terms }}"</h3>
+                <p>Please another search or <a href="/collections/all" class="cta-arrow">start shopping</a></p>
+              </div>
+
+              {% else %}
+
+              {% for item in search.results %}
+              {% unless item.object_type == 'page' or item.tags contains 'no-search' %}
+
+              <div class="grid__item grid__product grid__product-margin one-half medium-up--one-third text-center">
+
+                <a class="product-item-link" href="{{ item.url }}">
+                  <div class="product-item-featured">
+                    {% if item.object_type == 'product' %}
+                    <img src="{{ item.featured_image.src | product_img_url: '760x760', crop: 'center' }}" alt="{{ item.title | escape }}" {% if item.tags contains "Coming-Soon" %}class="coming-soon"{% endif %} />
+                    {% elsif item.object_type == 'article' %}
+                    {% if item.image %}
+                    <img src="{{ item.image.src | img_url: '760x760', crop: 'center' }}" alt="{{ item.title }}" />
+                    {% elsif item.content contains "<img" %}
+                    {% assign src = item.content | split: 'src="' %}
+                    {% assign src = src[1] | split: '"' | first | remove: 'https:' | remove: 'http:' | replace: 'grande', 'large' %}
+                    {{ src | img_tag }}
+                    {% else %}
+                    <div style="width:330px;height:330px"></div>
+                    {% endif %}
+                    {% endif %}
+                  </div>
+                  {% if item.images.size > 1 %}
+
+                  {% endif %}
+                </a>
+
+                <div class="product-item-info search-results">
+                  <p class="weight800"><a {% unless item.tags contains "Coming-Soon" %}href="{{ item.url }}"{% endunless %}>{{ item.title }}</a></p>
+                  <p>{% if item.tags contains "Sold-Out" %}<span style="color:#aaaaaa">Sold Out</span>{% elsif item.tags contains "Coming-Soon" %}<span style="color:#aaaaaa">Coming Soon</span>{% else %}<span>{{ item.first_available_variant.price | money }}</span>{% endif %}</p>
+                  <p class="pad-x" style="font-size: 14px; margin-top: 20px;">{{ item.content | strip_html | truncatewords: 11 | highlight: search.terms }}</p>
+                </div>
+
+              </div>
+
+              {% endunless %}
+              {% endfor %}
+              {% endif %}
+              {% endif %}
+
+            </div>
+
+            {% if paginate.pages > 1 %}
+            {% comment %}
+            <div class="pagination">
+            {% if paginate.previous.is_link %}
+            <a class="arrows" href="{{ paginate.previous.url }}"><i class="fa fa-chevron-left" aria-hidden="true"></i></a>
+            {% endif %}
+            {% assign count = paginate.pages %}
+            {% for part in (1..count) %}
+            <a {% if paginate.current_page == part %}class="active"{% endif %} href="{{ blog.url }}?page={{ forloop.index }}">{{ forloop.index }}</a>
+            {% endfor %}
+            {% if paginate.next.is_link %}
+            <a class="arrows" href="{{ paginate.next.url }}"><i class="fa fa-chevron-right" aria-hidden="true"></i></a>
+            {% endif %}
+          </div>
+          {% endcomment %}
+          <div class="pagination text-center">
+            <div class="pad-top">
+              {% include 'pagination' %}
+            </div>
+          </div>
+          {% endif %}
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endpaginate %}

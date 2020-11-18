@@ -1,0 +1,66 @@
+<div class = "wrap wrap--max">
+  <div class = "grid">
+    <div class = "grid__item medium-up--one-whole wholesale--catalog">
+      <div class = "grid__item medium-up--one-whole">
+        <h2 class = "wholesale--catalog-header">{{ section.settings.title }}</h2>
+        {{section.settings.wholesale_description}}
+      </div>
+    </div>
+  </div>
+  {% include "catalog" %}
+</div>
+
+<script>
+  $( document ).ready( function(){
+    $(".slick-carousel").slick({
+      arrows: true,
+      centerMode: false,
+      slidesToShow: 3,
+      slidesToScroll: 1,
+      responsive: [
+        {
+          breakpoint: 767,
+          settings: {
+            slidesToShow: 1,
+            slidesToScroll: 1,
+            infinite: true,
+            arrows: false
+          }
+        }
+      ],
+      nextArrow: "<div class = 'carousel-next carousel-arrow'>></div>",
+      prevArrow: "<div class = 'carousel-prev carousel-arrow'><</div>"
+    });
+  });
+</script>
+
+{% schema %}
+  {
+    "name": "Wholesale Catalog",
+    "settings": [
+      {
+        "id": "title",
+        "type": "text",
+        "label": "Title"
+      },
+      {
+        "id": "wholesale_description",
+        "label": "Description",
+        "type": "textarea"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "image",
+        "name": "Image",
+        "settings": [
+          {
+            "id": "image",
+            "type": "image_picker",
+            "label": "Image"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

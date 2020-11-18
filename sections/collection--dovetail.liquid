@@ -1,0 +1,307 @@
+{% include 'breadcrumbs' %}
+{% include 'collection__hero' %}
+{%- if section.blocks.size > 0 -%}
+  <div class="wrap wrap--max pad-top">
+  {%- for block in section.blocks -%}
+    {% if collections[block.settings.cb_collection].products_count != 0 %}
+      <div class="collection-block" data-aos="fade-up" data-aos-delay="300" data-aos-once="true">
+        {% if block.settings.cb_title != blank %}
+          <h3>{{ block.settings.cb_title }}</h3>
+        {% else %}
+          <h3>{{ collections[block.settings.cb_collection].title }}</h3>
+        {% endif %}
+        <div class="grid">
+        {% for product in collections[block.settings.cb_collection].products limit: 3 %}
+          <div class="grid__item one-half medium-up--one-quarter">
+            {% include 'product-grid-item' %}
+          </div>
+        {% endfor %}
+          <div class="grid__item one-half medium-up--one-quarter">
+            <div class="item item--square">
+              <div class="item__wrap">
+                <div class="item__text">
+                  <a class="cta-arrow cta-arrow--big" href="{{ collections[block.settings.cb_collection].url }}">View&nbsp;All</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endif %}
+  {%- endfor -%}
+    <div class="text-center pad-y">
+      <a class="cta-arrow cta-arrow--big" href="/collections/dovetail?view=list">See All from Dovetail</a>
+    </div>
+  </div>
+{%- endif -%}
+  {% unless section.settings.hide_promo %}
+<div class="wrap wrap--max pad-top">
+  <div class="collection__promo" data-aos="fade-up" id="promo-{{ section.id }}">
+      <div class="grid grid--uniform">
+        <div class="grid__item medium-up--one-half">
+          <div class="item">
+            <style type="text/css">
+              #{{ section.id }}-left {
+                background: url('{{ section.settings.promo_left | img_url: '630x788', crop: 'center' }}') no-repeat;
+              }
+              @media
+              only screen and (-webkit-min-device-pixel-ratio: 2),
+              only screen and (   min--moz-device-pixel-ratio: 2),
+              only screen and (     -o-min-device-pixel-ratio: 2/1),
+              only screen and (        min-device-pixel-ratio: 2),
+              only screen and (                min-resolution: 192dpi),
+              only screen and (                min-resolution: 2dppx) {
+                #{{ section.id }}-left {
+                  background: url('{{ section.settings.promo_left | img_url: '1200x1500', crop: 'center' }}') no-repeat;
+                }
+              }
+            </style>
+            <div id="{{ section.id }}-left" class="item__image"></div>
+            <div class="item__wrap" data-aos="fade" data-aos-duration="1500" data-aos-anchor="#promo-{{ section.id }}" data-aos-anchor-placement="top-center">
+              <div class="item__text wrapper text-center" data-aos-delay="200" data-aos="fade-up">
+                <h2 class="weight800">{{ section.settings.promo_left_headline }}</h2>
+                <ul class="inline-list text-center">
+                  <li>
+                    <a class="cta-arrow" href="{{ section.settings.promo_left_cta_url }}">{{ section.settings.promo_left_cta }}</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="grid__item medium-up--one-half">
+          <div class="item">
+            <style type="text/css">
+              #{{ section.id }}-right {
+                background: url('{{ section.settings.promo_right | img_url: '630x788', crop: 'center' }}') no-repeat;
+              }
+              @media
+              only screen and (-webkit-min-device-pixel-ratio: 2),
+              only screen and (   min--moz-device-pixel-ratio: 2),
+              only screen and (     -o-min-device-pixel-ratio: 2/1),
+              only screen and (        min-device-pixel-ratio: 2),
+              only screen and (                min-resolution: 192dpi),
+              only screen and (                min-resolution: 2dppx) {
+                #{{ section.id }}-right {
+                  background: url('{{ section.settings.promo_right | img_url: '1200x1500', crop: 'center' }}') no-repeat;
+                }
+              }
+            </style>
+            <div id="{{ section.id }}-right" class="item__image"></div>
+            <div class="item__wrap" data-aos="fade" data-aos-duration="1500" data-aos-anchor="#promo-{{ section.id }}" data-aos-anchor-placement="top-center" data-aos-delay="500">
+              <div class="item__text wrapper text-center" data-aos-delay="700" data-aos="fade-up">
+                <h2 class="weight800">{{ section.settings.promo_right_headline }}</h2>
+                <ul class="inline-list text-center">
+                  <li>
+                    <a class="cta-arrow" href="{{ section.settings.promo_right_cta_url }}">{{ section.settings.promo_right_cta }}</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+  {% endunless %}
+
+{% schema %}
+  {
+    "name": "Dovetail Collection",
+    "settings": [
+    {
+      "id": "products_per_page",
+      "type": "select",
+      "label": "Products per Page",
+      "options": [
+        {
+          "value": "10",
+          "label": "10 products"
+        },
+        {
+          "value": "15",
+          "label": "15 products"
+        },
+        {
+          "value": "20",
+          "label": "20 products"
+        },
+        {
+          "value": "25",
+          "label": "25 products"
+        },
+        {
+          "value": "30",
+          "label": "30 products"
+        },
+        {
+          "value": "35",
+          "label": "35 products"
+        },
+        {
+          "value": "40",
+          "label": "40 products"
+        },
+        {
+          "value": "45",
+          "label": "45 products"
+        },
+        {
+          "value": "50",
+          "label": "50 products"
+        }
+      ],
+      "default": "30"
+    },
+    {
+      "id": "hero_img",
+      "type": "image_picker",
+      "label": "Collection Hero Image"
+    },
+    {
+      "id": "collection_video",
+      "type": "video_url",
+      "label": "Collection Video URL",
+      "accept": ["vimeo"]
+    },
+    {
+      "type": "checkbox",
+      "default": false,
+      "id": "show_collection_img",
+      "label": "Show Image instead of Video"
+    },
+    {
+      "id": "collection_img",
+      "type": "image_picker",
+      "label": "Collection Image"
+    },
+    {
+      "type": "header",
+      "content": "Promo Grid"
+    },
+    {
+      "type": "checkbox",
+      "default": false,
+      "id": "hide_promo",
+      "label": "Hide Promo Grid"
+    },
+    {
+      "id": "visible_promo",
+      "type": "select",
+      "label": "Default Visible Promo",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "right"
+    },
+    {
+      "id": "promo_left",
+      "type": "image_picker",
+      "label": "Promo - Left Image"
+    },
+    {
+      "id": "promo_left_headline",
+      "type": "text",
+      "label": "Promo - Left Headline"
+    },
+    {
+      "id": "promo_left_cta_url",
+      "type": "url",
+      "label": "Promo - Left CTA Link"
+    },
+    {
+      "id": "promo_left_cta",
+      "type": "text",
+      "label": "Promo - Left CTA Text"
+    },
+    {
+      "id": "promo_right",
+      "type": "image_picker",
+      "label": "Promo - Right Image"
+    },
+    {
+      "id": "promo_right_headline",
+      "type": "text",
+      "label": "Promo - Right Headline"
+    },
+    {
+      "id": "promo_right_cta_url",
+      "type": "url",
+      "label": "Promo - Right CTA Link"
+    },
+    {
+      "id": "promo_right_cta",
+      "type": "text",
+      "label": "Promo - Right CTA Text"
+    }
+    ],
+    "blocks": [
+      {
+        "type": "collection",
+        "name": "Collection Block",
+        "settings": [
+          {
+            "type": "collection",
+            "id": "cb_collection",
+            "label": "Collection"
+          },
+          {
+            "type": "text",
+            "id": "cb_title",
+            "label": "Collection Title",
+            "info": "Optional"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+
+.collection-block {
+  margin-bottom: 50px;
+}
+
+@media (min-width: 769px) {
+  .collection-block {
+    margin-bottom: 80px;
+  }
+}
+
+.collection-block h3 {
+  position: relative;
+  padding-left: 30px;
+  display: block;
+  z-index: 1;
+  font-size: 26px;
+  line-height: 1;
+}
+.collection-block h3:before {
+  position: absolute;
+  width: 100%;
+  height: 16px;
+  background-color: #f1f2f2;
+  z-index: -1;
+  left: 0;
+  bottom: -4px;
+  content: '';
+  display: block;
+}
+@media (min-width: 769px) {
+  .collection-block h3 {
+    font-size: 30px;
+  }
+}
+
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

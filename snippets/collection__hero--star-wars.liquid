@@ -1,0 +1,58 @@
+<style>
+  .hero__text .logo--star-wars {
+    fill: #333334;
+    width: 100%;
+    max-width: 260px;
+    height: auto;
+  }
+  @media (min-width: 769px) {
+    .hero__text .logo--star-wars {
+      max-width: 300px;
+      height: auto;
+    }
+  }
+  .hero-image {
+    background: url('{{ collection.image | img_url: '1440x' }}') no-repeat;
+    background-position: bottom left;
+    background-size: cover;
+  }
+  @media
+  only screen and (-webkit-min-device-pixel-ratio: 2),
+  only screen and (   min--moz-device-pixel-ratio: 2),
+  only screen and (     -o-min-device-pixel-ratio: 2/1),
+  only screen and (        min-device-pixel-ratio: 2),
+  only screen and (                min-resolution: 192dpi),
+  only screen and (                min-resolution: 2dppx) {
+    .hero-image {
+      background: url('{{ collection.image | img_url: '2880x' }}') no-repeat;
+      background-position: bottom left;
+      background-size: cover;
+    }
+  }
+</style>
+<section class="hero hero--blocks hero--star-wars">
+  <div class="grid grid--full">
+    <div class="grid__item large-up--two-thirds one-whole" style="line-height: 0;" data-aos="fade">
+      {% comment %}
+	  <img src="{{ section.settings.hero_img | img_url: '2880x1100', crop: 'center' }}">
+      {% endcomment %}
+      <div class="hero-image"></div>
+      {% comment %}
+      <img srcset="{{ collection.image | img_url: '2880x1000', crop: 'center' }} 2x, {{ collection.image | img_url: '1440x500', crop: 'center' }} 1x" src="{{ collection.image | img_url: '1440x500', crop: 'center' }}" alt="{{ collection.title }}">
+      {% endcomment %}
+    </div>
+  </div>
+  <div class="hero__text text-charcoal">
+    <div class="gray-block" data-aos="fade-up" data-aos-delay="500" data-aos-once="true">
+      <h1>
+        <span class="visually-hidden">{{ collection.title }}</span>
+        {% include 'logo--star-wars' %}
+      </h1>
+      {% if collection.description != blank %}
+        <div class="rte">
+          {{ collection.description }}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</section>

@@ -1,0 +1,183 @@
+<section id="grid-{{ section.id }}">
+  <style>
+    #grid-{{ section.id }} .grid__item {
+      line-height: 0;
+    }
+    #grid-{{ section.id }} .home-grid__item {
+      line-height: 0;
+      position: relative;
+      margin-bottom: 20px;
+    }
+    @media (min-width: 769px) {
+      #grid-{{ section.id }} .home-grid__item {
+        margin-bottom: 30px;
+      }
+    }
+    @media (min-width: 1024px) {
+      #grid-{{ section.id }} .home-grid__item {
+        margin-bottom: 40px;
+      }
+    }
+    #grid-{{ section.id }} .item__wrap {
+      color: {{ section.settings.grid_txt_color }};
+      background: rgba(255,255,255,0.8);
+    }
+    #grid-{{ section.id }} .item__wrap a {
+      color: {{ section.settings.grid_txt_color }};
+      border-color: {{ section.settings.grid_txt_color }};
+    }
+    #grid-{{ section.id }} .logo--star-wars {
+      fill: {{ section.settings.grid_txt_color }};
+      width: 100%;
+      height: auto;
+      max-width: 300px;
+      display: block;
+      margin: 0 auto 20px auto;
+    }
+    @media (min-width: 769px) {
+      #grid-{{ section.id }} .logo--star-wars {
+        margin: 0 auto 30px auto;
+      }
+    }
+    .item__image--link a {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+  </style>
+  <div class="wrap wrap--max">
+    <div class="grid home-grid{% if section.settings.reverse %} grid--rev{% endif %}">
+      <div class="grid__item home-grid__item medium-up--two-thirds">
+        <div class="item">
+          <div class="item__image lozad" data-background-image="{{ section.settings.main_img | img_url: '1600x2000', crop: 'center' }}"></div>
+          <div class="item__wrap" data-aos="fade" data-aos-duration="1500" data-aos-anchor="#grid-{{ section.id }}" data-aos-anchor-placement="top-center">
+            <div class="item__text wrapper text-center" data-aos-delay="200" data-aos="fade-up">
+              {% if section.settings.main_headline contains 'Star Wars' %}
+                <span class="visually-hidden">{{ section.settings.main_cta2_main_headline }}</span>
+                {% include 'logo--star-wars' %}
+              {% else %}
+                <h2 class="weight800">{{ section.settings.main_headline }}</h2>
+              {% endif %}
+              <div>
+                {{ section.settings.main_txt }}
+              </div>
+              <ul class="inline-list text-center">
+                <li>
+                  <a class="cta-arrow" href="{{ section.settings.main_cta1_url }}">{{ section.settings.main_cta1_txt }}</a>
+                </li>
+                {%- if section.settings.main_cta2_txt != blank -%}
+                <li>
+                  <a class="cta-arrow" href="{{ section.settings.main_cta2_url }}">{{ section.settings.main_cta2_txt }}</a>
+                </li>
+                {%- endif -%}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="grid__item home-grid__item medium-up--one-third one-half" data-aos="fade" data-aos-once="true">
+        <div class="item">
+          <div class="item__image item__image--link lozad" data-background-image="{{ section.settings.side_img1 | img_url: '760x950', crop: 'center' }}">{% if section.settings.side_img1_url != blank %}<a href="{{ section.settings.side_img1_url }}"></a>{% endif %}</div>
+        </div>
+      </div>
+      <div class="grid__item home-grid__item medium-up--one-third one-half" data-aos="fade" data-aos-once="true">
+        <div class="item">
+          <div class="item__image item__image--link lozad" data-background-image="{{ section.settings.side_img2 | img_url: '760x950', crop: 'center' }}">{% if section.settings.side_img2_url != blank %}<a href="{{ section.settings.side_img2_url }}"></a>{% endif %}</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+{% schema %}
+  {
+    "name": "Home Grid Area",
+    "settings": [
+	  {
+		"type": "checkbox",
+		"id": "reverse",
+		"label": "Flip the Grid",
+		"default": false
+	  },
+      {
+        "type": "color",
+        "id": "grid_txt_color",
+        "label": "Grid Text Color",
+        "default": "#333334"
+      },
+	  {
+        "id": "main_img",
+        "type": "image_picker",
+        "label": "Featured Image"
+	  },
+	  {
+		"id": "main_headline",
+		"type": "text",
+		"label": "Featured Headline"
+	  },
+	  {
+        "id": "main_txt",
+        "type": "richtext",
+        "label": "Left Column Text"
+	  },
+	  {
+        "id": "main_cta1_txt",
+        "type": "text",
+        "label": "Featured CTA Text"
+	  },
+	  {
+        "id": "main_cta1_url",
+        "type": "url",
+        "label": "Featured CTA Link"
+	  },
+	  {
+        "id": "main_cta2_txt",
+        "type": "text",
+        "label": "2nd Featured CTA Text",
+		"info": "Optional"
+	  },
+	  {
+        "id": "main_cta2_url",
+        "type": "url",
+        "label": "2nd Featured CTA Link",
+		    "info": "Optional"
+	  },
+	  {
+        "id": "side_img1",
+        "type": "image_picker",
+        "label": "1st Side Image"
+	  },
+    {
+        "id": "side_img1_url",
+        "type": "url",
+        "label": "1st Side Image Link",
+        "info": "Optional"
+	  },
+	  {
+        "id": "side_img2",
+        "type": "image_picker",
+        "label": "2nd Side Image"
+	  },
+    {
+        "id": "side_img2_url",
+        "type": "url",
+        "label": "2nd Side Image Link",
+        "info": "Optional"
+	  }
+	],
+    "presets": [
+      {
+        "name": "Grid - 2 Column",
+        "category": "Grid"
+      }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

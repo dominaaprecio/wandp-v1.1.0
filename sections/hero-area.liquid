@@ -1,0 +1,378 @@
+<style type="text/css">
+  #hero-{{ section.id }} {
+    {% if section.settings.hero_type == 'hero--image' or section.settings.hide_video_on_mobile %}
+    background: url('{{ section.settings.hero_img | img_url: '1600x' }}') no-repeat;
+    background-position: {{ section.settings.hero_img_pos }};
+    background-size: cover;
+    {% endif %}
+    color: {{ section.settings.hero_txt_color }};
+    height: 380px;
+  }
+  {% if section.settings.hero_type == 'hero--image' %}
+  @media
+  only screen and (-webkit-min-device-pixel-ratio: 2),
+  only screen and (   min--moz-device-pixel-ratio: 2),
+  only screen and (     -o-min-device-pixel-ratio: 2/1),
+  only screen and (        min-device-pixel-ratio: 2),
+  only screen and (                min-resolution: 192dpi),
+  only screen and (                min-resolution: 2dppx) {
+    #hero-{{ section.id }} {
+      {% if section.settings.hero_type == 'hero--image' or section.settings.hide_video_on_mobile %}
+      background: url('{{ section.settings.hero_img | img_url: '2880x' }}') no-repeat;
+      background-position: {{ section.settings.hero_img_pos }};
+      background-size: cover;
+      {% endif %}
+    }
+  }
+  {% endif %}
+  #hero-{{ section.id }} .hero__wrap {
+    width: 100%;
+    max-width: 100%;
+  }
+  #hero-{{ section.id }} .hero__text__cta {
+    margin-top: 20px;
+  }
+  #hero-{{ section.id }} h1 {
+    font-size: 1.5rem;
+    max-width: 100%;
+    margin: 0 auto;
+  }
+  @media (min-width: 375px) {
+    #hero-{{ section.id }} {
+      height: 480px;
+    }
+    #hero-{{ section.id }} h1 {
+      font-size: 1.8rem;
+      max-width: 100%;
+    }
+  }
+  @media (min-width: 480px) {
+    #hero-{{ section.id }} {
+      height: 500px;
+    }
+    #hero-{{ section.id }} h1 {
+      max-width: 300px;
+    }
+  }
+  @media (max-width: 768px) {
+    {% if section.settings.use_mobile_hero_img %}
+    #hero-{{ section.id }} {
+      background: url('{{ section.settings.mobile_hero_img | img_url: '1200x1200', crop: 'center' }}') no-repeat;
+      background-position: {{ section.settings.hero_img_pos_mobile }};
+      background-size: cover;
+    }
+    {% endif %}
+    .object-fit .hero__video video {
+      object-position: {{ section.settings.hero_img_pos_mobile }};
+    }
+    #hero-{{ section.id }} .hero__wrap {
+      padding: 20px;
+      align-items: center;
+    }
+    #hero-{{ section.id }} h1 {
+      margin-top: 57px;
+    }
+    .cta-arrow--big {
+      font-size: 18px;
+    }
+    {% if section.settings.hero_type == 'hero--image' or section.settings.hide_video_on_mobile %}
+    #hero-{{ section.id }} {
+      background-position: {{ section.settings.hero_img_pos_mobile }};
+      background-size: cover;
+    }
+    {% endif %}
+    {% if section.settings.hero_txt_align_mobile == 'text-right--mobile' %}
+    #hero-{{ section.id }} h1 {
+      margin-left: auto;
+    }
+    {% endif %}
+  }
+  @media (min-width: 769px) {
+    #hero-{{ section.id }} {
+      min-height: 500px;
+    }
+    #hero-{{ section.id }} .hero__wrap {
+      padding: 30px;
+    }
+    #hero-{{ section.id }} .hero__text__cta {
+      margin-top: 20px;
+    }
+    #hero-{{ section.id }} h1 {
+      font-size: 2.rem;
+      max-width: 470px;
+    }
+    #hero-{{ section.id }} .cta-arrow--big {
+      font-size: 20px;
+    }
+  }
+  @media (min-width: 1025px) {
+    #hero-{{ section.id }} {
+      height: 82vh;
+      min-height: 600px;
+    }
+    #hero-{{ section.id }} .hero__wrap {
+      padding: 50px 40px;
+    }
+    #hero-{{ section.id }} h1 {
+      font-size: 2.5rem;
+      max-width: 520px;
+    }
+  }
+  @media (min-width: 1140px) {
+    #hero-{{ section.id }} .cta-arrow--big {
+      font-size: 20px;
+    }
+  }
+  #hero-{{ section.id }} a {
+    color: {{ section.settings.hero_txt_color }};
+    border-color: {{ section.settings.hero_txt_color }};
+  }
+  #hero-{{ section.id }} .btn-cta {
+    color: {{ section.settings.hero_txt_color }};
+    border-color: {{ section.settings.hero_txt_color }};
+  }
+</style>
+<div class="hero {{ section.settings.hero_type }}" id="hero-{{ section.id }}">
+  {% if section.settings.hero_type == 'hero--video' %}
+  <div class="hero__video{% if section.settings.hide_video_on_mobile %} hide-mobile{% endif %}">
+    <video width="16" height="9" preload loop autoplay playsinline muted>
+      <source src="{{ section.settings.hero_video_url }}" type="video/mp4">
+    </video>
+  </div>
+  {% endif %}
+  <!--div class="hero__overlay"></div-->
+  <div class="hero__wrap">
+    <div class="hero__text {{ section.settings.hero_txt_align }} {{ section.settings.hero_txt_align_mobile }}" data-aos="fade-up" data-aos-delay="1200" data-aos-duration="1100" data-aos-once="true" data-aos-anchor=".hero">
+      <h1>{{ section.settings.hero_headline }}</h1>
+      {% if section.settings.hero_text != blank %}<p style="margin: 10px 0 20px 0;">{{ section.settings.hero_text }}</p>{% endif %}
+      {% if section.settings.hero_cta1_txt != blank %}
+      <div class="hero__text__cta">
+        {% if section.settings.hero_cta2_txt != blank %}
+          <ul class="inline-list">
+            <li>
+              <a class="cta-arrow cta-arrow--big" href="{{ section.settings.hero_cta1_url }}">{{ section.settings.hero_cta1_txt }}</a>
+            </li>
+            <li>
+              <a class="cta-arrow cta-arrow--big" href="{{ section.settings.hero_cta2_url }}">{{ section.settings.hero_cta2_txt }}</a>
+            </li>
+          </ul>
+        {% else %}
+          <a class="cta-arrow cta-arrow--big" href="{{ section.settings.hero_cta1_url }}">{{ section.settings.hero_cta1_txt }}</a>
+        {% endif %}
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+  {
+  	"name": "Hero Area",
+  	"settings": [
+      {
+  		"type": "select",
+  		"id": "hero_type",
+  		"label": "Type of Hero Area",
+        "options": [
+          {
+        	"value": "hero--image",
+        	"label": "Image"
+          },
+          {
+        	"value": "hero--video",
+        	"label": "Video"
+          }
+        ],
+   		  "default": "hero--image"
+  	  },
+      {
+        "type": "text",
+        "id": "hero_video_url",
+        "label": "Hero Video URL",
+		    "info": "If using Video"
+      },
+      {
+        "id": "hide_video_on_mobile",
+        "type": "checkbox",
+        "label": "Hide video on mobile",
+        "info": "Displays background image instead",
+        "default": false
+      },
+      {
+        "type": "image_picker",
+        "id": "hero_img",
+        "label": "Hero Image"
+      },
+      {
+        "type": "image_picker",
+        "id": "mobile_hero_img",
+        "label": "Mobile Hero Image"
+      },
+      {
+        "id": "use_mobile_hero_img",
+        "type": "checkbox",
+        "label": "Use Mobile Hero Image",
+        "info": "Displays different image on mobile",
+        "default": false
+      },
+      {
+        "type": "select",
+        "id": "hero_img_pos",
+        "label": "Hero Image Position",
+      	"options": [
+          {
+        		"value": "center",
+        		"label": "Center"
+      	  },
+      	  {
+        		"value": "top left",
+        		"label": "Top Left"
+      	  },
+      	  {
+        		"value": "top center",
+        		"label": "Top Center"
+      	  },
+      	  {
+        		"value": "top right",
+        		"label": "Top Right"
+      	  },
+      	  {
+        		"value": "bottom left",
+        		"label": "Bottom Left"
+      	  },
+      	  {
+        		"value": "bottom center",
+        		"label": "Bottom Center"
+      	  },
+      	  {
+        		"value": "bottom right",
+        		"label": "Bottom Right"
+      	  }
+      	],
+        "default": "center"
+      },
+      {
+        "type": "select",
+        "id": "hero_img_pos_mobile",
+        "label": "Mobile Hero Image Position",
+        "options": [
+          {
+            "value": "center",
+            "label": "Center"
+          },
+          {
+            "value": "top left",
+            "label": "Top Left"
+          },
+          {
+            "value": "top center",
+            "label": "Top Center"
+          },
+          {
+            "value": "top right",
+            "label": "Top Right"
+          },
+          {
+            "value": "bottom left",
+            "label": "Bottom Left"
+          },
+          {
+            "value": "bottom center",
+            "label": "Bottom Center"
+          },
+          {
+            "value": "bottom right",
+            "label": "Bottom Right"
+          }
+        ],
+        "default": "center"
+      },
+      {
+      	"type": "color",
+      	"id": "hero_txt_color",
+      	"label": "Hero Text Color",
+      	"default": "#fff"
+      },
+      {
+        "type": "select",
+        "id": "hero_txt_align",
+        "label": "Text Alignment",
+        "options": [
+          {
+            "value": "text-center--desktop",
+            "label": "Center"
+          },
+          {
+            "value": "text-left--desktop",
+            "label": "Left"
+          },
+          {
+            "value": "text-right--desktop",
+            "label": "Right"
+          }
+        ],
+        "default": "text-left--desktop"
+      },
+      {
+        "type": "select",
+        "id": "hero_txt_align_mobile",
+        "label": "Mobile Text Alignment",
+        "options": [
+          {
+            "value": "text-center--mobile",
+            "label": "Center"
+          },
+          {
+            "value": "text-left--mobile",
+            "label": "Left"
+          },
+          {
+            "value": "text-right--mobile",
+            "label": "Right"
+          }
+        ],
+        "default": "text-left--mobile"
+      },
+      {
+      	"type": "text",
+      	"id": "hero_headline",
+      	"label": "Headline"
+      },
+      {
+      	"type": "textarea",
+      	"id": "hero_text",
+      	"label": "Text (optional)"
+      },
+      {
+      	"type": "text",
+      	"id": "hero_cta1_txt",
+      	"label": "First CTA Text"
+      },
+      {
+      	"type": "url",
+      	"id": "hero_cta1_url",
+      	"label": "First CTA Link"
+      },
+      {
+      	"type": "text",
+      	"id": "hero_cta2_txt",
+      	"label": "Second CTA Text"
+      },
+      {
+      	"type": "url",
+      	"id": "hero_cta2_url",
+      	"label": "Second CTA Link"
+      }
+  	],
+    "presets": [
+      {
+        "category": "Media",
+        "name": "Hero Area"
+      }
+    ]
+  }
+{% endschema %}
+
+{% javascript %}
+
+{% endjavascript %}

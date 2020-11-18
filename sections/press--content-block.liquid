@@ -1,0 +1,31 @@
+<div class="wrap wrap--max text-center" style="margin-top: 50px;">
+  <div class="gray-block gray-block--inline text-center">
+    <div class="pad-x">
+      {{ section.settings.text }}
+      <a href="{{ section.settings.press_cta_link }}" class="cta-arrow">{{ section.settings.press_cta }}</a>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "Press Content Block",
+    "settings": [
+  	  {
+          "id": "text",
+          "type": "richtext",
+          "label": "Contact Press Text"
+  	  },
+      {
+          "id": "press_cta",
+          "type": "text",
+          "label": "Press CTA Text"
+      },
+      {
+          "id": "press_cta_link",
+          "type": "url",
+          "label": "Press CTA Link"
+      }
+    ]
+  }
+{% endschema %}

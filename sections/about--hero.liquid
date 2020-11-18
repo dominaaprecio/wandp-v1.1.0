@@ -1,0 +1,137 @@
+<style type="text/css">
+  #hero-{{ section.id }} {
+    background: url('{{ section.settings.hero_img | img_url: '2880x' }}') no-repeat;
+    background-position: {{ section.settings.hero_img_pos }};
+    background-size: cover;
+    color: {{ section.settings.hero_txt_color }};
+  }
+  #hero-{{ section.id }} a {
+    color: {{ section.settings.hero_txt_color }};
+  }
+  #hero-{{ section.id }} .hero__text {
+    padding-left: 30%;
+  }
+  #hero-{{ section.id }} .hero__text h1 {
+    margin-top: 36%;
+  }
+  @media (max-width: 768px) {
+    #hero-{{ section.id }} .hero__text h1 {
+      margin-top: 40%;
+    }
+  }
+  @media (min-width: 769px) {
+    #hero-{{ section.id }} .hero__text {
+      padding-left: 50%;
+    }
+  }
+</style>
+<div class="hero hero--info" id="hero-{{ section.id }}">
+  <div class="hero__wrap {{ section.settings.hero_txt_pos }}" >
+    <div class="hero__text {{ section.settings.hero_txt_align }}" data-aos="fade-up" data-aos-delay="1000" data-aos-duration="1500">
+      {% if section.settings.hero_txt != blank %}
+      <h1>{{ section.settings.hero_txt}}</h1>
+    {% endif %}
+    </div>
+  </div>
+</div>
+
+
+{% schema %}
+  {
+    "name": "About Hero Image",
+    "settings": [
+      {
+        "id": "hero_img",
+        "type": "image_picker",
+        "label": "Info Hero Image"
+      },
+      {
+        "type": "select",
+        "id": "hero_img_pos",
+        "label": "Hero Image Position",
+        "options": [
+          {
+            "value": "center",
+            "label": "Center"
+          },
+          {
+            "value": "top left",
+            "label": "Top Left"
+          },
+          {
+            "value": "top center",
+            "label": "Top Center"
+          },
+          {
+            "value": "top right",
+            "label": "Top Right"
+          },
+          {
+            "value": "bottom left",
+            "label": "Bottom Left"
+          },
+          {
+            "value": "bottom center",
+            "label": "Bottom Center"
+          },
+          {
+            "value": "bottom right",
+            "label": "Bottom Right"
+          }
+        ],
+        "default": "center"
+      },
+      {
+        "type": "text",
+        "id": "hero_txt",
+        "label": "Hero Text Headline"
+      },
+      {
+        "type": "color",
+        "id": "hero_txt_color",
+        "label": "Hero Text Color",
+        "default": "#333334"
+      },
+      {
+        "type": "select",
+        "id": "hero_txt_pos",
+        "label": "Hero Text Position",
+        "options": [
+          {
+            "value": "hero__wrap--center",
+            "label": "Center"
+          },
+          {
+            "value": "hero__wrap--top",
+            "label": "Top"
+          },
+          {
+            "value": "hero__wrap--bottom",
+            "label": "Bottom"
+          }
+        ],
+        "default": "hero__wrap--center"
+      },
+      {
+        "type": "select",
+        "id": "hero_txt_align",
+        "label": "Hero Text Alignment",
+        "options": [
+          {
+            "value": "text-center",
+            "label": "Center"
+          },
+          {
+            "value": "text-left",
+            "label": "Left"
+          },
+          {
+            "value": "text-right",
+            "label": "Right"
+          }
+        ],
+        "default": "text-center"
+      }
+	]
+  }
+{% endschema %}

@@ -1,0 +1,76 @@
+<style>
+  .page--customization{
+    padding-bottom: 100px;
+  }
+
+  .carousel-prev{
+    left: -100px;
+  }
+
+
+
+  .carousel-arrow{
+    position: absolute;
+    top: 50%;
+    transform: translate( 0px, -50% );
+    font-size: 4em;
+    z-index: 4;
+    cursor: pointer;
+  }
+
+  .carousel-next{
+    right: -100px;
+  }
+
+  .customization-logo {
+    float: left;
+    padding: 0 5px;
+    margin: 0px;
+    width: 20%;
+  }
+
+  @media( max-width: 950px ){
+    .customization-logo{
+      width: 50%;
+    }
+
+    #customization-logos{
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    .carousel-prev{
+      left: 0px;
+    }
+    .carousel-next{
+      right: 0px;
+    }
+  }
+
+  .customization-logo img {
+    width: 100%;
+    height: auto;
+  }
+</style>
+<div class="page--customization">
+  {% section "customization--hero" %}
+  <div class="wrap wrap--max">
+    <div class="grid">
+      <div class="grid__item medium-up--six-tenths medium-up--push-two-tenths">
+        <div class="pad-y">
+          {% section "customization--body" %}
+        </div>
+      </div>
+    </div>
+    <div class="grid">
+      <div class="grid__item medium-up--six-tenths medium-up--push-two-tenths">
+        {% section "customization--form" %}
+      </div>
+    </div>
+  </div>
+  {% section "customization--slideshow" %}
+  <div class="wrap wrap--max">
+    {% section "customization--clients" %}
+    <h3 class="text-center" data-aos="fade-up" data-aos-once="true" data-aos-delay="400">and more</h3>
+  </div>
+</div>

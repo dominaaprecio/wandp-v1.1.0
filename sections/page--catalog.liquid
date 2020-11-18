@@ -1,0 +1,71 @@
+{% comment %}{% include 'info__hero' %}{% endcomment %}
+<div class="wrap">
+  <div class="grid">
+  {% comment %}
+    <div class="grid__item one-whole medium-up--three-quarters">
+      {{ section.settings.body_txt }}
+      <p>
+    </div>
+  {% endcomment %}
+    <div class="grid__item one-whole text-center pad-y">
+      <h1>{{ page.title }}</h1>
+      {{ section.settings.catalog_embed }}
+      <div class="pad-y">
+        {{ section.settings.catalog_txt }} <a class="cta-arrow" href="{{ section.settings.catalog_link }}">{{ section.settings.catalog_link_txt }}</a>
+      </div>
+    </div>
+  </div>
+  <div class="cf"></div>
+</div>
+
+{% schema %}
+  {
+    "name": "Catalog",
+    "settings": [
+      {
+        "id": "hero_img",
+        "type": "image_picker",
+        "label": "Info Hero Image"
+      },
+      {
+        "type": "text",
+        "id": "hero_txt",
+        "label": "Hero Text Headline"
+      },
+      {
+        "type": "header",
+        "content": "Body Copy"
+      },
+      {
+        "type": "richtext",
+        "id": "body_txt",
+        "label": "Body"
+      },
+      {
+        "type": "header",
+        "content": "Catalog Embed"
+      },
+      {
+        "type": "textarea",
+        "id": "catalog_embed",
+        "label": "Catalog Embed Code"
+      },
+      {
+        "type": "textarea",
+        "id": "catalog_txt",
+        "label": "Request Catalog Text"
+      },
+      {
+        "type": "text",
+        "id": "catalog_link_txt",
+        "label": "Request Catalong Link Text"
+      },
+      {
+        "type": "url",
+        "id": "catalog_link",
+        "label": "Request Catalong Link"
+      }
+    ]
+
+  }
+{% endschema %}

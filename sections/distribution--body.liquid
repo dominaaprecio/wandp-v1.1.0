@@ -1,0 +1,21 @@
+<style>
+  .distribution--block{
+    background-color: #f1f2f2;
+    padding: 20px;
+  }
+</style>
+{{ section.settings.body }}
+
+{% schema %}
+  {
+  	"name": "Distribution Body",
+  	"settings": [
+      {
+        "type": "richtext",
+        "id": "body",
+        "label": "Body Text"
+      }
+  	]
+
+  }
+{% endschema %}

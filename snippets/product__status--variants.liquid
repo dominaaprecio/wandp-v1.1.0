@@ -1,0 +1,12 @@
+<div class="product__status__icon">
+  <div id="in-stock" class="status hidden">{% include 'icon--in-stock' %}</div>
+  <div id="out-of-stock" class="status hidden">{% include 'icon--out-of-stock' %}</div>
+  <div id="waiting-list" class="status hidden">{% include 'icon--waiting-list' %}</div>
+</div>
+<span class="product__status__text">
+  {% if current_variant.available %}
+    Currently in stock.
+  {% else %}
+    This item is currently out of stock.<br>
+  {% endif %}
+</span>

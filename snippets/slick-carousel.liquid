@@ -1,0 +1,18 @@
+<div class = "grid__item medium-up--one-whole slick-carousel">
+  {% for block in section.blocks %}
+    <img src = "{{ block.settings.image | img_url: '2400x' }}"/>
+  {% endfor %}
+</div>
+
+<script>
+  $( document ).ready( function(){
+    $(".slick-carousel").slick({
+      arrows: true,
+      slidesToShow: 3,
+      centerPadding: '40px',
+      centerMode: true,
+      nextArrow: "<div class = 'carousel-next carousel-arrow'>></div>",
+      prevArrow: "<div class = 'carousel-prev carousel-arrow'><</div>"
+    });
+  });
+</script>

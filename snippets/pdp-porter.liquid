@@ -1,0 +1,91 @@
+{% if section.settings.show_related_products %}
+<div class="product__related">
+  <div class="wrap wrap--max">
+    <h2 class="text-center">{{ section.settings.related_products_title }}</h2>
+  </div>
+  {% include 'cross-sell-custom' %}
+</div>
+{% endif %}
+  {% if product.title contains 'Bag' %}
+  <div class="pad-y">
+    <div class="wrap wrap--product">
+      <div class="grid pad-bottom">
+        <div class="grid__item one-whole"><h3 class="text-center">The Porter&nbsp;Bag Lineup</h3></div>
+        {% assign currentProduct = product.title %}
+        {% for product in collections['porter'].products %}
+          {% if product.title contains 'Bag' %}
+            <div class="grid__item one-half medium-up--one-fifth pad-bottom">
+              {% if product.title == currentProduct %}
+                <div class="pad-bottom current-bag" style="position: relative;">
+                  <style type="text/css">
+                    .current-bag::after {
+                      position: absolute;
+                      top: 50%;
+                      left: 50%;
+                      transform: translate(-50%, -50%);
+                      width: 100%;
+                      height: 100%;
+                      width: calc(100% + 15px);
+                      height: calc(100% + 15px);
+                      border: 2px solid #ccc;
+                      content: '';
+                      z-index: 21;
+                    }
+                  </style>
+                  {% include 'product-grid-item' %}
+                </div>
+              {% else %}
+                <div class="pad-bottom">
+                  {% include 'product-grid-item' %}
+                </div>
+              {% endif %}
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+  {% endif %}
+<div class="product__features">
+  <div class="wrap wrap--product">
+    <h2 class="text-center pad-bottom">Features</h2>
+    <div class="grid grid--full">
+      <div class="grid__item medium-up--one-third">
+        <div class="product__feature text-center" data-aos="fade-up" data-aos-delay="200" data-aos-duration="800" data-aos-once="true">
+          <div class="product__feature__icon">
+            {% capture porter_icon1 %}{{ section.settings.porter_feat1_icon }}{% endcapture %}
+            {% include porter_icon1 %}
+          </div>
+          <div class="product__feature__txt">
+            <h2 class="weight300">{{ section.settings.porter_feat1_title }}</h2>
+            {{ section.settings.porter_feat1_txt }}
+          </div>
+        </div>
+      </div>
+      <div class="grid__item medium-up--one-third">
+        <div class="product__feature text-center" data-aos="fade-up" data-aos-delay="400" data-aos-duration="800" data-aos-once="true">
+          <div class="product__feature__icon">
+            {% capture porter_icon2 %}{{ section.settings.porter_feat2_icon }}{% endcapture %}
+            {% include porter_icon2 %}
+          </div>
+          <div class="product__feature__txt">
+            <h2 class="weight300">{{ section.settings.porter_feat2_title }}</h2>
+            {{ section.settings.porter_feat2_txt }}
+          </div>
+        </div>
+      </div>
+      <div class="grid__item medium-up--one-third">
+        <div class="product__feature text-center" data-aos="fade-up" data-aos-delay="600" data-aos-duration="800" data-aos-once="true">
+          <div class="product__feature__icon">
+            {% capture porter_icon3 %}{{ section.settings.porter_feat3_icon }}{% endcapture %}
+            {% include porter_icon3 %}
+          </div>
+          <div class="product__feature__txt">
+            <h2 class="weight300">{{ section.settings.porter_feat3_title }}</h2>
+            {{ section.settings.porter_feat3_txt }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

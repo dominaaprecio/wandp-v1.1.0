@@ -1,0 +1,506 @@
+<style type="text/css">
+  #hero-{{ section.id }} {
+    background: #5F7767;
+    color: #fff;;
+    height: 100%;
+  }
+  #hero-{{ section.id }} .hero__wrap {
+    width: 100%;
+    max-width: 100%;
+    flex-direction: column;
+    padding: 100px 20px 40px 20px;
+  }
+  #hero-{{ section.id }} .hero__text {
+
+  }
+  #hero-{{ section.id }} .hero__text p {
+    margin-bottom: 0;
+  }
+  #hero-{{ section.id }} .hero__text,
+  #hero-{{ section.id }} .hero__ugc {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  .hero__ugc-grid {
+    display: grid;
+    grid-gap: 20px;
+    grid-template-columns: 50fr 50fr;
+    grid-template-rows: repeat(1, 20fr);
+    grid-auto-flow: row;
+    margin-top: 40px;
+    grid-auto-rows: minmax(50fr, auto)
+  }
+  .hero__ugc-grid__item {
+    grid-area: span 1 / span 1;
+    position: relative;
+    padding-bottom: 125%;
+    line-height: 0;
+    overflow: hidden;
+  }
+  .hero__ugc-grid__item.hero__ugc-grid__item--big {
+    grid-area: span 2 / span 2;
+    display: block;
+  }
+  .hero__ugc-grid__media {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1;
+  }
+  .hero__ugc-grid__media img,
+  .hero__ugc-grid__media video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    z-index: 1;
+  }
+  .hero__ugc-grid__media a {
+    position: absolute;
+    z-index: 2;
+    line-height: 1;
+    bottom: 8px;
+    left: 8px;
+    font-size: 12px;
+    font-weight: 700;
+    color: #fff;
+    display: inline-block;
+    padding: 0;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+  }
+  #hero-{{ section.id }} .hero__text__cta, .hero__text p {
+    margin-top: 20px;
+  }
+  #hero-{{ section.id }} h1 {
+    font-size: 1.5rem;
+    max-width: 100%;
+  }
+  @media (min-width: 375px) {
+    #hero-{{ section.id }} h1 {
+      font-size: 1.8rem;
+      max-width: 100%;
+    }
+  }
+  @media (max-width: 768px) {
+    .cta-arrow--big {
+      font-size: 18px;
+    }
+  }
+  @media (min-width: 769px) {
+    #hero-{{ section.id }} .hero__wrap {
+      padding: 100px 40px 60px 40px;
+    }
+    .hero__ugc-grid {
+      margin-top: 50px;
+    }
+    #hero-{{ section.id }} .hero__text__cta {
+      margin-top: 40px;
+    }
+    #hero-{{ section.id }} .hero__text p {
+      margin-top: 20px;
+    }
+    #hero-{{ section.id }} h1 {
+      font-size: 2rem;
+      margin-top: 0;
+    }
+    #hero-{{ section.id }} .cta-arrow--big {
+      font-size: 20px;
+    }
+  }
+  @media (min-width: 1024px) {
+    #hero-{{ section.id }} .hero__wrap {
+      padding: 93px 30px 30px 30px;
+      flex-direction: row;
+    }
+    #hero-{{ section.id }} .hero__text {
+      max-width: 360px;
+      width: 25%;
+      padding-right: 50px;
+    }
+    #hero-{{ section.id }} .hero__ugc {
+      flex-grow: 1;
+      width: 75%;
+    }
+    .hero__ugc-grid {
+      grid-gap: 1.5vw;
+      grid-template-columns: repeat(5, 20fr);
+      grid-template-rows: 50fr 50fr;
+      grid-auto-flow: column;
+      margin-top: 0;
+    }
+  }
+  @media (min-width: 1140px) {
+    #hero-{{ section.id }} h1 {
+      font-size: 2.5rem;
+    }
+    #hero-{{ section.id }} .cta-arrow--big {
+      font-size: 20px;
+    }
+  }
+  #hero-{{ section.id }} a {
+    color: #fff;
+    border-color: #fff;
+  }
+  #hero-{{ section.id }} .btn-cta {
+    color: #fff;
+    border-color: #fff;
+  }
+</style>
+<script>
+  var currentBlock;
+  function randomImage() {
+    let blocks = $('.hero__ugc-grid__media:visible');
+    var number = Math.floor(Math.random() * blocks.length);
+    if (number == currentBlock) {
+      number += 1;
+    }
+    blocks.eq(number).each(function() {
+      let next = $(this).next().length ? $(this).next() : $(this).parent().find('.hero__ugc-grid__media:eq(0)');
+      $(this).fadeOut(1000);
+      next.fadeIn(1000);
+      currentBlock = number;
+    });
+  }
+  setInterval(randomImage, 3050); // then every 1 second afterward
+</script>
+<div class="hero hero--ugc" id="hero-{{ section.id }}">
+  {% if section.settings.hero_type == 'hero--video' %}
+  <div class="hero__video{% if section.settings.hide_video_on_mobile %} hide-mobile{% endif %}">
+    <video width="16" height="9" preload loop autoplay playsinline muted>
+      <source src="{{ section.settings.hero_video_url }}" type="video/mp4">
+    </video>
+  </div>
+  {% endif %}
+  <!--div class="hero__overlay"></div-->
+  <div class="hero__wrap">
+    <div class="hero__text text-center--mobile {{ section.settings.hero_txt_align }} {{ section.settings.hero_txt_align_mobile }}" data-aos="fade-up" data-aos-delay="1200" data-aos-duration="1100" data-aos-once="true" data-aos-anchor=".hero">
+      <h1>{{ section.settings.hero_headline }}</h1>
+      {% if section.settings.hero_text != blank %}
+      <p>{{ section.settings.hero_text }}</p>
+      {% endif %}
+      {% if section.settings.hero_cta1_txt != blank %}
+      <div class="hero__text__cta">
+        {% if section.settings.hero_cta2_txt != blank %}
+          <ul class="inline-list">
+            <li>
+              <a class="cta-arrow cta-arrow--big" href="{{ section.settings.hero_cta1_url }}">{{ section.settings.hero_cta1_txt }}</a>
+            </li>
+            <li>
+              <a class="cta-arrow cta-arrow--big" href="{{ section.settings.hero_cta2_url }}">{{ section.settings.hero_cta2_txt }}</a>
+            </li>
+          </ul>
+        {% else %}
+          <a class="cta-arrow cta-arrow--big" href="{{ section.settings.hero_cta1_url }}">{{ section.settings.hero_cta1_txt }}</a>
+        {% endif %}
+      </div>
+      {% endif %}
+    </div>
+    <div class="hero__ugc" data-aos="fade" data-aos-delay="1500" data-aos-duration="1100" data-aos-once="true" data-aos-anchor=".hero">
+      <div class="hero__ugc-grid">
+        <div class="hero__ugc-grid__item">
+          <div class="hero__ugc-grid__media">
+            <video width="4" height="5" preload loop autoplay playsinline muted>
+              <source src="https://cdn.shopify.com/s/files/1/2788/6486/files/Porter_SealTight_Caseyfeehan.mp4?v=1586370840" type="video/mp4">
+            </video>
+            <a href="https://instagram.com/caseyfeehan" target="_blank">@caseyfeehan</a>
+          </div>
+          <div class="hero__ugc-grid__media" style="display: none;">
+            <img src="https://cdn.shopify.com/s/files/1/2788/6486/files/Porter_WideMouth_bibiography_2_800x1000_crop_center.jpg?v=1586370836">
+            <a href="https://instagram.com/bibiography" target="_blank">@bibiography</a>
+          </div>
+          <div class="hero__ugc-grid__media" style="display: none;">
+            <video width="4" height="5" preload loop autoplay playsinline muted>
+              <source src="https://cdn.shopify.com/s/files/1/2788/6486/files/Porter_Bowl_ceramic_charcoal_whieyaronoff.mp4?v=1586440140" type="video/mp4">
+            </video>
+            <a href="https://instagram.com/whitneyaronoff" target="_blank">@whitneyaronoff</a>
+          </div>
+        </div>
+        <div class="hero__ugc-grid__item">
+          <div class="hero__ugc-grid__media">
+            <img src="https://cdn.shopify.com/s/files/1/2788/6486/files/Porter_Bottle_Charcoal_kapok_1_800x1000_crop_center.jpg?v=1586371086">
+            <a href="https://instagram.com/kapok" target="_blank">@kapok</a>
+          </div>
+          <div class="hero__ugc-grid__media" style-"display: none;">
+            <img src="https://cdn.shopify.com/s/files/1/2788/6486/files/Porter_Mug_Charcoal_curatewellco_1_800x1000_crop_center.jpg?v=1586370836">
+            <a href="https://instagram.com/curatewellco" target="_blank">@curatewellco</a>
+          </div>
+          <div class="hero__ugc-grid__media" style-"display: none;">
+            <img class="lozad" data-src="https://cdn.shopify.com/s/files/1/2788/6486/files/Porter_Glass_craft_peak_courtney.yeh_800x1000_crop_center.JPG?v=1586445577">
+            <a href="https://instagram.com/courtney.yeh" target="_blank">@courtney.yeh</a>
+          </div>
+        </div>
+        <div class="hero__ugc-grid__item hero__ugc-grid__item--big">
+          <div class="hero__ugc-grid__media">
+            <img src="https://cdn.shopify.com/s/files/1/2788/6486/files/Porter_Bowl_Plastic_Tan_eatchofood_800x1000_crop_center.jpg?v=1586370841">
+            <a href="https://instagram.com/eatchofood" target="_blank">@eatchofood</a>
+          </div>
+          <div class="hero__ugc-grid__media" style="display: none;">
+            <img class="lozad" data-src="https://cdn.shopify.com/s/files/1/2788/6486/files/Porter_Bowl_Mint_ShortStack_bunchofbri_800x1000_crop_center.jpg?v=1586445577">
+            <a href="https://instagram.com/bunchofbri" target="_blank">@bunchofbri</a>
+          </div>
+        </div>
+        <div class="hero__ugc-grid__item">
+          <div class="hero__ugc-grid__media">
+            <img src="https://cdn.shopify.com/s/files/1/2788/6486/files/Porter_Glass_jule.claire_800x1000_crop_center.jpg?v=1586370837">
+            <a href="https://instagram.com/jule.claire" target="_blank">@jule.claire</a>
+          </div>
+          <div class="hero__ugc-grid__media" style="display: none;">
+            <img src="https://cdn.shopify.com/s/files/1/2788/6486/files/Porter_SealTight_WideMouth_LucyMink_800x1000_crop_center.jpg?v=1586370840">
+            <a href="https://instagram.com/lucymink" target="_blank">@lucymink</a>
+          </div>
+          <div class="hero__ugc-grid__media" style="display: none;">
+            <img class="lozad" data-src="https://cdn.shopify.com/s/files/1/2788/6486/files/Porter_Bowl_Tan_Bottle_Cream__karinhadadan_800x1000_crop_center.jpg?v=1586440140">
+            <a href="https://instagram.com/karinhadadan" target="_blank">@karinhadadan</a>
+          </div>
+        </div>
+        <div class="hero__ugc-grid__item">
+          <div class="hero__ugc-grid__media">
+            <img src="https://cdn.shopify.com/s/files/1/2788/6486/files/Porter_Mug_Blush_amynagoda_2_800x1000_crop_center.jpg?v=1586370837">
+            <a href="https://instagram.com/amynagoda" target="_blank">@amynagoda</a>
+          </div>
+          <div class="hero__ugc-grid__media" style="display: none;">
+            <img class="lozad" data-src="https://cdn.shopify.com/s/files/1/2788/6486/files/Porter_PorterBowl_UtensilSet_DressingContainers_candiceadiehl_2_800x1000_crop_center.jpg?v=1586370836">
+            <a href="https://instagram.com/candiceadiehl" target="_blank">@candiceadiehl</a>
+          </div>
+          <div class="hero__ugc-grid__media" style="display: none;">
+            <img src="https://cdn.shopify.com/s/files/1/2788/6486/files/Porter_Bottle_Charcoal_monikergeneral_800x1000_crop_center.jpg?v=1586440139">
+            <a href="https://instagram.com/monikergeneral" target="_blank">@monikergeneral</a>
+          </div>
+        </div>
+        <div class="hero__ugc-grid__item">
+          <div class="hero__ugc-grid__media">
+            <img src="https://cdn.shopify.com/s/files/1/2788/6486/files/Porter_WideMouth__itscalledbalance_800x1000_crop_center.jpg?v=1586370836">
+            <a href="https://instagram.com/itscalledbalance" target="_blank">@itscalledbalance</a>
+          </div>
+          <div class="hero__ugc-grid__media" style="display: none;">
+            <img src="https://cdn.shopify.com/s/files/1/2788/6486/files/Porter_collection_rohinimm_800x1000_crop_center.jpeg?v=1586371088">
+            <a href="https://instagram.com/rohinimm" target="_blank">@rohinimm</a>
+          </div>
+          <div class="hero__ugc-grid__media" style="display: none;">
+            <img class="lozad" data-src="https://cdn.shopify.com/s/files/1/2788/6486/files/Porter_Mug_Cream_terrenzinbi_800x1000_crop_center.jpg?v=1586440139">
+            <a href="https://instagram.com/terrenzinbi" target="_blank">@terrenzinbi</a>
+          </div>
+        </div>
+        <div class="hero__ugc-grid__item">
+          <div class="hero__ugc-grid__media">
+            <img src="https://cdn.shopify.com/s/files/1/2788/6486/files/Porter_Straw_citizen.supply_800x1000_crop_center.jpg?v=1586370837">
+            <a href="https://instagram.com/citizen.supply" target="_blank">@citizen.supply</a>
+          </div>
+          <div class="hero__ugc-grid__media" style="display: none;">
+            <video width="4" height="5" preload loop autoplay playsinline muted>
+              <source src="https://cdn.shopify.com/s/files/1/2788/6486/files/Porter_Bowl_Ceramic_Cream_mojalvo.mp4?v=1586370838" type="video/mp4">
+            </video>
+            <a href="https://instagram.com/mojalvo" target="_blank">@mojalvo</a>
+          </div>
+          <div class="hero__ugc-grid__media" style="display: none;">
+            <img class="lozad" data-src="https://cdn.shopify.com/s/files/1/2788/6486/files/Porter_PorterBowl_SealTight_hungryforresults_800x1000_crop_center.jpg?v=1586440139">
+            <a href="https://instagram.com/hungryforresults" target="_blank">@hungryforresults</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+  {
+  	"name": "UGC Hero Area",
+  	"settings": [
+      {
+  		"type": "select",
+  		"id": "hero_type",
+  		"label": "Type of Hero Area",
+        "options": [
+          {
+        	"value": "hero--image",
+        	"label": "Image"
+          },
+          {
+        	"value": "hero--video",
+        	"label": "Video"
+          }
+        ],
+   		  "default": "hero--image"
+  	  },
+      {
+        "type": "text",
+        "id": "hero_video_url",
+        "label": "Hero Video URL",
+		    "info": "If using Video"
+      },
+      {
+        "id": "hide_video_on_mobile",
+        "type": "checkbox",
+        "label": "Hide video on mobile",
+        "info": "Displays background image instead",
+        "default": false
+      },
+      {
+        "type": "image_picker",
+        "id": "hero_img",
+        "label": "Hero Image"
+      },
+      {
+        "type": "select",
+        "id": "hero_img_pos",
+        "label": "Hero Image Position",
+      	"options": [
+          {
+        		"value": "center",
+        		"label": "Center"
+      	  },
+      	  {
+        		"value": "top left",
+        		"label": "Top Left"
+      	  },
+      	  {
+        		"value": "top center",
+        		"label": "Top Center"
+      	  },
+      	  {
+        		"value": "top right",
+        		"label": "Top Right"
+      	  },
+      	  {
+        		"value": "bottom left",
+        		"label": "Bottom Left"
+      	  },
+      	  {
+        		"value": "bottom center",
+        		"label": "Bottom Center"
+      	  },
+      	  {
+        		"value": "bottom right",
+        		"label": "Bottom Right"
+      	  }
+      	],
+        "default": "center"
+      },
+      {
+        "type": "select",
+        "id": "hero_img_pos_mobile",
+        "label": "Mobile Hero Image Position",
+        "options": [
+          {
+            "value": "center",
+            "label": "Center"
+          },
+          {
+            "value": "top left",
+            "label": "Top Left"
+          },
+          {
+            "value": "top center",
+            "label": "Top Center"
+          },
+          {
+            "value": "top right",
+            "label": "Top Right"
+          },
+          {
+            "value": "bottom left",
+            "label": "Bottom Left"
+          },
+          {
+            "value": "bottom center",
+            "label": "Bottom Center"
+          },
+          {
+            "value": "bottom right",
+            "label": "Bottom Right"
+          }
+        ],
+        "default": "center"
+      },
+      {
+      	"type": "color",
+      	"id": "hero_txt_color",
+      	"label": "Hero Text Color",
+      	"default": "#fff"
+      },
+      {
+        "type": "select",
+        "id": "hero_txt_align",
+        "label": "Text Alignment",
+        "options": [
+          {
+            "value": "text-center--desktop",
+            "label": "Center"
+          },
+          {
+            "value": "text-left--desktop",
+            "label": "Left"
+          },
+          {
+            "value": "text-right--desktop",
+            "label": "Right"
+          }
+        ],
+        "default": "text-left--desktop"
+      },
+      {
+        "type": "select",
+        "id": "hero_txt_align_mobile",
+        "label": "Mobile Text Alignment",
+        "options": [
+          {
+            "value": "text-center--mobile",
+            "label": "Center"
+          },
+          {
+            "value": "text-left--mobile",
+            "label": "Left"
+          },
+          {
+            "value": "text-right--mobile",
+            "label": "Right"
+          }
+        ],
+        "default": "text-left--mobile"
+      },
+      {
+      	"type": "text",
+      	"id": "hero_headline",
+      	"label": "Headline"
+      },
+      {
+      	"type": "textarea",
+      	"id": "hero_text",
+      	"label": "Text (optional)"
+      },
+      {
+      	"type": "text",
+      	"id": "hero_cta1_txt",
+      	"label": "First CTA Text"
+      },
+      {
+      	"type": "url",
+      	"id": "hero_cta1_url",
+      	"label": "First CTA Link"
+      },
+      {
+      	"type": "text",
+      	"id": "hero_cta2_txt",
+      	"label": "Second CTA Text"
+      },
+      {
+      	"type": "url",
+      	"id": "hero_cta2_url",
+      	"label": "Second CTA Link"
+      }
+  	],
+    "presets": [
+      {
+        "category": "Media",
+        "name": "UGC Hero Area"
+      }
+    ]
+  }
+{% endschema %}
+
+{% javascript %}
+
+{% endjavascript %}

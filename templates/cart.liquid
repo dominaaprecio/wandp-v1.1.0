@@ -1,0 +1,315 @@
+<style>
+
+  .giftnote input[type="checkbox"]{
+    display: inline;
+    display: inline-block;
+  }
+
+  .add-on-items{
+    background-color: white;
+  }
+
+  .add-on-items p,
+  .add-on-items h4,
+  .add-on-items h5 {
+    margin: 0;
+  }
+
+  .cart-drawer__free-shipping p {
+    margin: 0;
+  }
+
+  .giftnote textarea {
+    border: 0;
+    background-color: white;
+    padding: 10px;
+    width: 100%;
+    max-width: 280px;
+    height: 140px;
+    font-weight: 300;
+    display: block;
+    margin: 20px auto;
+    line-height: 1.3;
+  }
+
+  .giftnote label { font-size: 15px; }
+
+  .cart__checkout li {
+    margin: 0 15px;
+  }
+
+</style>
+<div class="cart-page" data-cart-view="data-cart-view">
+  <div class="wrap wrap--cart text-center">
+    <h1 class="pad-top">Shopping Cart</h1>
+    <div rv-if="cart.total_price | gt 5000"><p class="text-center">You get <span class="weight800">free&nbsp;domestic&nbsp;shipping</span>!</p></div>
+    <div rv-if="cart.total_price | lt 5000"><p class="text-center"><span class="weight800 sale-price">{5000 | minus cart.total_price | money}</span> away from <span class="weight800">free&nbsp;domestic&nbsp;shipping!</span></p></div>
+  </div>
+  <div class="wrap wrap--cart">
+    {% if settings.cart_promo != blank %}
+      <div class="cart-promo-text pad-top text-center">
+        <h5 style="color: {{ settings.cart_promo_color }};">{{ settings.cart_promo }}</h5>
+      </div>
+    {% endif %}
+    <table class="cart">
+      <thead rv-show="cart.item_count | gt 0">
+        <tr>
+          <th class="cart-header__item text-left">Item</th>
+          <th class="cart-header__qty">Qty</th>
+          <th class="cart-header__price text-left">Price</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr rv-each-item="cart.items">
+          <td vertical-align="middle">
+            <div class="cart-item">
+              <div class="cart-item__img" vertical-align="middle">
+                <span class="left cart__img" rv-if="item.image">
+                  <a rv-href="item.url"><img rv-src="item.image | productImageSize '300x300' "></a>
+                </span>
+              </div>
+              <div class="cart-item__info">
+                <a rv-href="item.url"><h5 rv-text="item.product_title"></h5></a>
+                <div rv-show="item.variant_title">
+                  <h6 rv-text="item.variant_title"></h6>
+                </div>
+                <ul rv-hide="item.propertyArray | empty">
+                  <li rv-each-property="item.propertyArray < properties">
+                    <small class="text-muted">{property.name}: {property.value}</small>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </td>
+          <td>
+            <div class="cart-item__qty text-center">
+              <div class="cart__qty text-center">
+                <a href="#" rv-data-cart-update="index | plus 1" rv-data-cart-quantity="item.quantity | minus 1">&ndash;</a>
+                <span rv-text="item.quantity"></span>
+                <a href="#" rv-data-cart-update="index | plus 1" rv-data-cart-quantity="item.quantity | plus 1">+</a>
+              </div>
+            </div>
+          </td>
+          <td>
+            <div class="cart-item__price">
+              <div rv-if="item.original_line_price | gt item.line_price">
+                <span class="cart__line-price weight800"><s>{item.original_line_price | money}</s></span>
+                <span class="cart__line-price weight800">{item.line_price | money}</span>
+              </div>
+              <div rv-if="item.original_line_price | eq item.line_price">
+                <span class="cart__line-price weight800">{item.line_price | money}</span>
+              </div>
+              <span class="cart__remove" rv-data-cart-remove="index | plus 1"><small>Remove</small></span>
+            </div>
+          </td>
+        </tr>
+        <tr rv-show="cart.item_count | lt 1">
+          <td colspan="3" class="text-center" style="padding: 20px; line-height: 1.5;">You don't have any items in your cart. <a class="cta-arrow" href="/collections/all">Start Shopping</a></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="wrap wrap--cart">
+    <div class="cart-page__footer text-center" rv-show="cart.item_count | gt 0">
+      <div class="cart-drawer__free-shipping pad-top">
+      {% if cart.item_count != 0 %}
+        <div class="text-center">
+          <div class="pad-bottom">
+            <label for="giftnote-checkbox"><strong>Add a gift note?</strong> <input name="giftnote-checkbox" id="giftnote-checkbox" type="checkbox" onclick='$("#giftnote-area").slideToggle("slow");'/></label>
+            <div id="giftnote-area" style="display:none">
+              <div class="giftnote">
+                <textarea name="note" class="input-full" id="CartSpecialInstructions" maxlength="500" placeholder="Enter gift note here (optional)">{{ cart.note }}</textarea>
+                <label for="note"><em>Gift notes do not apply to e-gift card purchases.</em></label>
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endif %}
+      <div class="cart-drawer__upsell"></div>
+      <div class="cart__checkout pad-y" style="">
+        <h2>Subtotal <span rv-show="cart.total_discount | gt 0" rv-html="cart.original_total_price | money" style="text-decoration: line-through;"></span> <span rv-html="cart.total_price | money"></span></h2>
+        <h2 class="subtotal-savings" rv-show="cart.total_discount | gt 0">Your Savings: <span rv-html="cart.total_discount | money"></span></h2>
+        {% if customer %}
+          <ul class="inline-list">
+            <li><a class="cta-solid cta-solid--checkout" href="/checkout">Checkout</a></li>
+          </ul>
+        {% else %}
+          <ul class="inline-list">
+            <li><a class="cta-solid cta-solid--checkout" href="/account/login#checkout">Sign In &amp; Checkout</a></li>
+            <li><a href="/checkout" class="cta-solid cta-solid--checkout">Checkout as Guest</a></li>
+          </ul>
+        {% endif %}
+      </div>
+      {% comment %}
+      <div id="cart-value-buy">
+        <div id="cart-value-buy-intro">
+          <h3>Don't forget!</h3>
+          <p>Our favorite Carry On Cocktail Kit: The Old Fashioned</p>
+        </div>
+        <form action="/cart/add" method="post" class="product-form">
+          <table class="add-on-items" width = "100%">
+            <tbody><tr>
+              <td class="add-on-item">
+                <a href="/products/the-old-fashioned" title="The Old Fashioned">
+                  <img class="cart-icon" src="//cdn.shopify.com/s/files/1/1002/8980/products/WP-old-fashioned-carry-on-cocktail-kit-front_small.jpg?v=1528301987" alt="The Old Fashioned">
+                </a>
+              </td>
+              <td class="add-on-title">
+                <a href="/products/the-old-fashioned" title="The Old Fashioned">
+                  <h4>The Old Fashioned</h4>
+                </a>
+              </td>
+              <td class="cart-table-price">
+                <p class="price">$ 24.00
+
+                </p>
+              </td>
+              <td class="add-on-cta">
+                <input type="hidden" name="id" value="8015998339">
+                <button id="add-to-cart" type="submit" name="add" value="Add" class="cta-solid">Add</button>
+              </td>
+            </tr>
+          </tbody></table>
+        </form>
+      </div>
+      {% endcomment %}
+    </div>
+  </div>
+</div>
+
+{% comment %}
+{% if cart.item_count > 0 %}
+  <h1>{{ 'cart.general.title' | t }}</h1>
+
+  <form action="/cart" method="post" novalidate>
+    <table class="responsive-table">
+      <thead class="small--hide">
+        <tr>
+          <th colspan="2">{{ 'cart.label.product' | t }}</th>
+          <th>{{ 'cart.label.price' | t }}</th>
+          <th>{{ 'cart.label.quantity' | t }}</th>
+          <th>{{ 'cart.label.total' | t }}</th>
+        </tr>
+      </thead>
+      <tbody>
+
+        {% for item in cart.items %}
+
+        {% comment %}
+
+        Cart Item Template
+        =====================
+        The data-label attributes on <td> elements are mobile-friendly
+        helpers used for responsive-table labels
+        {% endcomment %}
+
+          <tr class="responsive-table-row">
+
+            <td data-label="{{ 'customer.order.product' | t }}">
+
+              {% if item.image != blank %}
+                <a href="{{ item.url | within: collections.all }}">
+                  {{ item | img_url: '240x240' | img_tag: item.title }}
+                </a>
+              {% endif %}
+
+            </td>
+            <td>
+              <a href="{{ item.url }}">{{ item.product.title }}</a>
+
+              {% unless item.product.has_only_default_variant %}
+                <p>{{ item.variant.title }}</p>
+              {% endunless %}
+
+              <p>{{ item.vendor }}</p>
+
+              {%- assign property_size = item.properties | size -%}
+
+              {% if property_size > 0 %}
+                {% for p in item.properties %}
+                  {% unless p.last == blank %}
+                  {{ p.first }}:
+
+                  {% if p.last contains '/uploads/' %}
+                    <a href="{{ p.last }}">{{ p.last | split: '/' | last }}</a>
+                  {% else %}
+                    {{ p.last }}
+                  {% endif %}
+
+                  {% endunless %}
+                {% endfor %}
+              {% endif %}
+
+              <a href="/cart/change?line={{ forloop.index }}&amp;quantity=0">
+                <small>{{ 'cart.general.remove' | t }}</small>
+              </a>
+            </td>
+            <td data-label="{{ 'cart.label.price' | t }}">
+              {% if item.original_line_price != item.line_price %}
+                <span class="visually-hidden">{{ 'cart.label.discounted_price' | t }}</span>
+                {{ item.price | money }}
+                <span class="visually-hidden">{{ 'cart.label.original_price' | t }}</span>
+                <s>{{ item.original_price | money }}</s>
+              {% else %}
+                {{ item.price | money }}
+              {% endif %}
+            </td>
+            <td data-label="{{ 'cart.label.quantity' | t }}">
+              <input type="number"
+                     name="updates[]"
+                     id="updates_{{ item.key }}"
+                     value="{{ item.quantity }}"
+                     min="0"
+                     aria-label="{{ 'cart.general.item_quantity' | t }}">
+            </td>
+            <td data-label="{{ 'cart.label.total' | t }}">
+              {{ item.line_price | money }}
+            </td>
+          </tr>
+
+        {% endfor %}
+      </tbody>
+    </table>
+
+    {% if settings.cart_notes_enable %}
+      <label for="CartSpecialInstructions">{{ 'cart.general.note' | t }}</label>
+      <textarea name="note" id="CartSpecialInstructions">{{ cart.note }}</textarea>
+    {% endif %}
+
+    <p>{{ 'cart.general.subtotal' | t }}</p>
+    <p>{{ cart.total_price | money }}</p>
+    {% if cart.total_discounts > 0 %}
+      <p>{{ 'cart.general.savings' | t }} {{ cart.total_discounts | money }}</p>
+    {% endif %}
+    <p>{{ 'cart.general.shipping_at_checkout' | t }}</p>
+    <input type="submit" name="update" value="{{ 'cart.general.update' | t }}">
+    <input type="submit" name="checkout" class="btn" value="{{ 'cart.general.checkout' | t }}">
+  </form>
+{% else %}
+  <h1>{{ 'cart.general.title' | t }}</h1>
+
+  {% comment %}
+  Cart empty state
+  {% endcomment %}
+  <div class="supports-cookies">
+    <p>{{ 'cart.general.empty' | t }}</p>
+    <p>{{ 'cart.general.continue_browsing_html' | t }}</p>
+  </div>
+
+  {% comment %}
+  Cart no cookies state
+  ---------------------
+  Browser cookies are required to use the cart. If cookies aren't enabled in the
+  browser a message is displayed prompting the user to enable them.
+  {% endcomment %}
+  <div class="supports-no-cookies">
+    <p>{{ 'cart.general.cookies_required' | t }}</p>
+  </div>
+{% endif %}
+{% endcomment %}
+
+<script>
+$(document).ready(function() {
+
+});
+</script>

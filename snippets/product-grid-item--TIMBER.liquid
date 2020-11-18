@@ -1,0 +1,155 @@
+<!-- snippets/product-grid-item.liquid -->
+{% comment %}
+
+  This snippet is used to showcase each product during the loop,
+  'for product in collection.products' in collection.liquid.
+
+  A liquid variable (grid_item_width) is set just before the this
+  snippet is included to change the size of the container.
+  Once the variable is set on a page, all future instances of this
+  snippet will use that width. Overwrite the variable to adjust this.
+
+  Example
+    - assign grid_item_width = 'large--one-quarter medium--one-half'
+
+{% endcomment %}
+
+{% comment %}
+  Set the default grid_item_width if no variable is set
+{% endcomment %}
+{% unless grid_item_width %}
+  {% assign grid_item_width = 'large--one-third medium--one-half' %}
+{% endunless %}
+
+{% if featured.title == '' %}
+  {% comment %}add default state for product block in storefront editor{% endcomment %}
+  {% capture product_title %}{{ 'home_page.onboarding.product_title' | t }}{% endcapture %}
+{% else %}
+  {% capture product_title %}{{ featured.title | escape }}{% endcapture %}
+{% endif %}
+
+{% comment %}
+  Check if the product is on sale and set a variable to be used below.
+{% endcomment %}
+{% assign on_sale = false %}
+{% if featured.compare_at_price > featured.price %}
+  {% assign on_sale = true %}
+{% endif %}
+
+{% comment %}
+  Check if the product is sold out and set a variable to be used below.
+{% endcomment %}
+{% assign sold_out = false %}
+{% if featured.tags contains 'Sold-Out' %}
+  {% assign sold_out = true %}
+{% endif %}
+
+{% comment %}
+  Set a class for sold-out and on-sale items
+{% endcomment %}
+<div class="{% if sold_out %} sold-out{% endif %}{% if on_sale %} on-sale{% endif %}{% if forloop.last %} last{% endif %}">
+  <div class="product-wrapper">
+    <a href="{{ featured.url | within: collection }}" class="product">
+      {% if featured.title != '' %}
+        <img src="{{ featured.featured_image.src | img_url: 'large' }}" alt="{{ featured.featured_image.alt | escape }}" class="product__img">
+      {% else %}
+        {% capture current %}{% cycle 1, 2, 3, 4, 5, 6 %}{% endcapture %}
+        {{ 'product-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
+      {% endif %}
+      <div class="product__cover"></div>
+      {% comment %}
+        Link to your product with the 'within: collection' filter for the link to be aware of the collection.
+        This allows you to create collection-based navigation on the product page.
+
+        Results of using 'within: collection':
+        - Instead of a URL with /products/product-handle
+          you would get /collections/collection-handle/products/product-handle
+
+        For more info on navigation within a collection
+          - http://docs.shopify.com/support/your-store/collections/how-to-navigate-within-a-collection
+
+      {% endcomment %}
+
+      <div class="product__details text-center">
+        <div class="table-contain">
+          <div class="table-contain__inner">
+            <p class="h6{% comment %}product__title{% endcomment %}">{{ product_title }}</p>
+            <p class="product__price">
+              {% if on_sale %}
+                <span class="visuallyhidden">{{ 'products.general.sale_price' | t }}</span>
+              {% else %}
+                <span class="visuallyhidden">{{ 'products.general.regular_price' | t }}</span>
+              {% endif %}
+              {% assign price = featured.price | money %}
+              {% if featured.price_varies %}{{ 'products.general.from_text_html' | t: price: price }}{% else %}{{ price }}{% endif %}
+              &#47; pc 
+              {% if on_sale %}
+                {% assign original_price =  featured.compare_at_price | money %}
+                <span class="visuallyhidden">{{ 'products.general.regular_price' | t }}</span>
+                <del>{{ original_price }}</del>
+              {% endif %}
+            </p>
+            {% if featured.available %}
+              {% if featured.tags contains "Sold-Out"  %}
+              <p class="product__availability product__availability--out-of-stock">
+                Out Of Stock
+                {% if featured.metafields.data.ship_date != blank %}
+                <br><span>{{ featured.metafields.data.ship_date }}</span>
+                {% endif %}
+              </p>
+              {% elsif featured.tags contains "Coming-Soon" %}
+              <p class="product__availability product__availability--coming-soon">
+                Coming Soon
+                {% if featured.metafields.data.ship_date != blank %}
+                <br><span>{{ featured.metafields.data.ship_date }}</span>
+                {% endif %}
+              </p>
+              {% else %}
+                {% for variant in featured.variants %}
+                  {% assign product_quantity = product_quantity | plus: variant.inventory_quantity | plus: 0 %}
+                {% endfor %}
+              	{% if product_quantity > 100 %}
+                  <p class="product__availability product__availability--in-stock">
+                    In Stock
+            	  </p>
+            	{% else %}
+                  <p class="product__availability product__availability--low-stock">
+                    Low Stock<br><span>Order Now!</span>
+                  </p>
+            	{% endif %}
+              {% endif %}
+            {% else %}
+              <p class="product__availability product__availability--out-of-stock">
+                Out Of Stock
+                {% if featured.metafields.data.ship_date != blank %}
+                <br><span>{{ featured.metafields.data.ship_date }}</span>
+                {% endif %}
+              </p>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      {% comment %}
+      {% if featured.tags contains "Sold-Out"  %}
+      <div class="sold-out-tag text-center">
+        <span class="tag">{{ 'products.product.sold_out' | t }}</span>
+      </div>
+      {% elsif featured.tags contains "Coming-Soon" %}
+      <div class="sold-out-tag text-center">
+        <span class="tag">Coming Soon</span>
+      </div>
+      {% elsif featured.tags contains "Pre-Order" %}
+      <div class="sold-out-tag text-center">
+        <span class="tag">Pre-Order</span>
+      </div>
+      {% else %}
+      {% endif %}
+      {% if on_sale and sold_out != true %}
+      <div class="on-sale-tag text-center">
+        <span class="tag" aria-hidden="true">{{ 'products.product.on_sale' | t }}</span>
+      </div>
+      {% endif %}
+      {% endcomment %}
+    </a>
+  </div>
+</div>

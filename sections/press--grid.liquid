@@ -1,0 +1,38 @@
+<div class = "wrap press--grid">
+  <div class = "grid">
+    {% for block in section.blocks %}
+    <div class = "grid__item medium-up--one-third">
+      <div class = "press-grid--block">
+        <div class = "press-grid--block-text">
+          <h3>{{ block.settings.text }}</h3>
+        </div>
+        <div style = "background-image: url( {{ block.settings.logo | img_url: '800x' }} )" class = "press-grid--block-logo"></div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "Press Grid",
+    "blocks": [
+  	  {
+        "type": "image",
+        "name": "Slideshow",
+        "settings": [
+          {
+            "type": "text",
+            "label": "Text",
+            "id": "text"
+          },
+          {
+            "type": "image_picker",
+            "label": "Image",
+            "id": "logo"
+          }
+        ]
+  	  }
+    ]
+  }
+{% endschema %}

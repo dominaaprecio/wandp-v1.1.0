@@ -1,0 +1,93 @@
+{% comment %}
+  Set the extension of your color files below. Use 'png', 'jpeg', 'jpg' or 'gif'.
+{% endcomment %}
+
+{% assign file_extension = 'png' %}
+
+{% if swatch == blank %}
+<div class="swatch error">
+  <p>You must include the snippet swatch.liquid with the name of a product option.</p>
+  <p>Use: <code>{% raw %}{% include 'swatch' with 'name of your product option here' %}{% endraw %}</code></p>
+  <p>Example: <code>{% raw %}{% include 'swatch' with 'Color' %}{% endraw %}</code></p>
+</div>
+{% else %}
+
+{% assign found_option = false %}
+{% assign is_color = false %}
+{% assign is_size = false %}
+{% assign option_index = 0 %}
+
+{% for option in product.options %}
+  {% if option == swatch %}
+    {% assign found_option = true %}
+    {% assign option_index = forloop.index0 %}
+    <style>
+      label[for="product-select-option-{{ option_index }}"] { display: none; }
+      #product-select-option-{{ option_index }} { display: none; }
+      #product-select-option-{{ option_index }} + .custom-style-select-box { display: none !important; }
+    </style>
+    <script>$(window).load(function() { $('.selector-wrapper:eq({{ option_index }})').hide(); });</script>
+    {% assign downcased_option = swatch | downcase %}
+    {% if downcased_option contains 'color' or downcased_option contains 'colour' %}
+      {% assign is_color = true %}
+	{% elsif downcased_option contains 'size' or 'quantity' %}
+	  {% assign is_size = true %}
+    {% endif %}
+  {% endif %}
+{% endfor %}
+
+{% unless found_option %}
+  <div class="">
+    <div class="swatch error">
+      <p>You included the snippet swatch.liquid with the name of a product option — <code>'{{ swatch }}'</code> — that does not belong to your product.</p>
+      <p>Use <code>{% raw %}{% include 'swatch' with 'name of your product option here' %}{% endraw %}</code></p>
+      <p>Example: <code>{% raw %}{% include 'swatch' with 'Color' %}{% endraw %}</code></p>
+      <p><strong>This is case-sensitive!</strong> Do not put in <code>'color'</code> if your product option name is <code>'Color'</code>.</p>
+    </div>
+  </div>
+{% else %}
+{% if is_color %}
+  <div class="">
+{% elsif is_size %}
+  <div class="">
+{% else %}
+  <div class="">
+{% endif %}
+    <div class="swatch clearfix{% if is_color %} color-swatches{% elsif is_size %} size-swatches{% else %} default-swatches{% endif %}" data-option-index="{{ option_index }}">
+      <h5>
+        {% if is_size %}{% if product.vendor == 'Peak' or product.vendor == 'Carry On' %}<em>Buy in 2-packs and save!</em>{% endif %}{% else %}{{ swatch }}{% endif %}{% if is_color %}: <span id="color-name">{{ product.selected_or_first_available_variant.option1 }}</span>{% endif %}
+        {% if is_size %}{% for tag in product.tags %}{% if tag contains 'size-' %}
+          <a href="#" class="js-toggle--modal product__size-link" data-modal="modal-{{ tag }}">Guide</a>
+        {% endif %}{% endfor %}{% endif %}
+      </h5>
+      {% assign values = '' %}
+      {% for variant in product.variants %}
+        {% assign value = variant.options[option_index] %}
+        {% unless values contains value %}
+          {% assign values = values | join: ',' %}
+          {% assign values = values | append: ',' | append: value %}
+          {% assign values = values | split: ',' %}
+          <div id="{% if is_color %}color-{% elsif is_size %}size-{% endif %}{{ variant.id }}" data-value="{{ value }}" class="swatch-element {% if is_color %}color {% elsif is_size %}size {% endif %}{% if product.vendor == 'Porter' or product.title contains 'LUNCH! Set' %}porter-{% endif %}{{ value | handleize }} {% if variant.available %}available{% else %}soldout{% endif %}">
+            <input id="swatch-{{ option_index }}-{{ value | handle }}" type="radio" name="option-{{ option_index }}" value="{{ value | escape }}"{% comment %}{% if forloop.first %} checked{% endif %}{% endcomment %} {% comment %}{% unless variant.available %}disabled{% endunless %}{% endcomment %} />
+              {% if is_color or is_size %}
+                <label for="swatch-{{ option_index }}-{{ value | handle }}" {% comment %}style="background-color: {{ value | split: ' ' | last | handle }}; background-image: url({{ value | handle | append: '.' | append: file_extension | asset_url }})"{% endcomment %}>
+                  {% if is_size %}<span></span> {% endif %}{% if is_size %}{{ value }}{% endif %}
+                </label>
+              {% else %}
+                <label for="swatch-{{ option_index }}-{{ value | handle }}">
+                  {{ value }}
+                </label>
+              {% endif %}
+          </div>
+        {% endunless %}
+        {% if variant.available %}
+          <script>
+            jQuery('.swatch[data-option-index="{{ option_index }}"] .{{ value | handle }}').removeClass('soldout').addClass('available');
+          </script>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+{% endunless %}
+
+{% endif %}

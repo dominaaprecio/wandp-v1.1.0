@@ -1,0 +1,54 @@
+      <div class="text-center grid__product">
+        {% if variant.featured_image != blank %}
+          <a href="{{ variant.url | within: collection }}">
+            {{ variant.image.src | img_url: '1000x1000', crop: 'center' | img_tag: variant.image.alt }}
+          </a>
+        {% endif %}
+
+        <p class="weight800">
+          <a href="{{ variant.url | within: collection }}">
+            {% if product.vendor == 'Porter' and product.title contains 'Bowl' %}
+              {% assign porterType = product.title | remove: 'The Porter Bowl - ' %}
+              {{ variant.title }} {{ porterType }} Bowl
+            {% else %}
+              {{ variant.title }} {{ product.title }} {{ variant.title }}
+            {% endif %}
+          </a>
+        </p>
+        <p>
+          {% if variant.compare_at_price > variant.price %}
+			{% comment %}
+            {% if variant.price_varies %}
+              {%- assign sale_price = variant.price | money -%}
+              {{ 'products.variant.on_sale_from_html' | t: price: sale_price }}
+            {% else %}
+              {{ 'products.variant.on_sale' | t }}
+              {{ variant.price | money }}
+            {% endif %}
+            {% endcomment %}
+            {{ 'products.variant.on_sale' | t }}
+            {{ variant.price | money }}
+
+          {% else %}
+			{% comment %}
+            {% if variant.price_varies %}
+              {%- assign price = variant.price | money -%}
+              {{ 'products.variant.from_text_html' | t: price: price }}
+            {% else %}
+              {{ variant.price | money }}
+            {% endif %}
+            {% endcomment %}
+            {{ variant.price | money }}
+
+          {% endif %}
+
+          {% if variant.compare_at_price > variant.price %}
+            <span class="visually-hidden">{{ 'products.variant.regular_price' | t }}</span>
+            <s>{{ variant.compare_at_price | money }}</s>
+          {% endif %}
+
+          {% unless variant.available %}
+            {{ 'products.variant.sold_out' | t }}
+          {% endunless %}
+        </p>
+      </div>

@@ -1,0 +1,33 @@
+{% layout none %}
+{% comment %} Inspired by: http://ecommerce.shopify.com/c/ecommerce-design/t/diy-implementing-autocomplete-with-search-144104 {% endcomment %}
+{% paginate search.results by 10 %}
+ {% capture output %}
+ {% for item in search.results %}
+
+     	{% if item.object_type == 'product' %}
+            {% assign resultURL = item.url %}
+            {% assign thumbURL = item.featured_image | img_url: '100x100', crop: 'center' %}
+
+            {"title":"{{ item.title | replace: '\\', '\\\\' | replace: '"', '\\"' | replace:  '/','\\/' }}",
+               "url":"{{ item.url   | replace: '\\', '\\\\' | replace: '"', '\\"' | replace:  '/','\\/' }}",
+             "thumb":"{{ thumbURL     | replace: '\\', '\\\\' | replace: '"', '\\"' | replace:  '/','\\/' }}",
+                "id":{{item.id}} }{% unless forloop.last %},{% endunless %}
+        {% elsif item.object_type == 'article' %}
+          {% comment %}
+
+            {% assign resultURL = item.url %}
+            {% assign blogImg = item | image_url: 'small' %}
+
+            {"title":"{{ item.title | replace: '\\', '\\\\' | replace: '"', '\\"' | replace:  '/','\\/' }}",
+               "url":"{{ item.url   | replace: '\\', '\\\\' | replace: '"', '\\"' | replace:  '/','\\/' }}",
+             "thumb":"{{ item.image | img_url:'100x100', crop: 'center' }}",
+                "id":{{item.id}} }{% unless forloop.last %},{% endunless %}
+                {% endcomment %}
+
+        {% endif %}
+{% endfor %}
+{% endcapture %}
+
+{% comment %} Output the json object {% endcomment %}
+{"results_total":{{paginate.items}},"results":[{{ output | strip_newlines }}]}
+{% endpaginate %}

@@ -1,0 +1,27 @@
+<style>
+  .distribution--block{
+    background-color: #f1f2f2;
+    padding: 20px;
+  }
+</style>
+<div class = "grid">
+  <div class = "grid__item medium-up--one-third">
+    <div class = "distribution--block">
+      {{ section.settings.body }}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+  {
+  	"name": "Distribution Block",
+  	"settings": [
+      {
+        "type": "richtext",
+        "id": "body",
+        "label": "Body Text"
+      }
+  	]
+
+  }
+{% endschema %}
